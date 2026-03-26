@@ -1,0 +1,23 @@
+# Core (all PyTorch — no JAX)
+torch>=2.0
+torchvision
+transformers>=4.45
+huggingface_hub
+
+# For pi0/pi0.5 weight extraction (PyTorch port)
+lerobot
+
+# Analysis
+scikit-learn
+numpy
+scipy
+matplotlib
+seaborn
+
+# Dataset
+pillow
+opencv-python
+
+# Optional
+wandb
+tqdm

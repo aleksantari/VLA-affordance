@@ -1,0 +1,81 @@
+# Affordance Probing Configuration
+# ================================
+
+# Paths
+paths:
+  umd_dataset: ./data/umd_dataset
+  cached_features: ./results/cached_features
+  figures: ./results/figures
+  tables: ./results/tables
+  models_dir: ./models
+
+# Encoder configurations
+encoders:
+  raw_siglip:
+    model_name: google/siglip-so400m-patch14-384
+    encoder_type: siglip
+    feature_dim: 1152
+    patch_size: 14
+    num_patches: 256  # 16x16
+
+  pi0_siglip:
+    source: lerobot/pi0_base
+    encoder_type: siglip
+    feature_dim: 1152
+    patch_size: 14
+    num_patches: 256
+
+  pi05_siglip:
+    source: lerobot/pi05_base
+    encoder_type: siglip
+    feature_dim: 1152
+    patch_size: 14
+    num_patches: 256
+
+  dinov2:
+    model_name: facebook/dinov2-base
+    encoder_type: dinov2
+    feature_dim: 768
+    patch_size: 14
+    num_patches: 256
+
+  dino_wm:
+    repo: https://github.com/mazpie/dino-wm
+    encoder_type: dino_wm
+    feature_dim: 768
+    patch_size: 14
+    num_patches: 256
+
+# Image processing
+image:
+  resolution: 224
+  patch_grid: 16  # 224 / 14
+
+# UMD dataset
+umd:
+  num_classes: 8  # 7 affordances + background
+  categories:
+    - background
+    - grasp
+    - cut
+    - scoop
+    - contain
+    - pound
+    - support
+    - wrap-grasp
+
+# Linear probing
+linear_probe:
+  optimizer: adam
+  learning_rate: 1.0e-3
+  epochs: 50
+  batch_size: 32
+  num_workers: 4
+
+# PCA analysis
+pca:
+  n_components: 3
+
+# Cosine similarity
+cosine_similarity:
+  patch_grid: 16
