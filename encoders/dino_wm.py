@@ -104,3 +104,24 @@ def extract_predicted_features(components, current_frames, actions, device="cuda
         z_t1_predicted = transition_model(z_t, actions)
 
     return z_t1_predicted
+
+
+def extract_ground_truth_hidden_states(components, images, device="cuda"):
+    """Extract all hidden states from DINO-WM's frozen DINOv2 for multi-layer fusion.
+
+    Returns:
+        Tuple of (B, 257, 768) tensors (includes CLS token).
+        For DINOv2 ViT-B: 13 states (1 embedding + 12 layers).
+    """
+    encoder = components["encoder"]
+    processor = components["processor"]
+
+    if not isinstance(images, list):
+        images = [images]
+
+    inputs = processor(images=images, return_tensors="pt").to(device)
+
+    with torch.no_grad():
+        outputs = encoder(**inputs, return_dict=True, output_hidden_states=True)
+
+    return outputs.hidden_states

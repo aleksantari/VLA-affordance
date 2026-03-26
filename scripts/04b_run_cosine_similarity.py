@@ -1,4 +1,8 @@
-"""Step 5: Part correspondence experiments via cosine similarity."""
+"""Step 4b (deprioritized): Part correspondence via cosine similarity.
+
+Deprioritized per AXIS1_PROBING_METHODS_SUPPLEMENT.md — redundant with PCA
+for our thesis. Kept for potential stretch-goal analysis.
+"""
 
 import sys
 import os

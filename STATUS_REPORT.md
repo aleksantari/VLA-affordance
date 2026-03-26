@@ -6,41 +6,49 @@
 ## What's Done
 
 ### Project Structure (Complete)
-All 20+ source files written and ready:
 
 ```
 affordance/
 ├── configs/probing_config.yaml
 ├── data/
+│   ├── README.md                    # Dataset download + reproducibility guide
 │   ├── download_umd.py
 │   └── umd_dataset.py
+├── docs/
+│   └── siglip_progression.md        # Research: SigLIP through PaliGemma/pi0/pi0.5
 ├── encoders/
-│   ├── raw_siglip.py
-│   ├── pi0_siglip.py
-│   ├── pi05_siglip.py
-│   ├── dinov2.py
-│   ├── dino_wm.py
-│   └── feature_extractor.py
+│   ├── multilayer.py                # Multi-layer feature fusion (Zhang et al.)
+│   ├── raw_siglip.py                # google/siglip-so400m-patch14-224 (224-native)
+│   ├── paligemma_siglip.py          # google/paligemma-3b-pt-224 (NEW)
+│   ├── pi0_siglip.py                # lerobot/pi0_base
+│   ├── pi05_siglip.py               # lerobot/pi05_base
+│   ├── dinov2.py                    # facebook/dinov2-base
+│   ├── dino_wm.py                   # DINO-WM (deferred)
+│   └── feature_extractor.py         # Unified registry + extraction
 ├── probing/
-│   ├── linear_probe.py
-│   ├── pca_analysis.py
-│   ├── cosine_similarity.py
+│   ├── linear_probe.py              # Method 1: linear probing (mIoU)
+│   ├── pca_analysis.py              # Method 2: PCA subspace projection
+│   ├── depth_normal.py              # Method 3: depth/normal augmentation (NEW)
+│   ├── cosine_similarity.py         # Deprioritized
 │   └── weight_divergence.py
 ├── evaluation/
 │   ├── metrics.py
 │   └── visualization.py
 ├── scripts/
-│   ├── 01_setup_encoders.py
-│   ├── 02_extract_features.py
-│   ├── 03_run_linear_probing.py
-│   ├── 04_run_pca_analysis.py
-│   ├── 05_run_cosine_similarity.py
-│   ├── 06_weight_divergence.py
-│   └── 07_generate_report.py
+│   ├── 01_setup_encoders.py         # Verify encoders + multi-layer shapes
+│   ├── 02_extract_features.py       # Cache multi-layer fused features (float16)
+│   ├── 03_run_linear_probing.py     # Train linear probes
+│   ├── 04_run_pca_analysis.py       # PCA visualization
+│   ├── 04b_run_cosine_similarity.py # Deprioritized
+│   ├── 05_extract_depth_normal.py   # Cache DPT depth + normals (NEW)
+│   ├── 06_run_depth_augmentation.py # Depth augmentation experiment (NEW)
+│   ├── 07_weight_divergence.py      # Weight comparison (now includes PaliGemma)
+│   └── 08_generate_report.py        # Final report
 ├── results/{figures,tables,cached_features}/
 ├── requirements.txt
 ├── setup.py
-└── AXIS1_IMPLEMENTATION_GUIDE.pdf
+├── AXIS1_IMPLEMENTATION_GUIDE.pdf
+└── AXIS1_PROBING_METHODS_SUPPLEMENT.md
 ```
 
 ### Conda Environment (Complete)
@@ -50,15 +58,25 @@ affordance/
 - **Other deps:** transformers (4.53.3 custom fork), lerobot 0.4.4, scikit-learn, numpy, scipy, matplotlib, seaborn, pillow, opencv-python, wandb, tqdm
 - **Note:** pi0/pi0.5 require a custom transformers fork (`fix/lerobot_openpi` branch) for the SigLIP check module
 
-### Models Downloaded (4 of 5)
+### Encoders (5 of 6 ready)
 
-| Model | Status | Notes |
-|-------|--------|-------|
-| Raw SigLIP (google/siglip-so400m-patch14-384) | **Downloaded** | 428.2M params |
-| DINOv2 (facebook/dinov2-base) | **Downloaded** | 86.6M params |
-| pi0 SigLIP (lerobot/pi0_base) | **Ready** | 412.4M vision tower params, loads via lerobot 0.4.4 |
-| pi0.5 SigLIP (lerobot/pi05_base) | **Ready** | 412.4M vision tower params, loads via lerobot 0.4.4 |
-| DINO-WM | **Not started** | Needs repo clone + checkpoint |
+| # | Encoder | Source | Status | Fused dim |
+|---|---------|--------|--------|-----------|
+| 1 | Raw SigLIP | google/siglip-so400m-patch14-224 | **Ready** | 4608 |
+| 2 | PaliGemma SigLIP | google/paligemma-3b-pt-224 | **Needs HF access** | 4608 |
+| 3 | pi0 SigLIP | lerobot/pi0_base | **Ready** | 4608 |
+| 4 | pi0.5 SigLIP | lerobot/pi05_base | **Ready** | 4608 |
+| 5 | DINOv2 | facebook/dinov2-base | **Ready** | 3072 |
+| 6 | DINO-WM | mazpie/dino-wm | **Deferred** | 3072 |
+
+### Key Changes (2026-03-26)
+
+1. **Multi-layer feature fusion** — All encoders now extract from 4 equally-spaced layers and concatenate. Feature dims are 4x larger (4608 for SigLIP, 3072 for DINOv2).
+2. **Raw SigLIP switched to 224-native** — Using `google/siglip-so400m-patch14-224` instead of the 384 model. Eliminates position embedding interpolation artifacts.
+3. **PaliGemma added as encoder** — Intermediate probing target between raw SigLIP and pi0. PaliGemma retrains SigLIP on 1B multimodal examples (unfrozen). Requires HuggingFace gated access.
+4. **Depth/normal augmentation added** — New Method 3 using DPT for monocular depth + finite-difference normals. Measures how much external geometry helps each encoder.
+5. **Cosine similarity deprioritized** — Redundant with PCA per supplement. Kept as stretch goal.
+6. **Scripts renumbered** — Now 8 steps (was 7).
 
 ### UMD Dataset (Downloaded)
 - **UMD+GT version** — 6 affordances (grasp, cut, scoop, contain, pound, wrap-grasp) + background
@@ -66,61 +84,27 @@ affordance/
 
 ---
 
-## Resolved Issues
-
-### Issue 1: lerobot pi0/pi0.5 Checkpoint Loading (RESOLVED 2026-03-26)
-
-**Solution:** Installed lerobot 0.4.4 from PyPI + custom transformers fork (`fix/lerobot_openpi` branch).
-```bash
-pip install lerobot==0.4.4
-pip install "transformers @ git+https://github.com/huggingface/transformers.git@fix/lerobot_openpi"
-```
-- Import path: `lerobot.policies.pi0.modeling_pi0.PI0Policy` (pi0), `lerobot.policies.pi05.modeling_pi05.PI05Policy` (pi0.5)
-- Vision tower path: `policy.model.paligemma_with_expert.paligemma.vision_tower` (SiglipVisionModel, 412.4M params)
-- Known harmless warning: missing `embed_tokens.weight` key (language model embedding, not needed for vision)
-
----
-
 ## Active Issues
 
-### Issue 2: DINO-WM Setup Not Started
+### Issue 1: PaliGemma HuggingFace Access
+`google/paligemma-3b-pt-224` is a gated model. Need to request access on HuggingFace and accept the license.
 
-Need to:
-1. Clone https://github.com/mazpie/dino-wm
-2. Find and download a trained checkpoint (PushT or similar)
-3. Adapt the transition model loading code
+### Issue 2: Affordance Label Mapping Mismatch
+The UMD+GT dataset has 6 affordances at indices 1-6 (wrap-grasp at index 6). The original code defined "support" at index 6 and "wrap-grasp" at index 7 (8 classes). Config updated to 7 classes (6 affordances + background), but `data/umd_dataset.py` category mapping needs verification against actual label files.
 
-### Issue 3: UMD Dataset Not Downloaded
-
-The original UMD hosting (umiacs.umd.edu) returns 404. The dataset is available via Google Drive from the [AffKpNet repo](https://github.com/ivalab/AffKpNet).
-
-**Manual download instructions:**
-```bash
-use_conda affordance
-# Install gdown if needed
-pip install gdown
-
-# Download main dataset (7.46 GB)
-gdown "1lWJDKyHILxOtMZ5nctxvY86igH5tFQoS" -O data/umd_dataset/UMD_GT.zip
-
-# Download masks (18 MB)
-gdown "1bB94rvWacpXF-Uo21bGEH8Ti2egSbU63" -O data/umd_dataset/UMD_GT_MASK.zip
-
-# Download split files
-gdown "1FGBrBhdbtEwcVWdJxMTSi1oaaq-RrE1g" -O data/umd_dataset/umd_gt_category_split.txt
-
-# Extract
-cd data/umd_dataset && unzip UMD_GT.zip && unzip UMD_GT_MASK.zip
-```
-
-**Note:** This is the UMD+GT version with **6 affordances** (grasp, cut, scoop, contain, pound, wrap-grasp). The original UMD has 7 (includes "support"), but that hosting is dead. Config/code may need updating from 7→6 affordances + background.
+### Issue 3: DINO-WM Setup (Deferred)
+Need to clone repo, download checkpoint, adapt transition model loading.
 
 ---
 
 ## Next Steps (In Priority Order)
 
-1. **Download UMD dataset** — see manual instructions above
-2. **Clone DINO-WM repo** and set up checkpoint
-3. **Verify all 5 encoders** produce correct output shapes via `scripts/01_setup_encoders.py`
-4. **Extract and cache features** via `scripts/02_extract_features.py`
-5. Probing experiments (no training yet per user instruction)
+1. **Request PaliGemma HuggingFace access** — needed for the progression experiment
+2. **Fix affordance label mapping** — verify actual label values in UMD+GT dataset, update `umd_dataset.py`
+3. **Run `01_setup_encoders.py`** — verify all encoders produce correct multi-layer shapes
+4. **Extract and cache features** via `02_extract_features.py`
+5. **Run linear probing** (Method 1) — validate DINOv2 reproduces ~0.670 mIoU
+6. **Extract depth/normal features** via `05_extract_depth_normal.py`
+7. **Run depth augmentation** (Method 3) — validate DINOv2 delta ~0
+8. **Run PCA analysis** (Method 2) — generate visualizations
+9. **Run weight divergence** — confirm SigLIP weights differ across stages

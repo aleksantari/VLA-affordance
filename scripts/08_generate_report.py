@@ -1,4 +1,4 @@
-"""Step 7: Compile all results into figures & tables for the report."""
+"""Step 8: Compile all results into figures & tables for the report."""
 
 import sys
 import os
@@ -56,35 +56,44 @@ def generate_report(tables_dir="./results/tables", figures_dir="./results/figure
             print(f"    Weights identical: {identical}")
             print(f"    Mean relative change: {mean_change}")
 
-    # 3. Cosine similarity
-    print("\n3. COSINE SIMILARITY (Part Correspondence)")
-    print("-" * 40)
-    cs_results = load_json(tables_dir / "cosine_similarity_results.json")
-    for name, res in cs_results.items():
-        hit_k = res.get("hit_at_k", "N/A")
-        ratio = res.get("similarity_ratio", "N/A")
-        print(f"  {name:20s}: Hit@K={hit_k}, Ratio={ratio}")
+    # 3. Depth/normal augmentation
+    print("\n3. DEPTH/NORMAL AUGMENTATION (mIoU delta)")
+    print("-" * 60)
+    da_results = load_json(tables_dir / "depth_augmentation_results.json")
+    if da_results:
+        print(f"  {'Encoder':25s} {'Visual':>8s} {'+ Depth':>8s} {'Delta':>8s}")
+        print(f"  {'-'*55}")
+        for name, res in da_results.items():
+            v = f"{res['visual_only_mIoU']:.4f}" if res.get("visual_only_mIoU") else "  N/A "
+            d = f"{res['delta']:+.4f}" if res.get("delta") is not None else "  N/A "
+            print(f"  {name:25s} {v:>8s} {res['mIoU']:8.4f} {d:>8s}")
 
     # 4. Interpretation
     print("\n4. INTERPRETATION GUIDE")
     print("-" * 40)
     if miou_dict:
         raw_miou = miou_dict.get("raw_siglip", 0)
+        pali_miou = miou_dict.get("paligemma_siglip", 0)
         pi0_miou = miou_dict.get("pi0_siglip", 0)
+        pi05_miou = miou_dict.get("pi05_siglip", 0)
         dinov2_miou = miou_dict.get("dinov2", 0)
 
-        gap_pi0_raw = pi0_miou - raw_miou
-        gap_pi0_dinov2 = dinov2_miou - pi0_miou
+        print("  SigLIP progression:")
+        print(f"    Raw SigLIP:       {raw_miou:.4f}")
+        print(f"    PaliGemma SigLIP: {pali_miou:.4f} ({pali_miou - raw_miou:+.4f} from raw)")
+        print(f"    pi0 SigLIP:       {pi0_miou:.4f} ({pi0_miou - pali_miou:+.4f} from PaliGemma)")
+        print(f"    pi0.5 SigLIP:     {pi05_miou:.4f} ({pi05_miou - pali_miou:+.4f} from PaliGemma)")
+        print(f"    DINOv2 ceiling:   {dinov2_miou:.4f}")
 
-        print(f"  pi0 improvement over raw SigLIP: {gap_pi0_raw:+.4f}")
-        print(f"  Gap between pi0 SigLIP and DINOv2: {gap_pi0_dinov2:.4f}")
+        gap_pali_raw = pali_miou - raw_miou
+        gap_pi0_pali = pi0_miou - pali_miou
 
-        if gap_pi0_raw < 0.05:
-            print("  -> VLA fine-tuning doesn't fix geometric limitations")
-        elif gap_pi0_dinov2 > 0.15:
-            print("  -> Partial recovery, but gap is structural")
-        elif gap_pi0_dinov2 < 0.05:
-            print("  -> Near full recovery! Training > architecture")
+        if gap_pali_raw > 0.05:
+            print("  -> Multimodal VL training improves geometric features")
+        if gap_pi0_pali < -0.03:
+            print("  -> Robot training damages geometric features (pi0)")
+        elif gap_pi0_pali > 0.03:
+            print("  -> Robot training further improves geometric features")
 
     print("\n" + "=" * 60)
     print("Report generation complete.")

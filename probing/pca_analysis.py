@@ -19,7 +19,7 @@ def extract_patch_features(encoder, image):
 
     Returns: (B, C, H_grid, W_grid) tensor of patch features arranged spatially.
     """
-    return encoder.extract_spatial(image)
+    return encoder.extract_multilayer_spatial(image)
 
 
 def pca_subspace_analysis(encoder, reference_image, test_images, n_components=3):

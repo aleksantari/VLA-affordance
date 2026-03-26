@@ -41,3 +41,21 @@ def extract_features(model, processor, images, device="cuda"):
         patch_tokens = outputs.last_hidden_state  # (B, 256, 1152)
 
     return patch_tokens
+
+
+def extract_hidden_states(model, processor, images, device="cuda"):
+    """Extract all hidden states for multi-layer fusion.
+
+    Returns:
+        Tuple of (B, 256, 1152) tensors, one per layer + embedding layer.
+        For SigLIP So400m: 28 states (1 embedding + 27 layers).
+    """
+    if not isinstance(images, list):
+        images = [images]
+
+    inputs = processor(images=images, return_tensors="pt").to(device)
+
+    with torch.no_grad():
+        outputs = model(**inputs, return_dict=True, output_hidden_states=True)
+
+    return outputs.hidden_states

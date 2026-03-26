@@ -1,34 +1,38 @@
-"""Extract SigLIP vision encoder from pi0 base checkpoint."""
+"""Extract SigLIP vision encoder from PaliGemma-3B pretrained checkpoint.
+
+PaliGemma jointly trains SigLIP on 1B multimodal examples (captioning, VQA,
+detection, segmentation) with a slow LR warm-up. SigLIP is fully unfrozen.
+This gives us the intermediate point between raw SigLIP and pi0/pi0.5.
+
+Requires HuggingFace gated access to google/paligemma-3b-pt-224.
+"""
 
 import torch
 
 
-def load_pi0_siglip(model_name="lerobot/pi0_base", device="cuda"):
-    """Load SigLIP encoder weights from the pi0 base model.
+def load_paligemma_siglip(model_name="google/paligemma-3b-pt-224", device="cuda"):
+    """Load SigLIP vision tower from PaliGemma-3B pretrained at 224x224.
 
-    The pi0 model uses PaliGemma internally. The vision encoder is at:
-    model.paligemma_with_expert.paligemma.vision_tower (SiglipVisionModel)
-
-    Uses the LeRobot HuggingFace PyTorch port (no JAX dependency).
+    Loads the full PaliGemma model, extracts the vision tower,
+    and frees the LLM + projector to save memory.
     """
-    from lerobot.policies.pi0.modeling_pi0 import PI0Policy
+    from transformers import PaliGemmaForConditionalGeneration, SiglipImageProcessor
 
-    policy = PI0Policy.from_pretrained(model_name)
-
-    # Extract the vision tower from the PaliGemma backbone
-    vision_tower = policy.model.paligemma_with_expert.paligemma.vision_tower
+    model = PaliGemmaForConditionalGeneration.from_pretrained(model_name)
+    vision_tower = model.vision_tower
     vision_tower = vision_tower.to(device).eval()
 
-    # Get the processor for image preprocessing
-    from transformers import SiglipImageProcessor
-    processor = SiglipImageProcessor.from_pretrained("google/siglip-so400m-patch14-384")
-    processor.size = {"height": 224, "width": 224}
+    processor = SiglipImageProcessor.from_pretrained(model_name)
+
+    # Free LLM and projector
+    del model
+    torch.cuda.empty_cache()
 
     return vision_tower, processor
 
 
 def extract_features(model, processor, images, device="cuda"):
-    """Extract patch-level features from pi0's SigLIP encoder.
+    """Extract patch-level features from PaliGemma's SigLIP (final layer only).
 
     Returns:
         Patch tokens tensor of shape (B, 256, 1152)

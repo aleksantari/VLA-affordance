@@ -12,16 +12,33 @@ paths:
 # Encoder configurations
 encoders:
   raw_siglip:
-    model_name: google/siglip-so400m-patch14-384
+    model_name: google/siglip-so400m-patch14-224
     encoder_type: siglip
     feature_dim: 1152
+    fused_feature_dim: 4608  # 1152 * 4 layers
+    num_layers: 27
+    probe_layers: [6, 13, 20, 26]
     patch_size: 14
     num_patches: 256  # 16x16
+
+  paligemma_siglip:
+    model_name: google/paligemma-3b-pt-224
+    encoder_type: siglip
+    feature_dim: 1152
+    fused_feature_dim: 4608
+    num_layers: 27
+    probe_layers: [6, 13, 20, 26]
+    patch_size: 14
+    num_patches: 256
+    note: Requires HuggingFace gated access
 
   pi0_siglip:
     source: lerobot/pi0_base
     encoder_type: siglip
     feature_dim: 1152
+    fused_feature_dim: 4608
+    num_layers: 27
+    probe_layers: [6, 13, 20, 26]
     patch_size: 14
     num_patches: 256
 
@@ -29,6 +46,9 @@ encoders:
     source: lerobot/pi05_base
     encoder_type: siglip
     feature_dim: 1152
+    fused_feature_dim: 4608
+    num_layers: 27
+    probe_layers: [6, 13, 20, 26]
     patch_size: 14
     num_patches: 256
 
@@ -36,24 +56,36 @@ encoders:
     model_name: facebook/dinov2-base
     encoder_type: dinov2
     feature_dim: 768
+    fused_feature_dim: 3072  # 768 * 4 layers
+    num_layers: 12
+    probe_layers: [2, 5, 8, 11]
     patch_size: 14
     num_patches: 256
 
   dino_wm:
     repo: https://github.com/mazpie/dino-wm
-    encoder_type: dino_wm
+    encoder_type: dinov2
     feature_dim: 768
+    fused_feature_dim: 3072
+    num_layers: 12
+    probe_layers: [2, 5, 8, 11]
     patch_size: 14
     num_patches: 256
+    status: deferred
 
 # Image processing
 image:
   resolution: 224
   patch_grid: 16  # 224 / 14
 
+# Multi-layer feature fusion (Zhang et al. / Probing3D protocol)
+multilayer:
+  num_probes: 4
+  cache_dtype: float16  # Fused features are 4x larger; cache in half precision
+
 # UMD dataset
 umd:
-  num_classes: 8  # 7 affordances + background
+  num_classes: 7  # 6 affordances + background (UMD+GT dataset)
   categories:
     - background
     - grasp
@@ -61,7 +93,6 @@ umd:
     - scoop
     - contain
     - pound
-    - support
     - wrap-grasp
 
 # Linear probing
@@ -76,6 +107,8 @@ linear_probe:
 pca:
   n_components: 3
 
-# Cosine similarity
-cosine_similarity:
-  patch_grid: 16
+# Depth/normal augmentation
+depth_augmentation:
+  method: dpt
+  dpt_model: Intel/dpt-large
+  cache_dir: ./results/cached_features/depth_normal

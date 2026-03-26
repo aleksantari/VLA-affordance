@@ -1,4 +1,8 @@
-"""Step 6: Compare raw vs fine-tuned SigLIP weights."""
+"""Step 7: Compare raw vs fine-tuned SigLIP weights.
+
+Now also compares against PaliGemma SigLIP to see the progression:
+raw SigLIP → PaliGemma → pi0 → pi0.5.
+"""
 
 import sys
 import os
@@ -27,6 +31,7 @@ def run_weight_divergence(device="cuda", figures_dir="./results/figures",
     raw_model = raw_extractor.get_raw_model()
 
     comparisons = {
+        "paligemma_siglip": "PaliGemma SigLIP",
         "pi0_siglip": "pi0 SigLIP",
         "pi05_siglip": "pi0.5 SigLIP",
     }

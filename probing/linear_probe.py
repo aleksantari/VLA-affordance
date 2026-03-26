@@ -72,7 +72,7 @@ def train_probe(encoder, dataset, feature_dim, num_classes=8, epochs=50,
 
             # Extract features (frozen encoder, no gradients)
             with torch.no_grad():
-                features = encoder.extract_spatial(images)  # (B, C, 16, 16)
+                features = encoder.extract_multilayer_spatial(images)  # (B, C_fused, 16, 16)
 
             # Forward through probe
             logits = probe(features)  # (B, num_classes, 224, 224)
@@ -113,7 +113,7 @@ def evaluate_probe(encoder, probe, dataset, batch_size=32, device="cuda",
         for images, masks in tqdm(dataloader, desc="Evaluating"):
             masks = masks.to(device)
 
-            features = encoder.extract_spatial(images)
+            features = encoder.extract_multilayer_spatial(images)
             logits = probe(features)
             preds = logits.argmax(dim=1)  # (B, H, W)
 

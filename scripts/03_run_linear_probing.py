@@ -13,7 +13,10 @@ from data.umd_dataset import UMDAffordanceDataset
 from probing.linear_probe import train_probe, evaluate_probe
 
 
-ENCODER_NAMES = ["raw_siglip", "pi0_siglip", "pi05_siglip", "dinov2", "dino_wm"]
+ENCODER_NAMES = [
+    "raw_siglip", "paligemma_siglip", "pi0_siglip", "pi05_siglip",
+    "dinov2", "dino_wm",
+]
 
 
 def run_linear_probing(encoder_name, train_dataset, test_dataset, device="cuda",
@@ -29,7 +32,7 @@ def run_linear_probing(encoder_name, train_dataset, test_dataset, device="cuda",
         print(f"  ERROR: {e}")
         return None
 
-    feature_dim = ENCODER_REGISTRY[encoder_name]["feature_dim"]
+    feature_dim = ENCODER_REGISTRY[encoder_name]["fused_feature_dim"]
 
     # Train
     probe = train_probe(

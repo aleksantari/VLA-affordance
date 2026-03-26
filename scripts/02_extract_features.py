@@ -18,32 +18,38 @@ from encoders.feature_extractor import UnifiedFeatureExtractor
 from data.umd_dataset import UMDAffordanceDataset
 
 
-ENCODER_NAMES = ["raw_siglip", "pi0_siglip", "pi05_siglip", "dinov2", "dino_wm"]
+ENCODER_NAMES = [
+    "raw_siglip", "paligemma_siglip", "pi0_siglip", "pi05_siglip",
+    "dinov2", "dino_wm",
+]
 
 
 def extract_and_cache(encoder_name, dataset, cache_dir, device="cuda", batch_size=16):
-    """Extract features for an encoder and save to disk.
+    """Extract multi-layer fused features for an encoder and save to disk.
 
     Saves:
-        - features.npy: (N, 256, feature_dim) array
+        - features_multilayer.npy: (N, 256, fused_feature_dim) array in float16
         - masks.npy: (N, 224, 224) array of integer labels
     """
     cache_path = Path(cache_dir) / encoder_name
     cache_path.mkdir(parents=True, exist_ok=True)
 
-    features_path = cache_path / "features.npy"
+    features_path = cache_path / "features_multilayer.npy"
     masks_path = cache_path / "masks.npy"
 
     if features_path.exists() and masks_path.exists():
         print(f"  Cache exists for {encoder_name}, skipping.")
         return
 
-    print(f"\nExtracting features for: {encoder_name}")
+    print(f"\nExtracting multi-layer fused features for: {encoder_name}")
     try:
         extractor = UnifiedFeatureExtractor(encoder_name, device=device)
     except Exception as e:
         print(f"  ERROR loading {encoder_name}: {e}")
         return
+
+    print(f"  Fused feature dim: {extractor.fused_feature_dim}")
+    print(f"  Probe layers: {extractor.get_probe_layers()}")
 
     dataloader = DataLoader(
         dataset, batch_size=batch_size, shuffle=False,
@@ -55,8 +61,9 @@ def extract_and_cache(encoder_name, dataset, cache_dir, device="cuda", batch_siz
 
     for images, masks in tqdm(dataloader, desc=f"  {encoder_name}"):
         with torch.no_grad():
-            features = extractor.extract(images)  # (B, 256, C)
-            all_features.append(features.cpu().numpy())
+            features = extractor.extract_multilayer(images)  # (B, 256, C_fused)
+            # Save as float16 to halve disk usage (fused features are 4x larger)
+            all_features.append(features.cpu().half().numpy())
             all_masks.append(masks.numpy())
 
     all_features = np.concatenate(all_features, axis=0)
@@ -65,7 +72,7 @@ def extract_and_cache(encoder_name, dataset, cache_dir, device="cuda", batch_siz
     np.save(str(features_path), all_features)
     np.save(str(masks_path), all_masks)
 
-    print(f"  Saved {encoder_name}: features {all_features.shape}, masks {all_masks.shape}")
+    print(f"  Saved {encoder_name}: features {all_features.shape} ({all_features.dtype}), masks {all_masks.shape}")
 
     del extractor
     torch.cuda.empty_cache()

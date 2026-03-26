@@ -43,3 +43,22 @@ def extract_features(model, processor, images, device="cuda"):
         patch_tokens = outputs.last_hidden_state[:, 1:, :]  # (B, 256, 768)
 
     return patch_tokens
+
+
+def extract_hidden_states(model, processor, images, device="cuda"):
+    """Extract all hidden states for multi-layer fusion.
+
+    Returns:
+        Tuple of (B, 257, 768) tensors (includes CLS token), one per layer
+        + embedding layer. CLS token handling is done by fuse_hidden_states().
+        For DINOv2 ViT-B: 13 states (1 embedding + 12 layers).
+    """
+    if not isinstance(images, list):
+        images = [images]
+
+    inputs = processor(images=images, return_tensors="pt").to(device)
+
+    with torch.no_grad():
+        outputs = model(**inputs, return_dict=True, output_hidden_states=True)
+
+    return outputs.hidden_states

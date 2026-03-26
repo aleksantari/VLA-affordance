@@ -14,7 +14,10 @@ from probing.pca_analysis import pca_subspace_analysis, quantify_part_separation
 from evaluation.visualization import plot_pca_colormap, plot_pca_comparison
 
 
-ENCODER_NAMES = ["raw_siglip", "pi0_siglip", "pi05_siglip", "dinov2", "dino_wm"]
+ENCODER_NAMES = [
+    "raw_siglip", "paligemma_siglip", "pi0_siglip", "pi05_siglip",
+    "dinov2", "dino_wm",
+]
 
 
 def run_pca_analysis(reference_image, test_images, device="cuda",
