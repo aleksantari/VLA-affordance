@@ -10,7 +10,7 @@ def load_pi05_siglip(model_name="lerobot/pi05_base", device="cuda"):
     discrete subtask prediction. The hypothesis is that pi0.5's stronger
     language-grounded spatial reasoning demands may push the encoder harder.
     """
-    from lerobot.policies.pi0.modeling_pi0 import PI0Policy as PI05Policy
+    from lerobot.policies.pi05.modeling_pi05 import PI05Policy
 
     policy = PI05Policy.from_pretrained(model_name)
 
