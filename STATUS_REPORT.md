@@ -60,8 +60,9 @@ affordance/
 | pi0.5 SigLIP (lerobot/pi05_base) | **Ready** | 412.4M vision tower params, loads via lerobot 0.4.4 |
 | DINO-WM | **Not started** | Needs repo clone + checkpoint |
 
-### UMD Dataset
-- **Not yet downloaded** — download script written but not executed
+### UMD Dataset (Downloaded)
+- **UMD+GT version** — 6 affordances (grasp, cut, scoop, contain, pound, wrap-grasp) + background
+- Source: Google Drive via [AffKpNet repo](https://github.com/ivalab/AffKpNet)
 
 ---
 
@@ -91,13 +92,34 @@ Need to:
 
 ### Issue 3: UMD Dataset Not Downloaded
 
-The download script is written but the UMD dataset URL structure needs verification. The dataset may have changed hosting.
+The original UMD hosting (umiacs.umd.edu) returns 404. The dataset is available via Google Drive from the [AffKpNet repo](https://github.com/ivalab/AffKpNet).
+
+**Manual download instructions:**
+```bash
+use_conda affordance
+# Install gdown if needed
+pip install gdown
+
+# Download main dataset (7.46 GB)
+gdown "1lWJDKyHILxOtMZ5nctxvY86igH5tFQoS" -O data/umd_dataset/UMD_GT.zip
+
+# Download masks (18 MB)
+gdown "1bB94rvWacpXF-Uo21bGEH8Ti2egSbU63" -O data/umd_dataset/UMD_GT_MASK.zip
+
+# Download split files
+gdown "1FGBrBhdbtEwcVWdJxMTSi1oaaq-RrE1g" -O data/umd_dataset/umd_gt_category_split.txt
+
+# Extract
+cd data/umd_dataset && unzip UMD_GT.zip && unzip UMD_GT_MASK.zip
+```
+
+**Note:** This is the UMD+GT version with **6 affordances** (grasp, cut, scoop, contain, pound, wrap-grasp). The original UMD has 7 (includes "support"), but that hosting is dead. Config/code may need updating from 7→6 affordances + background.
 
 ---
 
 ## Next Steps (In Priority Order)
 
-1. **Download UMD dataset** — run `data/download_umd.py`
+1. **Download UMD dataset** — see manual instructions above
 2. **Clone DINO-WM repo** and set up checkpoint
 3. **Verify all 5 encoders** produce correct output shapes via `scripts/01_setup_encoders.py`
 4. **Extract and cache features** via `scripts/02_extract_features.py`
