@@ -42,6 +42,7 @@ def _load_split_file(root_dir):
     # Try multiple possible locations for the split file
     candidates = [
         Path(root_dir) / "category_split.txt",
+        Path(root_dir) / "part-affordance-dataset" / "category_split.txt",
         Path(root_dir) / "umd_gt_category_split.txt",
         Path(root_dir).parent / "category_split.txt",
     ]
@@ -62,8 +63,8 @@ def _load_split_file(root_dir):
                 continue
             parts = line.split()
             if len(parts) >= 2:
-                obj_name = parts[0]
-                split_id = int(parts[1])
+                split_id = int(parts[0])
+                obj_name = parts[1]
                 split_assignments[obj_name] = split_id
 
     return split_assignments
@@ -115,10 +116,12 @@ class UMDAffordanceDataset(Dataset):
     def _get_search_dirs(self):
         """Get directories to search for samples."""
         dirs = []
-        # Original UMD: tools/ subdirectory
-        tools_dir = self.root_dir / "tools"
-        if tools_dir.exists():
-            dirs.append(tools_dir)
+        # Original UMD: tools/ subdirectory (may be nested under part-affordance-dataset/)
+        for subdir in [self.root_dir, self.root_dir / "part-affordance-dataset"]:
+            tools_dir = subdir / "tools"
+            if tools_dir.exists():
+                dirs.append(tools_dir)
+                break
         # Flat structure (UMD+GT or already extracted)
         dirs.append(self.root_dir)
         return dirs

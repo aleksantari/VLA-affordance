@@ -19,7 +19,7 @@ def load_dinov2(model_name="facebook/dinov2-base", device="cuda"):
     model = model.to(device).eval()
 
     processor = AutoImageProcessor.from_pretrained(model_name)
-    processor.size = {"height": 224, "width": 224, "shortest_edge": 224}
+    processor.size = {"height": 224, "width": 224}
 
     return model, processor
 

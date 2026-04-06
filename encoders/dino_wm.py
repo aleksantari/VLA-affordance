@@ -31,7 +31,7 @@ def load_dino_wm(repo_path="./third_party/dino-wm", checkpoint_path=None, device
     encoder = encoder.to(device).eval()
 
     processor = AutoImageProcessor.from_pretrained("facebook/dinov2-base")
-    processor.size = {"height": 224, "width": 224, "shortest_edge": 224}
+    processor.size = {"height": 224, "width": 224}
 
     components = {
         "encoder": encoder,
