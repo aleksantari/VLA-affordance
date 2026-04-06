@@ -25,6 +25,7 @@ models/
 
 # UMD dataset (large, downloaded via script)
 data/umd_dataset/
+data/umd_dataset_old/
 
 # DINO-WM cloned repo
 dino-wm/

@@ -176,88 +176,188 @@ A single mIoU number per encoder that directly answers "how much geometric affor
 ```python
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 class AffordanceLinearProbe(nn.Module):
     """
-    Linear probe following Zhang et al.'s protocol.
-    BatchNorm + 1x1 Conv, trained on frozen features.
+    Linear probe following Zhang et al. / Probe3D protocol.
+    Upsample 4x → BatchNorm → 1x1 Conv → resize to target.
     """
-    def __init__(self, feature_dim: int, num_classes: int = 8):
+    def __init__(self, feature_dim: int, num_classes: int = 8, image_size: int = 224):
         """
         Args:
             feature_dim: fused feature dimension (e.g. 4608 for SigLIP, 3072 for DINOv2-B)
             num_classes: 7 affordance categories + 1 background = 8
+            image_size: target resolution for loss computation
         """
         super().__init__()
         self.bn = nn.BatchNorm2d(feature_dim)
         self.conv = nn.Conv2d(feature_dim, num_classes, kernel_size=1)
+        self.image_size = image_size
     
-    def forward(self, features: torch.Tensor, target_size: tuple = (224, 224)) -> torch.Tensor:
+    def forward(self, features: torch.Tensor) -> torch.Tensor:
         """
         Args:
             features: (B, C_fused, H_grid, W_grid) e.g. (B, 4608, 16, 16)
-            target_size: spatial resolution to upsample to for pixel-wise loss
         Returns:
-            logits: (B, num_classes, target_H, target_W)
+            logits: (B, num_classes, image_size, image_size)
         """
-        x = self.bn(features)
+        # Step 1: Upsample features 4x (16x16 → 64x64), matching Probe3D
+        x = F.interpolate(features, scale_factor=4, mode='bilinear', align_corners=True)
+        # Step 2: BN + 1x1 Conv (Zhang et al.'s addition to Probe3D)
+        x = self.bn(x)
         x = self.conv(x)
-        x = nn.functional.interpolate(
-            x, size=target_size, mode='bilinear', align_corners=False
-        )
+        # Step 3: Final resize to target resolution
+        if x.shape[-1] != self.image_size:
+            x = F.interpolate(x, size=(self.image_size, self.image_size),
+                              mode='bilinear', align_corners=True)
         return x
 ```
 
 ### Training configuration
 
 ```python
-# Hyperparameters — match Zhang et al. / Probing3D protocol
-optimizer = torch.optim.Adam(probe.parameters(), lr=1e-3)
+import math
+
+# Hyperparameters — match Probe3D protocol
+optimizer = torch.optim.AdamW(probe.parameters(), lr=1e-3, weight_decay=0.05)
 loss_fn = nn.CrossEntropyLoss(ignore_index=255)  # 255 = unlabeled pixels if any
 num_epochs = 50
-batch_size = 32  # adjust for GPU memory with fused features
+batch_size = 32
+
+# Cosine LR schedule with linear warmup (10% of total steps)
+total_steps = num_epochs * len(dataloader)
+warmup_steps = int(0.1 * total_steps)
+
+def lr_lambda(step):
+    if step < warmup_steps:
+        return step / max(warmup_steps, 1)
+    progress = (step - warmup_steps) / max(total_steps - warmup_steps, 1)
+    return 0.5 * (1 + math.cos(math.pi * progress))
+
+scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda)
+# Call scheduler.step() after each optimizer.step()
 ```
 
 ### Evaluation
 
+mIoU is computed over **7 affordance classes only** (excluding background class 0), matching Zhang et al.'s "seven affordance categories." Background IoU is still computed and stored for reference.
+
 ```python
-def compute_miou(predictions: torch.Tensor, targets: torch.Tensor, num_classes: int = 8) -> float:
+def compute_miou(confusion_matrix, num_classes=8, ignore_classes=None):
     """
-    Compute mean Intersection over Union.
+    Compute mean Intersection over Union from confusion matrix.
     
     Args:
-        predictions: (N, H, W) integer class predictions
-        targets: (N, H, W) integer ground truth labels
-        num_classes: number of classes including background
+        confusion_matrix: (num_classes, num_classes) — confusion[true, pred] = count
+        num_classes: total classes including background
+        ignore_classes: classes to exclude from mIoU (default: [0] = background)
     Returns:
-        mIoU: mean IoU across all classes present in ground truth
+        dict with mIoU (7-class), mIoU_all (8-class), per_class_iou
     """
-    ious = []
-    for cls in range(num_classes):
-        pred_mask = (predictions == cls)
-        gt_mask = (targets == cls)
-        intersection = (pred_mask & gt_mask).sum().float()
-        union = (pred_mask | gt_mask).sum().float()
-        if union > 0:
-            ious.append((intersection / union).item())
-    return sum(ious) / len(ious) if ious else 0.0
+    if ignore_classes is None:
+        ignore_classes = [0]
+    
+    per_class_iou = {}
+    for c in range(num_classes):
+        tp = confusion_matrix[c, c]
+        fp = confusion_matrix[:, c].sum() - tp
+        fn = confusion_matrix[c, :].sum() - tp
+        denom = tp + fp + fn
+        iou = tp / denom if denom > 0 else 0.0
+        per_class_iou[c] = float(iou)
+    
+    affordance_ious = [v for k, v in per_class_iou.items() if k not in ignore_classes]
+    return {
+        "mIoU": float(np.mean(affordance_ious)),       # 7-class (primary metric)
+        "mIoU_all": float(np.mean(list(per_class_iou.values()))),  # 8-class (for reference)
+        "per_class_iou": per_class_iou,
+    }
+```
+
+The confusion matrix itself is built using vectorized `bincount` for efficiency:
+
+```python
+# Inside evaluation loop (per batch):
+valid = masks != 255
+pred_valid = preds[valid].long()
+mask_valid = masks[valid].long()
+indices = mask_valid * num_classes + pred_valid
+confusion += torch.bincount(indices, minlength=num_classes**2).reshape(num_classes, num_classes)
 ```
 
 ### Validation target
 
-DINOv2 should reproduce approximately 0.670 mIoU on UMD (Zhang et al.'s reported number). If your DINOv2 result is significantly different, debug the probing infrastructure before running other encoders. Common issues: wrong layer indices, forgetting to skip CLS token, incorrect image preprocessing, wrong number of classes.
+DINOv2 should reproduce approximately 0.662 mIoU (7-class, excl. background) on UMD, based on Zhang et al.'s Figure 4 bar chart reading. If your DINOv2 result is significantly different, debug the probing infrastructure before running other encoders. Common issues: wrong layer indices, forgetting to skip CLS token, incorrect image preprocessing, wrong number of classes, including background in mIoU average.
 
 ### Systems to run
 
-Run this for all 5 encoder states, producing a table like:
+Run this for all 6 encoder states, producing a table like:
 
-| System | mIoU | Delta from raw SigLIP |
-|--------|------|----------------------|
+| System | mIoU (7-class) | Delta from raw SigLIP |
+|--------|---------------|----------------------|
 | Raw SigLIP | ? | baseline |
+| PaliGemma SigLIP | ? | ? |
 | π0 SigLIP | ? | ? |
 | π0.5 SigLIP | ? | ? |
-| Frozen DINOv2 | ~0.670 (validate) | — |
+| Frozen DINOv2 | ~0.662 (validate) | — |
 | DINO-WM predicted states | ? | — |
+
+---
+
+## Protocol alignment with Zhang et al. and Probe3D
+
+After detailed comparison of our implementation against Zhang et al. (arXiv 2602.20501) and the Probe3D reference codebase (El Banani et al., CVPR 2024, github.com/mbanani/probe3d), we identified and corrected several discrepancies. This section documents the rationale for each change.
+
+### Model scale divergence (acknowledged, not a bug)
+
+Zhang et al. use **ViT-B** variants across all encoders (Table 1 in their paper):
+- SigLIP ViT-B/16: 12 layers, 768-dim → fused dim 3072
+- DINOv2 ViT-B/14: 12 layers, 768-dim → fused dim 3072
+
+We use **SigLIP-So400m/14** (27 layers, 1152-dim → fused dim 4608) because that is the checkpoint used inside PaliGemma, π0, and π0.5. Our research question is how SigLIP's representations change through the VLA training pipeline, not how ViT-B SigLIP compares to ViT-B DINOv2. Our DINOv2-B/14 matches theirs exactly.
+
+**Consequence**: Our SigLIP mIoU numbers are not directly comparable to their SigLIP numbers. Our DINOv2 numbers should be comparable and serve as the validation anchor (~0.662 mIoU).
+
+### mIoU computation (fixed)
+
+Zhang et al. report mIoU over "seven affordance categories." Our original implementation averaged over all 8 classes including background (class 0). Background is typically the majority class with high IoU, which inflates the average.
+
+**Fix**: mIoU is now computed over classes 1-7 only (7 affordance classes). Background IoU is still computed and stored as `mIoU_all` for reference. The `evaluate_probe()` function and `compute_miou()` utility both apply this correction.
+
+### Optimizer and LR schedule (fixed)
+
+Probe3D uses **AdamW** with **cosine LR decay + linear warmup**. Our original implementation used Adam with constant LR 1e-3.
+
+**Fix**: Switched to `AdamW(lr=1e-3, weight_decay=0.05)` with a cosine schedule:
+- Linear warmup for 10% of total training steps (LR ramps from 0 to 1e-3)
+- Cosine decay for remaining 90% (LR decays from 1e-3 to ~0)
+
+### Probe architecture ordering (fixed)
+
+Probe3D's `Linear` head upsamples features **4x before** the 1x1 convolution:
+```python
+# Probe3D (probes.py):
+feats = interpolate(feats, scale_factor=4, mode="bilinear", align_corners=True)
+return self.conv(feats)  # conv sees 64x64 features
+```
+
+Our original implementation applied BN → Conv on 16x16 features, then upsampled the logits to 224x224. This gives the conv 16x fewer spatial samples to work with, potentially hurting boundary precision.
+
+**Fix**: Forward pass is now: upsample 4x (16x16 → 64x64) → BN → 1x1 Conv → resize to 224x224. Both interpolations use `align_corners=True` (Probe3D convention).
+
+### BatchNorm (matches paper, differs from Probe3D)
+
+Probe3D's `Linear` head has **no BatchNorm** — just a raw Conv2d. Zhang et al. explicitly describe their probe as "BatchNorm + 1×1 Conv." We include BatchNorm, matching the paper rather than the Probe3D code. This is a deliberate choice by Zhang et al., likely because normalizing the concatenated multi-layer features (which may have different scales per layer) stabilizes training.
+
+### Updated validation targets
+
+| Measurement | Expected value | Source |
+|-------------|---------------|--------|
+| DINOv2-B mIoU (7-class) | ~0.662 | Zhang et al. Figure 4 bar chart |
+| DINOv2 depth delta | ~0 | "barely benefits from depth" |
+| SigLIP ViT-B mIoU | ~0.551 | Zhang et al. Figure 4 (NOT comparable to our SO400M) |
+| UMD dataset | 11,800 train / 14,020 test | Zhang et al. Section 3.1 |
 
 ---
 
@@ -529,12 +629,13 @@ This is identical to Method 1 but with an augmented feature dimension:
 
 ### Expected results table
 
-| System | mIoU (visual only) | mIoU (+ depth/normal) | Delta | Interpretation |
-|--------|--------------------|-----------------------|-------|----------------|
+| System | mIoU 7-class (visual only) | mIoU 7-class (+ depth/normal) | Delta | Interpretation |
+|--------|---------------------------|------------------------------|-------|----------------|
 | Raw SigLIP | ? | ? | ? | Large delta = weak inherent geometry |
+| PaliGemma SigLIP | ? | ? | ? | VL training effect on geometry |
 | π0 SigLIP | ? | ? | ? | Smaller delta than raw = VLA helped |
 | π0.5 SigLIP | ? | ? | ? | Compare to π0 |
-| DINOv2 | ~0.670 | ~0.67-0.68 | ~0 | Zhang et al.: barely benefits from depth |
+| DINOv2 | ~0.662 | ~0.66-0.67 | ~0 | Zhang et al.: barely benefits from depth |
 | DINO-WM states | ? | ? | ? | Does dynamics prediction affect geometry? |
 
 ### Metric3Dv2 setup
@@ -595,13 +696,16 @@ Validation checkpoint:
 
 | Measurement | Expected value | Source |
 |-------------|---------------|--------|
-| DINOv2 mIoU on UMD | ~0.670 | Zhang et al. Table/Figure 4 |
+| DINOv2 mIoU on UMD (7-class) | ~0.662 | Zhang et al. Figure 4 bar chart |
 | DINOv2 depth augmentation delta | ~0 (very small) | Zhang et al. — "barely benefits from depth" |
-| SigLIP/CLIP geometric affordance | ~3/10 informal, weak mIoU | Zhang et al. observations |
+| SigLIP ViT-B mIoU (7-class) | ~0.551 | Zhang et al. Figure 4 (NOT comparable to our SO400M) |
 | UMD dataset size | 11,800 train / 14,020 test | Zhang et al. Section 3.1 |
 | UMD categories | 7 affordance classes + background | grasp, cut, scoop, contain, pound, support, wrap-grasp |
-| Probe architecture | BatchNorm2d + Conv2d(C, 8, 1) | Zhang et al. following Probing3D |
+| Probe architecture | Upsample 4x → BatchNorm2d → Conv2d(C, 8, 1) | Zhang et al. + Probe3D ordering |
+| Optimizer | AdamW (lr=1e-3, weight_decay=0.05) | Probe3D protocol |
+| LR schedule | Cosine decay with 10% linear warmup | Probe3D protocol |
 | Feature fusion | 4 equally-spaced layers concatenated | Zhang et al. Section 3.1 |
+| mIoU averaging | 7 affordance classes only (excl. background) | Zhang et al. "seven affordance categories" |
 
 ---
 

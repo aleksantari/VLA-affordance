@@ -4,17 +4,22 @@ import numpy as np
 import torch
 
 
-def compute_miou(confusion_matrix, num_classes=8):
+def compute_miou(confusion_matrix, num_classes=8, ignore_classes=None):
     """Compute mean Intersection over Union from confusion matrix.
 
     Args:
         confusion_matrix: (num_classes, num_classes) array where
                          confusion[true, pred] = count
         num_classes: number of classes
+        ignore_classes: list of class indices to exclude from mIoU average
+                       (default: [0] to exclude background, matching Zhang et al.)
 
     Returns:
-        dict with mIoU and per-class IoU
+        dict with mIoU (over non-ignored classes), mIoU_all, and per-class IoU
     """
+    if ignore_classes is None:
+        ignore_classes = [0]
+
     per_class_iou = {}
 
     for c in range(num_classes):
@@ -25,10 +30,12 @@ def compute_miou(confusion_matrix, num_classes=8):
         iou = tp / denom if denom > 0 else 0.0
         per_class_iou[c] = float(iou)
 
-    miou = np.mean(list(per_class_iou.values()))
+    all_ious = list(per_class_iou.values())
+    affordance_ious = [v for k, v in per_class_iou.items() if k not in ignore_classes]
 
     return {
-        "mIoU": float(miou),
+        "mIoU": float(np.mean(affordance_ious)) if affordance_ious else 0.0,
+        "mIoU_all": float(np.mean(all_ious)) if all_ious else 0.0,
         "per_class_iou": per_class_iou,
     }
 

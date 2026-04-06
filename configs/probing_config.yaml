@@ -85,20 +85,23 @@ multilayer:
 
 # UMD dataset
 umd:
-  num_classes: 7  # 6 affordances + background (UMD+GT dataset)
+  num_classes: 8  # 7 affordances + background; mIoU reported over 7 (excl. background)
   categories:
-    - background
-    - grasp
-    - cut
-    - scoop
-    - contain
-    - pound
-    - wrap-grasp
+    - background     # class 0 — excluded from mIoU
+    - grasp          # class 1
+    - cut            # class 2
+    - scoop          # class 3
+    - contain        # class 4
+    - pound          # class 5
+    - support        # class 6
+    - wrap-grasp     # class 7
 
-# Linear probing
+# Linear probing (following Probe3D protocol)
 linear_probe:
-  optimizer: adam
+  optimizer: adamw
   learning_rate: 1.0e-3
+  weight_decay: 0.05
+  warmup_fraction: 0.1
   epochs: 50
   batch_size: 32
   num_workers: 4

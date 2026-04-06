@@ -13,6 +13,8 @@ import sys
 import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
+import math
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -54,10 +56,14 @@ def features_to_spatial(features):
 
 
 def train_augmented_probe(train_features, train_masks, feature_dim, num_classes=8,
-                          epochs=50, lr=1e-3, batch_size=32, device="cuda"):
-    """Train a linear probe on depth-augmented features from cached arrays."""
+                          epochs=50, lr=1e-3, weight_decay=0.05, warmup_fraction=0.1,
+                          batch_size=32, device="cuda"):
+    """Train a linear probe on depth-augmented features from cached arrays.
+
+    Uses AdamW with cosine LR schedule + linear warmup, following Probe3D.
+    """
     probe = AffordanceLinearProbe(feature_dim, num_classes).to(device)
-    optimizer = torch.optim.Adam(probe.parameters(), lr=lr)
+    optimizer = torch.optim.AdamW(probe.parameters(), lr=lr, weight_decay=weight_decay)
     criterion = nn.CrossEntropyLoss(ignore_index=255)
 
     # Create tensor dataset
@@ -65,6 +71,18 @@ def train_augmented_probe(train_features, train_masks, feature_dim, num_classes=
     masks_tensor = torch.from_numpy(train_masks).long()
     dataset = TensorDataset(features_tensor, masks_tensor)
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
+
+    # Cosine LR schedule with linear warmup (Probe3D protocol)
+    total_steps = epochs * len(dataloader)
+    warmup_steps = int(warmup_fraction * total_steps)
+
+    def lr_lambda(step):
+        if step < warmup_steps:
+            return step / max(warmup_steps, 1)
+        progress = (step - warmup_steps) / max(total_steps - warmup_steps, 1)
+        return 0.5 * (1 + math.cos(math.pi * progress))
+
+    scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda)
 
     probe.train()
     for epoch in range(epochs):
@@ -81,13 +99,15 @@ def train_augmented_probe(train_features, train_masks, feature_dim, num_classes=
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
+            scheduler.step()
 
             total_loss += loss.item()
             num_batches += 1
 
         avg_loss = total_loss / max(num_batches, 1)
         if (epoch + 1) % 10 == 0:
-            print(f"  Epoch {epoch+1}/{epochs} - Loss: {avg_loss:.4f}")
+            current_lr = scheduler.get_last_lr()[0]
+            print(f"  Epoch {epoch+1}/{epochs} - Loss: {avg_loss:.4f} - LR: {current_lr:.6f}")
 
     return probe
 
@@ -109,12 +129,15 @@ def evaluate_augmented_probe(test_features, test_masks, probe, num_classes=8,
             logits = probe(features_batch)
             preds = logits.argmax(dim=1).cpu()
 
-            for pred, mask in zip(preds, masks_batch):
-                valid = mask != 255
-                for c_pred, c_true in zip(pred[valid].flatten(), mask[valid].flatten()):
-                    confusion[c_true, c_pred] += 1
+            valid = masks_batch != 255
+            pred_valid = preds[valid].long()
+            mask_valid = masks_batch[valid].long()
+            indices = mask_valid * num_classes + pred_valid
+            confusion += torch.bincount(
+                indices, minlength=num_classes ** 2
+            ).reshape(num_classes, num_classes)
 
-    # Compute mIoU
+    # Compute mIoU — exclude background (class 0), matching Zhang et al.
     per_class_iou = {}
     for c in range(num_classes):
         tp = confusion[c, c].item()
@@ -123,8 +146,10 @@ def evaluate_augmented_probe(test_features, test_masks, probe, num_classes=8,
         iou = tp / (tp + fp + fn + 1e-8) if (tp + fp + fn) > 0 else 0.0
         per_class_iou[c] = iou
 
-    miou = np.mean(list(per_class_iou.values()))
-    return {"mIoU": miou, "per_class_iou": per_class_iou}
+    affordance_ious = [v for k, v in per_class_iou.items() if k != 0]
+    miou = np.mean(affordance_ious) if affordance_ious else 0.0
+    miou_all = np.mean(list(per_class_iou.values()))
+    return {"mIoU": miou, "mIoU_all": miou_all, "per_class_iou": per_class_iou}
 
 
 if __name__ == "__main__":

@@ -20,7 +20,7 @@ ENCODER_NAMES = [
 
 
 def run_linear_probing(encoder_name, train_dataset, test_dataset, device="cuda",
-                       epochs=50, lr=1e-3, batch_size=32):
+                       epochs=50, lr=1e-3, weight_decay=0.05, batch_size=32):
     """Train and evaluate a linear probe for one encoder."""
     print(f"\n{'='*50}")
     print(f"Linear Probing: {encoder_name}")
@@ -37,8 +37,8 @@ def run_linear_probing(encoder_name, train_dataset, test_dataset, device="cuda",
     # Train
     probe = train_probe(
         extractor, train_dataset, feature_dim,
-        epochs=epochs, lr=lr, batch_size=batch_size,
-        device=device,
+        epochs=epochs, lr=lr, weight_decay=weight_decay,
+        batch_size=batch_size, device=device,
     )
 
     # Evaluate
@@ -65,6 +65,7 @@ if __name__ == "__main__":
     parser.add_argument("--data_dir", default="./data/umd_dataset")
     parser.add_argument("--epochs", type=int, default=50)
     parser.add_argument("--lr", type=float, default=1e-3)
+    parser.add_argument("--weight_decay", type=float, default=0.05)
     parser.add_argument("--batch_size", type=int, default=32)
     parser.add_argument("--encoders", nargs="+", default=ENCODER_NAMES)
     args = parser.parse_args()
@@ -79,11 +80,12 @@ if __name__ == "__main__":
         results = run_linear_probing(
             encoder_name, train_dataset, test_dataset,
             device=device, epochs=args.epochs, lr=args.lr,
-            batch_size=args.batch_size,
+            batch_size=args.batch_size, weight_decay=args.weight_decay,
         )
         if results:
             all_results[encoder_name] = {
                 "mIoU": results["mIoU"],
+                "mIoU_all": results["mIoU_all"],
                 "per_class_iou": {str(k): v for k, v in results["per_class_iou"].items()},
             }
 
