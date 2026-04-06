@@ -24,14 +24,14 @@ ENCODER_NAMES = [
 ]
 
 
-def extract_and_cache(encoder_name, dataset, cache_dir, device="cuda", batch_size=16):
+def extract_and_cache(encoder_name, dataset, cache_dir, split="train", device="cuda", batch_size=16):
     """Extract multi-layer fused features for an encoder and save to disk.
 
     Saves:
         - features_multilayer.npy: (N, 256, fused_feature_dim) array in float16
         - masks.npy: (N, 224, 224) array of integer labels
     """
-    cache_path = Path(cache_dir) / encoder_name
+    cache_path = Path(cache_dir) / encoder_name / split
     cache_path.mkdir(parents=True, exist_ok=True)
 
     features_path = cache_path / "features_multilayer.npy"
@@ -56,23 +56,33 @@ def extract_and_cache(encoder_name, dataset, cache_dir, device="cuda", batch_siz
         num_workers=4, collate_fn=dataset.collate_fn,
     )
 
-    all_features = []
-    all_masks = []
+    n_samples = len(dataset)
+    fused_dim = extractor.fused_feature_dim
+    image_size = dataset.image_size
 
+    # Pre-allocate memory-mapped files to avoid RAM accumulation
+    feat_mmap = np.lib.format.open_memmap(
+        str(features_path), mode='w+', dtype=np.float16,
+        shape=(n_samples, 256, fused_dim),
+    )
+    mask_mmap = np.lib.format.open_memmap(
+        str(masks_path), mode='w+', dtype=np.int64,
+        shape=(n_samples, image_size, image_size),
+    )
+
+    idx = 0
     for images, masks in tqdm(dataloader, desc=f"  {encoder_name}"):
         with torch.no_grad():
             features = extractor.extract_multilayer(images)  # (B, 256, C_fused)
-            # Save as float16 to halve disk usage (fused features are 4x larger)
-            all_features.append(features.cpu().half().numpy())
-            all_masks.append(masks.numpy())
+            b = features.shape[0]
+            feat_mmap[idx:idx+b] = features.cpu().half().numpy()
+            mask_mmap[idx:idx+b] = masks.numpy()
+            idx += b
 
-    all_features = np.concatenate(all_features, axis=0)
-    all_masks = np.concatenate(all_masks, axis=0)
+    feat_mmap.flush()
+    mask_mmap.flush()
 
-    np.save(str(features_path), all_features)
-    np.save(str(masks_path), all_masks)
-
-    print(f"  Saved {encoder_name}: features {all_features.shape} ({all_features.dtype}), masks {all_masks.shape}")
+    print(f"  Saved {encoder_name}: features {feat_mmap.shape} ({feat_mmap.dtype}), masks {mask_mmap.shape}")
 
     del extractor
     torch.cuda.empty_cache()
@@ -94,6 +104,7 @@ if __name__ == "__main__":
 
     for encoder_name in args.encoders:
         extract_and_cache(encoder_name, dataset, args.cache_dir,
-                          device=device, batch_size=args.batch_size)
+                          split=args.split, device=device,
+                          batch_size=args.batch_size)
 
     print("\nFeature extraction complete!")

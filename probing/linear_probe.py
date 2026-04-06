@@ -41,40 +41,105 @@ class AffordanceLinearProbe(nn.Module):
         return x
 
 
-def train_probe(encoder, dataset, feature_dim, num_classes=8, epochs=50,
-                lr=1e-3, weight_decay=0.05, warmup_fraction=0.1,
-                batch_size=32, device="cuda", num_workers=4):
-    """Train a linear probe on frozen encoder features.
+class CachedFeatureDataset(torch.utils.data.Dataset):
+    """Dataset that loads pre-extracted features from numpy files."""
 
-    Uses AdamW with cosine LR schedule + linear warmup, following Probe3D.
+    def __init__(self, features_path, masks_path):
+        self.features = np.load(features_path, mmap_mode='r')
+        self.masks = np.load(masks_path, mmap_mode='r')
+
+    def __len__(self):
+        return len(self.features)
+
+    def __getitem__(self, idx):
+        # features: (256, C_fused) tokens → reshape to (C_fused, 16, 16) spatial
+        feat = torch.from_numpy(self.features[idx].copy()).float()
+        feat = feat.permute(1, 0).reshape(feat.shape[1], 16, 16)
+        mask = torch.from_numpy(self.masks[idx].copy()).long()
+        return feat, mask
+
+
+def _compute_miou(confusion, num_classes=8):
+    """Compute mIoU from confusion matrix. Returns (mIoU_7class, mIoU_all, per_class)."""
+    per_class_iou = {}
+    for c in range(num_classes):
+        tp = confusion[c, c].item()
+        fp = confusion[:, c].sum().item() - tp
+        fn = confusion[c, :].sum().item() - tp
+        iou = tp / (tp + fp + fn + 1e-8) if (tp + fp + fn) > 0 else 0.0
+        per_class_iou[c] = iou
+    affordance_ious = [v for k, v in per_class_iou.items() if k != 0]
+    miou = np.mean(affordance_ious) if affordance_ious else 0.0
+    miou_all = np.mean(list(per_class_iou.values()))
+    return miou, miou_all, per_class_iou
+
+
+def _run_validation(probe, val_dataloader, device, num_classes=8):
+    """Run validation and return mIoU metrics."""
+    confusion = torch.zeros(num_classes, num_classes, dtype=torch.long)
+    probe.eval()
+    with torch.no_grad():
+        for features, masks in val_dataloader:
+            features = features.to(device)
+            masks = masks.to(device)
+            logits = probe(features)
+            preds = logits.argmax(dim=1)
+            preds_cpu = preds.cpu()
+            masks_cpu = masks.cpu()
+            valid = masks_cpu != 255
+            pred_valid = preds_cpu[valid].long()
+            mask_valid = masks_cpu[valid].long()
+            indices = mask_valid * num_classes + pred_valid
+            confusion += torch.bincount(
+                indices, minlength=num_classes ** 2
+            ).reshape(num_classes, num_classes)
+    probe.train()
+    return _compute_miou(confusion, num_classes)
+
+
+def train_probe_cached(train_features_path, train_masks_path, feature_dim,
+                       num_classes=8, epochs=50, lr=1e-3, weight_decay=0.05,
+                       warmup_fraction=0.1, batch_size=32, device="cuda",
+                       num_workers=4, val_features_path=None,
+                       val_masks_path=None, val_every=5, wandb_run=None):
+    """Train a linear probe on cached features (no encoder needed).
 
     Args:
-        encoder: UnifiedFeatureExtractor instance
-        dataset: UMDAffordanceDataset (train split)
-        feature_dim: dimension of encoder features
+        train_features_path: path to cached features .npy (N, 256, C_fused)
+        train_masks_path: path to cached masks .npy (N, 224, 224)
+        feature_dim: fused feature dimension
         num_classes: number of output classes
-        epochs: training epochs
-        lr: peak learning rate
-        weight_decay: AdamW weight decay
-        warmup_fraction: fraction of total steps for linear warmup
-        batch_size: batch size
+        epochs, lr, weight_decay, warmup_fraction: Probe3D training protocol
+        batch_size: training batch size
         device: torch device
         num_workers: dataloader workers
+        val_features_path: optional path to val/test cached features
+        val_masks_path: optional path to val/test cached masks
+        val_every: compute val mIoU every N epochs (also always on last epoch)
+        wandb_run: optional active wandb run for logging
 
     Returns:
-        Trained AffordanceLinearProbe
+        (probe, history) — trained probe and list of per-epoch metric dicts
     """
+    dataset = CachedFeatureDataset(train_features_path, train_masks_path)
     probe = AffordanceLinearProbe(feature_dim, num_classes).to(device)
     optimizer = torch.optim.AdamW(probe.parameters(), lr=lr, weight_decay=weight_decay)
     criterion = nn.CrossEntropyLoss(ignore_index=255)
 
     dataloader = DataLoader(
         dataset, batch_size=batch_size, shuffle=True,
-        num_workers=num_workers, collate_fn=dataset.collate_fn,
-        pin_memory=True,
+        num_workers=num_workers, pin_memory=True,
     )
 
-    # Cosine LR schedule with linear warmup (Probe3D protocol)
+    # Validation dataloader (if paths provided)
+    val_dataloader = None
+    if val_features_path and val_masks_path:
+        val_dataset = CachedFeatureDataset(val_features_path, val_masks_path)
+        val_dataloader = DataLoader(
+            val_dataset, batch_size=batch_size, shuffle=False,
+            num_workers=num_workers, pin_memory=True,
+        )
+
     total_steps = epochs * len(dataloader)
     warmup_steps = int(warmup_fraction * total_steps)
 
@@ -86,21 +151,17 @@ def train_probe(encoder, dataset, feature_dim, num_classes=8, epochs=50,
 
     scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda)
 
+    history = []
     probe.train()
     for epoch in range(epochs):
         total_loss = 0
         num_batches = 0
 
-        for images, masks in tqdm(dataloader, desc=f"Epoch {epoch+1}/{epochs}"):
+        for features, masks in tqdm(dataloader, desc=f"Epoch {epoch+1}/{epochs}"):
+            features = features.to(device)
             masks = masks.to(device)
 
-            # Extract features (frozen encoder, no gradients)
-            with torch.no_grad():
-                features = encoder.extract_multilayer_spatial(images)  # (B, C_fused, 16, 16)
-
-            # Forward through probe
-            logits = probe(features)  # (B, num_classes, 224, 224)
-
+            logits = probe(features)
             loss = criterion(logits, masks)
 
             optimizer.zero_grad()
@@ -113,64 +174,49 @@ def train_probe(encoder, dataset, feature_dim, num_classes=8, epochs=50,
 
         avg_loss = total_loss / max(num_batches, 1)
         current_lr = scheduler.get_last_lr()[0]
-        print(f"  Epoch {epoch+1}/{epochs} - Loss: {avg_loss:.4f} - LR: {current_lr:.6f}")
 
-    return probe
+        epoch_metrics = {"epoch": epoch + 1, "train/loss": avg_loss, "train/lr": current_lr}
+
+        # Validation check
+        is_last = (epoch == epochs - 1)
+        do_val = val_dataloader and ((epoch + 1) % val_every == 0 or is_last)
+
+        if do_val:
+            miou, miou_all, per_class = _run_validation(
+                probe, val_dataloader, device, num_classes)
+            epoch_metrics["val/mIoU"] = miou
+            epoch_metrics["val/mIoU_all"] = miou_all
+            for c, iou in per_class.items():
+                epoch_metrics[f"val/iou_class_{c}"] = iou
+            print(f"  Epoch {epoch+1}/{epochs} - Loss: {avg_loss:.4f} - "
+                  f"LR: {current_lr:.6f} - val mIoU: {miou:.4f}")
+        else:
+            print(f"  Epoch {epoch+1}/{epochs} - Loss: {avg_loss:.4f} - "
+                  f"LR: {current_lr:.6f}")
+
+        if wandb_run:
+            wandb_run.log(epoch_metrics, step=epoch + 1)
+
+        history.append(epoch_metrics)
+
+    return probe, history
 
 
-def evaluate_probe(encoder, probe, dataset, batch_size=32, device="cuda",
-                   num_workers=4, num_classes=8):
-    """Evaluate probe on test set, compute mIoU.
-
-    Returns:
-        dict with mIoU and per-class IoU
-    """
+def evaluate_probe_cached(probe, test_features_path, test_masks_path,
+                          batch_size=32, device="cuda", num_workers=4,
+                          num_classes=8):
+    """Evaluate probe on cached test features, compute mIoU."""
+    dataset = CachedFeatureDataset(test_features_path, test_masks_path)
     dataloader = DataLoader(
         dataset, batch_size=batch_size, shuffle=False,
-        num_workers=num_workers, collate_fn=dataset.collate_fn,
-        pin_memory=True,
+        num_workers=num_workers, pin_memory=True,
     )
 
-    # Confusion matrix for mIoU computation
-    confusion = torch.zeros(num_classes, num_classes, dtype=torch.long)
-
-    probe.eval()
-    with torch.no_grad():
-        for images, masks in tqdm(dataloader, desc="Evaluating"):
-            masks = masks.to(device)
-
-            features = encoder.extract_multilayer_spatial(images)
-            logits = probe(features)
-            preds = logits.argmax(dim=1)  # (B, H, W)
-
-            # Update confusion matrix (vectorized)
-            preds_cpu = preds.cpu()
-            masks_cpu = masks.cpu()
-            valid = masks_cpu != 255
-            pred_valid = preds_cpu[valid].long()
-            mask_valid = masks_cpu[valid].long()
-            indices = mask_valid * num_classes + pred_valid
-            confusion += torch.bincount(
-                indices, minlength=num_classes ** 2
-            ).reshape(num_classes, num_classes)
-
-    # Compute per-class IoU
-    per_class_iou = {}
-    for c in range(num_classes):
-        tp = confusion[c, c].item()
-        fp = confusion[:, c].sum().item() - tp
-        fn = confusion[c, :].sum().item() - tp
-        iou = tp / (tp + fp + fn + 1e-8) if (tp + fp + fn) > 0 else 0.0
-        per_class_iou[c] = iou
-
-    # mIoU over 7 affordance classes (exclude background=0), matching Zhang et al.
-    affordance_ious = [v for k, v in per_class_iou.items() if k != 0]
-    miou = np.mean(affordance_ious) if affordance_ious else 0.0
-    miou_all = np.mean(list(per_class_iou.values()))
+    miou, miou_all, per_class_iou = _run_validation(
+        probe, dataloader, device, num_classes)
 
     return {
         "mIoU": miou,
         "mIoU_all": miou_all,
         "per_class_iou": per_class_iou,
-        "confusion_matrix": confusion.numpy(),
     }
