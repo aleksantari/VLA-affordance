@@ -134,3 +134,34 @@ Need to clone repo, download checkpoint, adapt transition model loading.
 5. **Run depth augmentation** (Method 3) — validate DINOv2 delta ~0
 6. **Run PCA analysis** (Method 2) — generate visualizations
 7. **Run weight divergence** — confirm SigLIP weights differ across stages
+
+---
+
+## Axis 2: Interaction Affordance (Flux)
+
+**Status:** Infrastructure complete, not yet run
+
+### What's Done
+
+- `interaction/` module with Flux cross-attention extraction (`flux_attention.py`)
+- Verb-spatial binding metrics: KLD, SIM, NSS (`verb_spatial_binding.py`)
+- Visualization pipeline: overlays, comparison grids, timestep progression (`visualization.py`)
+- AGD20K dataset loader with download helper (`data/agd20k_dataset.py`, `data/download_agd20k.py`)
+- Scripts 09-11 (setup, probing, report generation)
+- Axis 2 config section in `probing_config.yaml`
+- Separate `requirements_axis2.txt` for Colab dependencies
+
+### Compute Requirements
+
+- **Must run on Colab Pro (A100 40GB)** — Flux is ~12B params, needs ~24GB VRAM
+- Local RTX 5060 (8GB) is insufficient for Flux inference
+- Workflow: push to GitHub → clone on Colab → install → run scripts 09-11
+
+### Next Steps (Axis 2)
+
+1. Download AGD20K dataset to Google Drive
+2. Run `09_setup_flux.py` on Colab with schnell — verify pipeline
+3. Run `10_run_interaction_probing.py` with schnell on a few categories — sanity check
+4. Switch to `FLUX.1-dev` for final results
+5. Run `11_generate_axis2_report.py` — produce figures and tables
+

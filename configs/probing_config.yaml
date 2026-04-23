@@ -115,3 +115,39 @@ depth_augmentation:
   method: dpt
   dpt_model: Intel/dpt-large
   cache_dir: ./results/cached_features/depth_normal
+
+# ═══════════════════════════════════════════════════════════
+# Axis 2: Interaction Affordance Probing
+# ═══════════════════════════════════════════════════════════
+
+# Flux model configuration
+flux:
+  # Start with schnell for fast iteration, switch to dev for final results
+  model_name: black-forest-labs/FLUX.1-schnell  # or FLUX.1-dev
+  num_inference_steps: 4     # 4 for schnell, 20 for dev
+  guidance_scale: 0.0        # 0.0 for schnell, 3.5 for dev
+  image_size: 512
+  latent_grid: 32            # 512/16 (Flux patch embedding downsampling)
+  dtype: bfloat16
+  attention_extraction:
+    store_heads: false        # Average across attention heads immediately
+    store_per_timestep: true  # Keep per-timestep maps for temporal analysis
+    cache_dtype: float16      # Storage precision for attention maps
+
+# AGD20K dataset
+agd20k:
+  data_dir: ./data/agd20k
+  split: egocentric           # Primary evaluation on egocentric (object-centric) images
+  num_categories: 36
+  image_size: 512
+
+# Evaluation metrics for verb-spatial binding
+interaction_metrics:
+  - kld                       # KL Divergence — lower is better
+  - sim                       # Similarity (histogram intersection) — higher is better
+  - nss                       # Normalized Scanpath Saliency — higher is better
+  nss_threshold_percentile: 80.0  # Top 20% of GT heatmap pixels become fixations
+
+# Prompt construction
+prompt:
+  template: "a person {verb} a {object}"

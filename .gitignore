@@ -1,3 +1,10 @@
+# AI instruction files
+CLAUDE.md
+
+# PDFs and docs (kept locally, not in repo)
+*.pdf
+*.docx
+
 # Python
 __pycache__/
 *.py[cod]
@@ -26,6 +33,9 @@ models/
 # UMD dataset (large, downloaded via script)
 data/umd_dataset/
 data/umd_dataset_old/
+
+# AGD20K dataset (large, downloaded via script)
+data/agd20k/
 
 # DINO-WM cloned repo
 dino-wm/
