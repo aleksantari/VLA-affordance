@@ -1,0 +1,11 @@
+# Axis 2: Interaction Affordance Probing (Flux)
+# Install alongside base requirements.txt
+# Designed for Colab Pro (A100 40GB)
+
+diffusers>=0.32.0
+attention-map-diffusers
+accelerate
+sentencepiece
+protobuf
+safetensors
+gdown                 # Google Drive download for AGD20K
