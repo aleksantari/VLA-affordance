@@ -47,12 +47,19 @@ SYSTEM_CONFIG = {
         "default_height": 480,
         "default_width": 704,
     },
+    # NOTE: 2026-05-10 — Cosmos-Policy-ALOHA-Predict2-2B is NOT a diffusers
+    # pipeline. The HF repo lacks `model_index.json`; it ships under the
+    # NVlabs/cosmos-policy custom Python package with action heads + proprio
+    # input. It cannot be loaded with Cosmos2VideoToWorldPipeline.from_pretrained.
+    # H2c (manipulation amplification) is therefore deferred — see
+    # axis2_research/research-log.md for the decision rationale.
     "cosmos_policy": {
         "model_name": "nvidia/Cosmos-Policy-ALOHA-Predict2-2B",
-        "pipeline_type": "video2world",  # same base architecture
+        "pipeline_type": "video2world",
         "needs_image_input": True,
         "default_height": 480,
         "default_width": 704,
+        "deferred": True,
     },
 }
 
@@ -103,6 +110,15 @@ def main():
     args = parser.parse_args()
 
     cfg = SYSTEM_CONFIG[args.system]
+    if cfg.get("deferred"):
+        print(
+            f"⚠ System '{args.system}' is DEFERRED.\n"
+            f"  {cfg['model_name']} is not a diffusers pipeline (no model_index.json);\n"
+            f"  it requires the NVlabs/cosmos-policy custom Python package.\n"
+            f"  H2c is paused — proceed with cosmos_predict2_v2w (H2b) only.\n"
+            f"  See axis2_research/research-log.md for the decision."
+        )
+        sys.exit(0)
     height = args.height or cfg["default_height"]
     width = args.width or cfg["default_width"]
 

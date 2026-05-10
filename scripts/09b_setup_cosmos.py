@@ -41,10 +41,13 @@ SYSTEM_CONFIG = {
         "pipeline_type": "video2world",
         "needs_image_input": True,
     },
+    # See scripts/10b_run_cosmos_probing.py for deferral rationale —
+    # Cosmos-Policy-ALOHA-Predict2-2B is not a diffusers pipeline.
     "cosmos_policy": {
         "model_name": "nvidia/Cosmos-Policy-ALOHA-Predict2-2B",
         "pipeline_type": "video2world",
         "needs_image_input": True,
+        "deferred": True,
     },
 }
 
@@ -65,6 +68,11 @@ def main():
     args = parser.parse_args()
 
     cfg = SYSTEM_CONFIG[args.system]
+    if cfg.get("deferred"):
+        print(
+            f"⚠ System '{args.system}' is DEFERRED — see notes in 10b_run_cosmos_probing.py."
+        )
+        sys.exit(0)
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 

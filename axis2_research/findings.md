@@ -41,11 +41,21 @@ If H2c is supported, this connects to Axis 1's finding that VLAs *destroy* geome
 
 ## Resolved Questions (2026-05-10)
 
-- **Cosmos Policy availability:** publicly available on HuggingFace as `nvidia/Cosmos-Policy-ALOHA-Predict2-2B`.
+- **Cosmos Policy availability:** repo exists at `nvidia/Cosmos-Policy-ALOHA-Predict2-2B`, BUT — see deferral below.
 - **Cosmos base model:** Cosmos Policy is fine-tuned from `Cosmos-Predict2-2B-Video2World`, NOT Text2Image. H2b/H2c paired comparison must use Video2World base.
 - **Cosmos text encoder:** T5-11B (not T5-XXL as proposal stated). max_seq_length=512.
 - **Cosmos cross-attention layer naming:** `attn2` modules in `CosmosTransformer3DModel`. Custom `AttentionProcessor` registration is the path forward (attention-map-diffusers does not support Cosmos).
 - **Single-image probing for video model:** Cosmos2VideoToWorld accepts a single first-frame image. We use the AGD20K image directly, then average attention over the temporal latent dimension since binding is a spatial property.
+
+## H2c Deferred (2026-05-10) — Cosmos Policy is not a diffusers pipeline
+
+**Surfaced when:** user ran `09b_setup_cosmos.py --system cosmos_policy` on Colab — got `404 Not Found` on `https://huggingface.co/nvidia/Cosmos-Policy-ALOHA-Predict2-2B/resolve/main/model_index.json`.
+
+**Root cause:** the HF repo lacks `model_index.json`, which `Cosmos2VideoToWorldPipeline.from_pretrained()` requires. The model is not a standard diffusers pipeline — it's a custom NVIDIA robot-policy package with action heads, proprioception input, and bespoke loading code (NVlabs/cosmos-policy repo). Architecturally identical to V2W but the loading mechanism is incompatible.
+
+**Decision:** defer H2c. Run pilot with Flux (H2a) + Cosmos-Predict2-2B-Video2World (H2b) only. The two-system comparison still answers a real research question: *does base video diffusion develop verb-spatial binding via T5-XXL cross-attention?* (H2b). H2c remains an open question for follow-up work — would require a thin adapter that loads policy weights into a Video2World skeleton.
+
+**Code state:** `cosmos_policy` entries in `09b_setup_cosmos.py` and `10b_run_cosmos_probing.py` now have `"deferred": True` and exit immediately with a clear notice (no GPU consumed). Notebook Cell 5 marked DEFERRED.
 
 ## Trajectory Log
 
