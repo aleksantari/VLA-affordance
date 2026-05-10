@@ -1,0 +1,43 @@
+# FLUX.1-schnell — fast calibration baseline (H2a)
+# Used by scripts/09_setup_flux.py and scripts/10_run_interaction_probing.py
+# Currently parameters live as CLI flags, not consumed from this YAML;
+# when the code is refactored these become the canonical source.
+
+system_id: flux_schnell
+display_name: FLUX.1-schnell
+role: calibration baseline for H2a (cheap, may not match Zhang's dev numbers)
+
+model:
+  hf_model_id: black-forest-labs/FLUX.1-schnell
+  pipeline_class: diffusers.FluxPipeline
+  dtype: bfloat16
+
+inference:
+  num_inference_steps: 4
+  guidance_scale: 0.0          # schnell doesn't use CFG
+  image_height: 512
+  image_width: 512
+
+extraction:
+  recorder: interaction.flux_attention.FluxCrossAttnRecorder
+  blocks: all_double_stream     # FluxTransformerBlock; FluxSingleTransformerBlock skipped
+  store_attention_per_timestep: false   # save VRAM during pilots
+  text_tokenizer: tokenizer_2   # T5 — the one feeding cross-attention
+
+dataset:
+  loader: data.agd20k_dataset.AGD20KDataset
+  data_dir: ./data/agd20k
+  prompt_template: "a person {verb} a {object}"
+  image_size: 512
+
+probing:
+  max_per_category: 30          # pilot scale
+  seed: 42
+  save_attention_maps: true
+  commit_every: 100
+
+output:
+  per_sample_csv: results/tables/axis2_per_sample.csv
+  metrics_json: results/tables/axis2_metrics.json
+  cache_dir: results/cached_features/flux_attention
+  figures_dir: results/figures/axis2

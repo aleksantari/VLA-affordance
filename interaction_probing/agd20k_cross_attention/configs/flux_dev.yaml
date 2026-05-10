@@ -1,0 +1,42 @@
+# FLUX.1-dev — publication-quality H2a replication of Zhang et al.
+# Higher quality than schnell (20 steps + CFG) but ~5x slower.
+# Reserve for the final paper-quality run after pilot validates the pipeline.
+
+system_id: flux_dev
+display_name: FLUX.1-dev
+role: publication-quality H2a replication
+
+model:
+  hf_model_id: black-forest-labs/FLUX.1-dev
+  pipeline_class: diffusers.FluxPipeline
+  dtype: bfloat16
+
+inference:
+  num_inference_steps: 20
+  guidance_scale: 3.5
+  image_height: 512
+  image_width: 512
+
+extraction:
+  recorder: interaction.flux_attention.FluxCrossAttnRecorder
+  blocks: all_double_stream
+  store_attention_per_timestep: false
+  text_tokenizer: tokenizer_2
+
+dataset:
+  loader: data.agd20k_dataset.AGD20KDataset
+  data_dir: ./data/agd20k
+  prompt_template: "a person {verb} a {object}"
+  image_size: 512
+
+probing:
+  max_per_category: null        # full eval — all ~1710 AGD20K samples
+  seed: 42
+  save_attention_maps: true
+  commit_every: 100
+
+output:
+  per_sample_csv: results/tables/axis2_flux_dev_per_sample.csv
+  metrics_json: results/tables/axis2_flux_dev_metrics.json
+  cache_dir: results/cached_features/flux_attention
+  figures_dir: results/figures/axis2

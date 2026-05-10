@@ -1,0 +1,43 @@
+# Cosmos-Predict2-2B-Video2World — H2b base video diffusion
+# Image+text conditioned. We use the AGD20K image as the conditioning frame.
+
+system_id: cosmos_predict2_v2w
+display_name: Cosmos-Predict2-2B-Video2World
+role: H2b — does base video diffusion develop verb-spatial binding?
+
+model:
+  hf_model_id: nvidia/Cosmos-Predict2-2B-Video2World
+  pipeline_class: diffusers.Cosmos2VideoToWorldPipeline
+  dtype: bfloat16
+  bypass_safety_checker: true   # cosmos_guardrail package fails to install on Colab
+
+inference:
+  num_inference_steps: 12       # below diffusers default of 35 to bound wall-clock
+  guidance_scale: 7.0
+  image_height: 480
+  image_width: 704
+  num_frames: 17                # bound VRAM; first frame is the conditioning image
+
+extraction:
+  recorder: interaction.cosmos_attention.CosmosCrossAttnRecorder
+  blocks: all_attn2             # cross-attention modules only
+  collapse_temporal: mean        # average attention over temporal latent dim before recording
+  text_tokenizer: tokenizer     # T5-11B
+
+dataset:
+  loader: data.agd20k_dataset.AGD20KDataset
+  data_dir: ./data/agd20k
+  prompt_template: "a person {verb} a {object}"
+  image_size: 480
+
+probing:
+  max_per_category: 30
+  seed: 42
+  save_attention_maps: true
+  commit_every: 50
+
+output:
+  per_sample_csv: results/tables/axis2_cosmos_predict2_v2w_per_sample.csv
+  metrics_json: results/tables/axis2_cosmos_predict2_v2w_metrics.json
+  cache_dir: results/cached_features/cosmos_predict2_v2w_attention
+  figures_dir: results/figures/axis2/cosmos_predict2_v2w
