@@ -4,6 +4,79 @@ End-to-end workflow for running the three-system probing on Colab Pro / Pro+.
 Designed to be **interruptible**: any session crash leaves CSV results on
 disk that the next run can resume from.
 
+Two paths supported:
+
+- **Path A — Manual:** open `notebooks/axis2_unified_colab.ipynb` on Colab, run cells yourself.
+- **Path B — Agent-driven via Colab MCP** *(new)*: Claude Code drives a fresh Colab notebook over MCP. You handle setup + secrets, agent dictates and runs cells.
+
+## ── Path B (Colab MCP) — checklist ──
+
+### Phase 1 — One-time prep (~30 min, your machine)
+
+- [ ] **AGD20K on Drive** at `/content/drive/MyDrive/datasets/AGD20K` (5 GB). Source: <https://github.com/lhc1224/Cross-View-AG>.
+- [ ] **HF model access** (browser, click Agree if gated): FLUX.1-schnell, FLUX.1-dev, Cosmos-Predict2-2B-Video2World, Cosmos-Policy-ALOHA-Predict2-2B.
+- [ ] **HF token** (Read scope) from <https://huggingface.co/settings/tokens>.
+- [ ] **GitHub PAT** with `repo` scope from <https://github.com/settings/tokens>.
+- [ ] **Colab Pro/Pro+** subscription active (Pro+ recommended — 24h sessions).
+
+### Phase 2 — Restart Claude Code (so MCP tools load, ~30 sec)
+
+```
+/exit
+```
+
+Then `claude` in shell. Confirm with: *"can you list your MCP tools?"* — `open_colab_browser_connection` should be visible.
+
+### Phase 3 — Connect Colab (~2 min)
+
+Tell agent: *"start the Colab pilot"*.
+
+- [ ] Agent calls `open_colab_browser_connection` → opens a fresh Colab tab with token in URL hash. Click **Allow** on the connection prompt.
+- [ ] In that tab: **Runtime → Change runtime type → A100 GPU → Save**.
+- [ ] Left sidebar 🔑 → Add secret:
+   - `HF_TOKEN` = your HF token (toggle "Notebook access" ON)
+   - `GH_PAT` = your GitHub PAT (toggle ON)
+- [ ] Tell agent: *"runtime is A100, secrets set, ready"*.
+
+### Phase 4 — Pilot runs (~7 hrs)
+
+Agent dictates cells from `notebooks/axis2_unified_colab.ipynb` in order:
+
+| Block | What | Time |
+|---|---|---|
+| 0–2 | Clone repo + pip install + Drive mount + HF cache redirect + AGD20K symlink | ~5 min |
+| 3 | Flux pilot (schnell, 30/cat × 36) | ~45 min |
+| 4a | Cosmos V2W smoke (320×320, 4 steps) | ~3 min |
+| 4c | Cosmos V2W full pilot (480×704, 12 steps) | ~3 hrs |
+| 5a | Cosmos Policy smoke | ~3 min |
+| 5c | Cosmos Policy full pilot | ~3 hrs |
+| 6 | Three-way comparison + git push | ~5 min |
+
+**You can walk away during 4c / 5c**, but keep:
+- The Colab tab open (closing kills the MCP WebSocket — the run keeps going thanks to incremental CSV + Drive symlink, but agent can't drive new cells).
+- Laptop awake.
+
+### Phase 5 — Save the connected notebook to Drive
+
+Once Phase 4 completes:
+
+- [ ] In the Colab tab: File → Save a copy in Drive → name `axis2_pilot_runner.ipynb`.
+- [ ] Next time you re-run, open that saved notebook directly on Colab — secrets persist, skip Phase 1.4.
+
+### Failure modes
+
+| If… | Then… |
+|---|---|
+| Agent doesn't see `open_colab_browser_connection` after restart | `claude mcp list` should show `colab-proxy-mcp ✓ Connected`. If not, run `claude mcp add colab-proxy-mcp uvx git+https://github.com/googlecolab/colab-mcp -s user`. |
+| Colab tab refuses to connect | Reload the Colab tab. If it still fails, ask agent to call `open_colab_browser_connection` again. |
+| Smoke test 4a fails | Don't run pilot. Tell agent to debug the extractor. They patch + push from local; you `git pull` on Colab + retry. |
+| Session times out mid-pilot | Re-run Phase 3 (open + secrets) on next session, ask agent to re-run the same probing command — `--resume` (default on) skips done samples. |
+| Tab closed mid-pilot | Run continues (no MCP needed for the bash subprocess). Open a new Colab tab pointing to the same notebook to reconnect. |
+
+---
+
+## ── Path A (Manual) — original instructions ──
+
 ## One-time setup (do these once before first run)
 
 1. **Get model access on HuggingFace** (browser):
