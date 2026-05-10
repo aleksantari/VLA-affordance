@@ -114,18 +114,35 @@ def main():
     parser.add_argument("--output_dir", type=str, default="./data/agd20k",
                         help="Where to store the dataset")
     parser.add_argument("--from_drive", type=str, default=None,
-                        help="Path to pre-downloaded dataset on Google Drive (Colab)")
+                        help="Path to a pre-downloaded AGD20K *folder* (already unzipped) "
+                             "on Google Drive — symlink from there.")
+    parser.add_argument("--from_zip", type=str, default=None,
+                        help="Path to a local AGD20K .zip file (e.g. on a Drive mount) — "
+                             "unzip into output_dir.")
     parser.add_argument("--validate_only", action="store_true",
                         help="Only validate existing dataset, don't download")
     args = parser.parse_args()
-    
+
     output_dir = Path(args.output_dir)
-    
+
     if args.validate_only:
         valid = validate_dataset(str(output_dir))
         sys.exit(0 if valid else 1)
-    
-    if args.from_drive:
+
+    if args.from_zip:
+        zip_src = Path(args.from_zip)
+        if not zip_src.exists():
+            print(f"ERROR: zip not found: {zip_src}")
+            sys.exit(1)
+        if not zip_src.is_file():
+            print(f"ERROR: --from_zip expects a .zip file, got a directory: {zip_src}")
+            sys.exit(1)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        print(f"Extracting {zip_src} → {output_dir}")
+        with zipfile.ZipFile(str(zip_src), 'r') as zf:
+            zf.extractall(str(output_dir))
+        print(f"✓ Extracted to {output_dir}")
+    elif args.from_drive:
         # Colab workflow: symlink from Google Drive
         symlink_from_drive(args.from_drive, str(output_dir))
     else:
