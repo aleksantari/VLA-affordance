@@ -86,67 +86,71 @@ class FluxCrossAttnRecorder:
         image_rotary_emb: Optional[torch.Tensor] = None,
         **kwargs,
     ) -> torch.Tensor:
-        batch_size = hidden_states.shape[0]
-        img_len = hidden_states.shape[1]
+        # Mirrors diffusers' current FluxAttnProcessor exactly. Layout note:
+        # the diffusers FluxAttention uses (B, S, H, D) — i.e. unflatten the
+        # last dim into (heads, head_d) WITHOUT transposing to put heads
+        # before sequence. RoPE and attention then operate over sequence_dim=1.
+        # The ONLY thing we add is recording the post-softmax (image_q × text_k)
+        # slice for verb-spatial-binding analysis.
 
-        # Image stream: Q, K, V from `to_q/to_k/to_v`
-        img_q = attn.to_q(hidden_states)
-        img_k = attn.to_k(hidden_states)
-        img_v = attn.to_v(hidden_states)
+        # ── Q/K/V projections — image stream (called `to_q/to_k/to_v`) ──
+        query = attn.to_q(hidden_states)
+        key = attn.to_k(hidden_states)
+        value = attn.to_v(hidden_states)
 
-        heads = attn.heads
-        head_d = img_q.shape[-1] // heads
-        img_q = img_q.view(batch_size, img_len, heads, head_d).transpose(1, 2)
-        img_k = img_k.view(batch_size, img_len, heads, head_d).transpose(1, 2)
-        img_v = img_v.view(batch_size, img_len, heads, head_d).transpose(1, 2)
+        query = query.unflatten(-1, (attn.heads, -1))
+        key = key.unflatten(-1, (attn.heads, -1))
+        value = value.unflatten(-1, (attn.heads, -1))
 
         if getattr(attn, "norm_q", None) is not None:
-            img_q = attn.norm_q(img_q)
+            query = attn.norm_q(query)
         if getattr(attn, "norm_k", None) is not None:
-            img_k = attn.norm_k(img_k)
+            key = attn.norm_k(key)
 
-        # Text stream: only present in double-stream blocks (when
-        # encoder_hidden_states is passed)
+        # ── Text stream — only for double-stream blocks (added_kv_proj_dim set) ──
         txt_len = 0
-        if encoder_hidden_states is not None:
-            txt_q = attn.add_q_proj(encoder_hidden_states)
-            txt_k = attn.add_k_proj(encoder_hidden_states)
-            txt_v = attn.add_v_proj(encoder_hidden_states)
+        if encoder_hidden_states is not None and getattr(attn, "added_kv_proj_dim", None) is not None:
+            encoder_query = attn.add_q_proj(encoder_hidden_states)
+            encoder_key = attn.add_k_proj(encoder_hidden_states)
+            encoder_value = attn.add_v_proj(encoder_hidden_states)
 
-            txt_len = encoder_hidden_states.shape[1]
-            txt_q = txt_q.view(batch_size, txt_len, heads, head_d).transpose(1, 2)
-            txt_k = txt_k.view(batch_size, txt_len, heads, head_d).transpose(1, 2)
-            txt_v = txt_v.view(batch_size, txt_len, heads, head_d).transpose(1, 2)
+            encoder_query = encoder_query.unflatten(-1, (attn.heads, -1))
+            encoder_key = encoder_key.unflatten(-1, (attn.heads, -1))
+            encoder_value = encoder_value.unflatten(-1, (attn.heads, -1))
 
             if getattr(attn, "norm_added_q", None) is not None:
-                txt_q = attn.norm_added_q(txt_q)
+                encoder_query = attn.norm_added_q(encoder_query)
             if getattr(attn, "norm_added_k", None) is not None:
-                txt_k = attn.norm_added_k(txt_k)
+                encoder_key = attn.norm_added_k(encoder_key)
 
-            # Joint: text first, then image (matches diffusers FluxAttnProcessor)
-            query = torch.cat([txt_q, img_q], dim=2)
-            key = torch.cat([txt_k, img_k], dim=2)
-            value = torch.cat([txt_v, img_v], dim=2)
-        else:
-            # Single-stream: text was already concatenated into hidden_states
-            # by the block's forward; we treat the whole thing as the joint
-            # sequence and rely on the caller to know the layout.
-            query, key, value = img_q, img_k, img_v
+            txt_len = encoder_hidden_states.shape[1]
 
-        # Apply RoPE if provided (diffusers helper, but we guard for older versions)
+            # Joint: text first, then image, along sequence dim=1
+            query = torch.cat([encoder_query, query], dim=1)
+            key = torch.cat([encoder_key, key], dim=1)
+            value = torch.cat([encoder_value, value], dim=1)
+
+        # ── RoPE on (B, S, H, D), sequence_dim=1 ──
         if image_rotary_emb is not None:
             try:
+                from diffusers.models.embeddings import apply_rotary_emb
+                query = apply_rotary_emb(query, image_rotary_emb, sequence_dim=1)
+                key = apply_rotary_emb(key, image_rotary_emb, sequence_dim=1)
+            except TypeError:
                 from diffusers.models.embeddings import apply_rotary_emb
                 query = apply_rotary_emb(query, image_rotary_emb)
                 key = apply_rotary_emb(key, image_rotary_emb)
             except Exception:
-                # If RoPE application fails for any reason, continue without it.
-                # Attention pattern will be slightly off but model still runs.
                 pass
 
-        # Compute attention scores explicitly (cast Q,K to fp32 for stability).
+        # ── Compute attention probs explicitly (need transpose to (B, H, S, D)) ──
+        q_h = query.permute(0, 2, 1, 3).contiguous()
+        k_h = key.permute(0, 2, 1, 3).contiguous()
+        v_h = value.permute(0, 2, 1, 3).contiguous()
+
+        head_d = q_h.shape[-1]
         scale = head_d ** -0.5
-        attn_logits = torch.matmul(query.float(), key.float().transpose(-2, -1)) * scale
+        attn_logits = torch.matmul(q_h.float(), k_h.float().transpose(-2, -1)) * scale
 
         if attention_mask is not None:
             if attention_mask.dim() == 2:
@@ -156,38 +160,37 @@ class FluxCrossAttnRecorder:
         attn_probs = attn_logits.softmax(dim=-1)  # (B, H, S, S) fp32
 
         # ── Record cross-attention slice (image_q × text_k) ──
-        # Only record for double-stream blocks where text and image are
-        # separately identified. For single-stream blocks we'd need to know
-        # the text-len from outside; skip those (they're a minority).
         if txt_len > 0:
+            img_len = q_h.shape[2] - txt_len
             cross = attn_probs[:, :, txt_len:txt_len + img_len, :txt_len]
             avg = cross.detach().mean(dim=1).to(dtype=torch.float16, device="cpu")
             self.store.append({
                 "layer": self.name,
-                "attn": avg,                  # (B, img_len, txt_len)
+                "attn": avg,
                 "img_len": img_len,
                 "txt_len": txt_len,
             })
 
-        # Continue forward pass in input dtype.
-        out = torch.matmul(attn_probs.to(query.dtype), value)
-        out = out.transpose(1, 2).reshape(batch_size, -1, heads * head_d)
+        # ── Forward: probs @ V → reshape back to (B, S, H*D) ──
+        out_h = torch.matmul(attn_probs.to(q_h.dtype), v_h)         # (B, H, S, D)
+        out = out_h.permute(0, 2, 1, 3).contiguous()                 # (B, S, H, D)
+        out = out.flatten(2, 3).to(query.dtype)                      # (B, S, H*D)
 
-        if encoder_hidden_states is not None:
-            # Split joint output back into text and image, apply respective
-            # output projections.
-            txt_out = out[:, :txt_len]
-            img_out = out[:, txt_len:]
-            img_out = attn.to_out[0](img_out)
-            if len(attn.to_out) > 1:
-                img_out = attn.to_out[1](img_out)
+        # ── Output projections: ONLY for double-stream blocks ──
+        # Single-stream / pre_only blocks have no `to_out`; the block
+        # itself handles the projection downstream.
+        if encoder_hidden_states is not None and txt_len > 0:
+            encoder_out, hidden_out = out.split_with_sizes(
+                [txt_len, out.shape[1] - txt_len], dim=1
+            )
+            if hasattr(attn, "to_out") and not getattr(attn, "pre_only", False):
+                hidden_out = attn.to_out[0](hidden_out.contiguous())
+                if len(attn.to_out) > 1:
+                    hidden_out = attn.to_out[1](hidden_out)
             if hasattr(attn, "to_add_out"):
-                txt_out = attn.to_add_out(txt_out)
-            return img_out, txt_out
+                encoder_out = attn.to_add_out(encoder_out.contiguous())
+            return hidden_out, encoder_out
         else:
-            out = attn.to_out[0](out)
-            if len(attn.to_out) > 1:
-                out = attn.to_out[1](out)
             return out
 
 

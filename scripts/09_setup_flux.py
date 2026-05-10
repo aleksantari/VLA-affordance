@@ -26,6 +26,27 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 import numpy as np
 import torch
 
+# Suppress the verbose per-parameter materialization logs from transformers /
+# accelerate when loading large checkpoints — they make the cell output
+# unreadable on Colab and provide no actionable info.
+import logging
+import os
+os.environ.setdefault("TRANSFORMERS_VERBOSITY", "error")
+os.environ.setdefault("DIFFUSERS_VERBOSITY", "error")
+os.environ.setdefault("ACCELERATE_LOG_LEVEL", "ERROR")
+for noisy in ("transformers", "diffusers", "accelerate", "huggingface_hub"):
+    logging.getLogger(noisy).setLevel(logging.ERROR)
+try:
+    import transformers
+    transformers.logging.set_verbosity_error()
+except Exception:
+    pass
+try:
+    import diffusers
+    diffusers.logging.set_verbosity_error()
+except Exception:
+    pass
+
 
 def main():
     parser = argparse.ArgumentParser(description="Verify Flux setup for Axis 2")
