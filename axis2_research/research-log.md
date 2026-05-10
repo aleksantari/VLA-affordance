@@ -74,3 +74,20 @@ Both bugs would have produced incorrect outputs at runtime — likely NaN or gar
 **Committed and pushed:** cb19c07 → origin/nj-features.
 
 **Next:** Build the per-affordance qualitative figure scaffold (Figure 2 from the protocol) so when results arrive, figure generation is one command. Also prepare a minimal axis1+axis2 connecting figure scaffold.
+
+## 2026-05-10 (later) — Final pre-flight: Colab MCP + dataset wiring
+
+- **Colab MCP installed.** `claude mcp add colab-proxy-mcp uvx git+https://github.com/googlecolab/colab-mcp -s user` succeeded; `claude mcp list` reports ✓ Connected. Tools NOT available until user restarts Claude Code (MCP servers initialize at session start).
+- **Found working AGD20K download.** Original Cross-View-AG Drive ID was stale; LOCATE repo (Reagan1311/LOCATE) hosts a verified mirror at `1OEz25-u1uqKfeuyCqy7hmiOv7lIWfigk`. Patched `data/download_agd20k.py` (commit c8ffae8).
+- **User uploaded AGD20K.zip to `/content/drive/MyDrive/LBV Project/AGD20K.zip` on Drive.** Updated notebook Cell 2 to look for the zip there as a second fallback (after preferred unzipped path). When found, unzips into `./data/agd20k` AND persists copy to `/content/drive/MyDrive/datasets/AGD20K` so subsequent sessions take the fast symlink path. New `--from_zip` flag in `download_agd20k.py` (commit 5719a3e).
+- **Regression check.** Re-ran `scripts/dev_synthetic_results_test.py` after all the data-pipeline edits. Still PASSES — H2a/H2b/H2c statistics fire correctly on synthetic data; `pass_nss=True` at p=7e-43; cleanup correctly removes synthetic results when none existed before.
+- **Created qualitative panel scaffold.** `scripts/13_qualitative_panel.py` (commit 465365e) loads cached `.npy` per-sample attention maps from each system and produces image | GT | Flux | Cosmos V2W | Cosmos Policy comparison grid. Will run once pilot CSVs land.
+- **Hardened the Cosmos extractor.** Audited `interaction/cosmos_attention.py` against diffusers' `CosmosAttnProcessor2_0` source; fixed two bugs (`norm_q` order, `norm_k` head-reshape order) that would have produced garbage attention probs at runtime. Added `scripts/09b_setup_cosmos.py` — ~3 min smoke test that verifies the extractor mechanics before committing to a 3-hour pilot (commit 1737c8c).
+- **Hardened Colab notebook.** Resilience against session disconnect: incremental CSV writes with fsync, `--resume` flag (default on) skips done sample IDs, `--commit_every` auto-pushes mid-run, persistent HF cache on Drive, results symlinked to Drive, explicit VRAM cleanup between systems, optional JS keepalive (commit cb19c07).
+
+**Where we are now:**
+- All Axis 2 infrastructure pushed to origin/nj-features (HEAD = 5719a3e).
+- 5 synthetic-test-validated commits this session: cb19c07, 1737c8c, 465365e, 93aa84d, c8ffae8, 5719a3e.
+- Awaiting user to /exit and reopen Claude Code so the colab-proxy-mcp tools become available; then user sets HF_TOKEN + GH_PAT in Colab Secrets and tells me to start the pilot.
+
+**Next inner loop (post-restart):** call `open_colab_browser_connection`, drive cells 0–6 in order, ingest the 3 per-sample CSVs that get pushed back, run script 12 + script 13, write the next progress report.

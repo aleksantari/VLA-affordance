@@ -1,7 +1,7 @@
 project: Affordance in the Wild — Axis 2
 title: Interaction Affordance Probing Across Generative World Models
 date_started: 2026-05-10
-status: awaiting_colab_pilot
+status: awaiting_user_restart_for_colab_mcp
 
 research_question: |
   Do language-conditioned diffusion world models (Cosmos Predict2,
@@ -91,9 +91,18 @@ compute:
   user_role: execute Colab cells, return result CSVs/JSONs
 
 current_priorities:
-  - Bootstrap literature search (Cosmos Predict2 paper, Cosmos Policy paper, attention extraction methods)
-  - Lock H2a/H2b/H2c protocols
-  - Build Cosmos extractors mirroring FluxVerbAttentionExtractor API
-  - Prepare a clean Colab notebook covering all 3 systems
+  - User to /exit and reopen Claude Code to load colab-proxy-mcp tools
+  - User to set HF_TOKEN + GH_PAT in Colab Secrets when notebook opens
+  - Drive AGD20K zip path: /content/drive/MyDrive/LBV Project/AGD20K.zip (cell 2 handles unzip + persist)
+  - Run stage 4a smoke (~3 min) before committing to long pilots
+  - On pilot completion, ingest CSVs, run script 12, write paper-ready figures
+
+agent_handoff_notes:
+  - All infrastructure pushed to origin/nj-features as of 5719a3e
+  - Synthetic test (scripts/dev_synthetic_results_test.py) still PASSES — script 12 statistics validated end-to-end
+  - 6.3 GB AGD20K.zip lives in repo working dir; user can rm it (gitignored)
+  - Cosmos extractor norm_q/norm_k fix at 1737c8c — should be correct per diffusers source audit
+  - Smoke test (09b) will catch any remaining cosmos_attention.py runtime bugs in ~3 min
+  - Colab MCP installed (colab-proxy-mcp), connects after Claude restart
 
 trajectory: []  # populated as experiments run
