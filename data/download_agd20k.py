@@ -21,11 +21,19 @@ import shutil
 from pathlib import Path
 
 
-# Google Drive file IDs from Cross-View-AG repo
-# https://github.com/lhc1224/Cross-View-AG
+# Google Drive file IDs for AGD20K.
+#
+# The original Cross-View-AG repo (https://github.com/lhc1224/Cross-View-AG) has
+# inconsistent download links. The most reliable source as of 2026-05-10 is the
+# LOCATE repo (https://github.com/Reagan1311/LOCATE), which redistributes the
+# same AGD20K dataset and verifies its integrity.
+#
+# LOCATE primary:
+#   https://drive.google.com/file/d/1OEz25-u1uqKfeuyCqy7hmiOv7lIWfigk/view
+# LOCATE Baidu mirror (password: g23n):
+#   https://pan.baidu.com/s/1IRfho7xDAT0oJi5_mvP1sg
 AGD20K_GDRIVE_IDS = {
-    # These IDs may need updating — check the Cross-View-AG repo README
-    "AGD20K": "1sGMbPPkxjsLqbxbfAi_Z5gSddBKMhXHi",  # Main dataset
+    "AGD20K": "1OEz25-u1uqKfeuyCqy7hmiOv7lIWfigk",
 }
 
 EXPECTED_STRUCTURE = {
