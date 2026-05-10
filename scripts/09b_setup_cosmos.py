@@ -82,7 +82,7 @@ def main():
     print(f"Device: cuda" if torch.cuda.is_available() else "Device: cpu")
     if torch.cuda.is_available():
         gpu = torch.cuda.get_device_name()
-        vram = torch.cuda.get_device_properties(0).total_mem / 1e9
+        vram = torch.cuda.get_device_properties(0).total_memory / 1e9
         print(f"GPU: {gpu}  VRAM: {vram:.1f} GB")
     print()
 
