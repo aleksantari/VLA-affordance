@@ -7,6 +7,32 @@
 
 Do language-conditioned diffusion world models (Cosmos Predict2, Cosmos Policy) develop verb-spatial binding analogous to Flux, and does manipulation fine-tuning amplify this binding?
 
+## Axis 1 results (from aleksantari/Probing_Bridging_Affordance @ VLA-affordance)
+
+Discovered 2026-05-10 — Alex completed Axis 1 in a separate repo.
+Repo: https://github.com/aleksantari/Probing_Bridging_Affordance
+Path: geometry_probing/umd_linear_probing/results.md
+
+**Linear probe mIoU on UMD Part Affordance Dataset:**
+
+| Encoder | mIoU @ res-UMD (480×640) | mIoU @ 224×224 |
+|---|---|---|
+| DINOv2-L/14 | **0.6660** | 0.3773 |
+| DINOv2-B/14 | 0.6635 | 0.3383 |
+| SigLIP raw | 0.6284 | 0.3125 |
+| SigLIP PG1 (PaliGemma) | 0.6023 | 0.3519 |
+| SigLIP π0.5 | 0.5648 | **0.3889** |
+| SigLIP π0 | 0.5496 | 0.3719 |
+
+**Headline finding:** The proposal predicted VLA fine-tuning would destroy geometric affordance monotonically. Reality is **resolution-dependent and opposite at native vs operating resolution**:
+
+- At **native UMD resolution (480×640)**: VLA fine-tuning DEGRADES affordance (raw 0.628 → π0 0.550, −7.9 pp). DINOv2 remains the ceiling — Alex calls this the "best-supported claim of the whole project."
+- At **224×224 (the VLA's actual operating resolution)**: VLA fine-tuning IMPROVES affordance monotonically (raw 0.312 → PG1 0.352 → π0 0.372 → π0.5 0.389, +7.7 pp cumulative). π0.5 even beats DINOv2-L (0.389 vs 0.377).
+
+**Implication for paper narrative:** VLA training doesn't simply destroy geometric structure — it specializes SigLIP to the resolution it sees during fine-tuning. The high-resolution generalization that the raw contrastive encoder had is sacrificed for in-distribution geometric competence. This is more interesting than the original H1 hypothesis.
+
+**Connecting with Axis 2:** Both axes show resolution/specialization tradeoffs. VLAs gain resolution-locked geometric competence; world models bind verbs to spatial regions through cross-attention. Complementary specializations.
+
 ## Current Understanding
 
 (Pre-experiment) Three claims to test:
