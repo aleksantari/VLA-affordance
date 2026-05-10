@@ -157,6 +157,40 @@ def heatmap_to_fixations(
     return (heatmap > threshold).astype(np.float64)
 
 
+def peak_in_gt_region(
+    pred_map: np.ndarray,
+    gt_heatmap: np.ndarray,
+    gt_threshold_percentile: float = 80.0,
+) -> int:
+    """
+    Binary part-discrimination metric (PAVE-inspired methodology transfer).
+
+    Returns 1 if the argmax of the predicted attention map falls inside the
+    binarised GT functional region (top (100 - threshold_percentile)% pixels);
+    0 otherwise. This is the simplest possible "did the verb attention land in
+    the right place?" test — bypassing the distributional metrics' sensitivity
+    to map smoothness, scale, and noise.
+
+    The motivation: PAVE (Jain 2026) shows that for VLA encoder probing on
+    UMD, a 27pp multi-class IoU gap collapses to <3pp on binary
+    part-discrimination. If our KLD/SIM/NSS gap between Flux and Cosmos is
+    large but peak_in_gt is similar, we have the same methodological caveat.
+    """
+    # Resize pred_map to match gt_heatmap if needed
+    if pred_map.shape != gt_heatmap.shape:
+        from PIL import Image
+        pred_pil = Image.fromarray(pred_map.astype(np.float32), mode='F')
+        pred_pil = pred_pil.resize(
+            (gt_heatmap.shape[1], gt_heatmap.shape[0]),
+            Image.BILINEAR,
+        )
+        pred_map = np.array(pred_pil)
+
+    gt_binary = heatmap_to_fixations(gt_heatmap, gt_threshold_percentile)
+    peak_idx = np.unravel_index(np.argmax(pred_map), pred_map.shape)
+    return int(gt_binary[peak_idx] > 0)
+
+
 def evaluate_single(
     pred_map: np.ndarray,
     gt_heatmap: np.ndarray,
@@ -166,14 +200,14 @@ def evaluate_single(
 ) -> BindingMetrics:
     """
     Compute all metrics for a single prediction-GT pair.
-    
+
     Args:
         pred_map: Predicted attention heatmap from Flux
         gt_heatmap: Ground truth affordance heatmap from AGD20K
         affordance: Affordance category name (for logging)
         prompt: Prompt used (for logging)
         nss_threshold_percentile: Percentile for NSS fixation binarization
-        
+
     Returns:
         BindingMetrics with KLD, SIM, and NSS
     """
@@ -186,14 +220,14 @@ def evaluate_single(
             Image.BILINEAR,
         )
         pred_map = np.array(pred_pil)
-    
+
     # Compute metrics
     kld = compute_kld(pred_map, gt_heatmap)
     sim = compute_sim(pred_map, gt_heatmap)
-    
+
     gt_fixations = heatmap_to_fixations(gt_heatmap, nss_threshold_percentile)
     nss = compute_nss(pred_map, gt_fixations)
-    
+
     return BindingMetrics(
         kld=kld,
         sim=sim,
