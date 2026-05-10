@@ -87,75 +87,78 @@ class CosmosCrossAttnRecorder:
         hidden_states: torch.Tensor,
         encoder_hidden_states: Optional[torch.Tensor] = None,
         attention_mask: Optional[torch.Tensor] = None,
-        image_rotary_emb: Optional[Tuple[torch.Tensor, torch.Tensor]] = None,
         **kwargs,
     ) -> torch.Tensor:
-        # Cross-attention requires encoder_hidden_states; if absent, this is
-        # called as self-attention (shouldn't happen for attn2, but guard).
-        if encoder_hidden_states is None:
-            encoder_hidden_states = hidden_states
+        """
+        Mirrors diffusers' CosmosAttnProcessor2_0 for the cross-attention path
+        (attn2 only — note Cosmos's attn2 forward does not pass image_rotary_emb).
 
-        residual = hidden_states
+        Order of operations from diffusers source:
+            query = attn.to_q(hidden_states)
+            key   = attn.to_k(encoder_hidden_states)
+            value = attn.to_v(encoder_hidden_states)
+            query = attn.norm_q(query)   # normalize after projection
+            key   = attn.norm_k(key)
+            # then reshape to (B, heads, len, head_d) and run scaled-dot-product
+        """
+        if encoder_hidden_states is None:
+            encoder_hidden_states = hidden_states  # safety guard; shouldn't happen for attn2
+
         batch_size, q_len, _ = hidden_states.shape
         kv_len = encoder_hidden_states.shape[1]
 
-        if attn.norm_q is not None:
-            hidden_states = attn.norm_q(hidden_states)
-
-        # Q, K, V projections
+        # Project (in input dtype to keep weights happy)
         query = attn.to_q(hidden_states)
         key = attn.to_k(encoder_hidden_states)
         value = attn.to_v(encoder_hidden_states)
 
-        head_dim = attn.heads if hasattr(attn, "heads") else (
-            query.shape[-1] // 64  # fallback assumption
-        )
-        # diffusers convention: attn.heads is num heads
+        # Optional RMSNorm — apply in same order as diffusers (after projection)
+        if getattr(attn, "norm_q", None) is not None:
+            query = attn.norm_q(query)
+        if getattr(attn, "norm_k", None) is not None:
+            key = attn.norm_k(key)
+
         heads = attn.heads
         head_d = query.shape[-1] // heads
 
-        # (B, q_len, heads*head_d) -> (B, heads, q_len, head_d)
+        # (B, len, heads*head_d) -> (B, heads, len, head_d)
         query = query.view(batch_size, q_len, heads, head_d).transpose(1, 2)
         key = key.view(batch_size, kv_len, heads, head_d).transpose(1, 2)
         value = value.view(batch_size, kv_len, heads, head_d).transpose(1, 2)
 
-        if hasattr(attn, "norm_k") and attn.norm_k is not None:
-            key = attn.norm_k(key)
-
-        # Compute attention probs explicitly so we can record them.
-        # Use float32 for numerical stability when saving probs.
+        # Compute attention scores explicitly so we can record probabilities.
+        # Cast Q,K to float32 for the QK^T matmul to reduce precision loss; this
+        # is the same trick PyTorch's SDPA uses internally for bf16/fp16 inputs.
         attn_logits = torch.matmul(
             query.float(), key.float().transpose(-2, -1)
         ) / math.sqrt(head_d)
 
         if attention_mask is not None:
-            # Broadcast attention mask onto logits.
-            # attention_mask is typically (B, 1, 1, kv_len) or (B, kv_len)
             if attention_mask.dim() == 2:
                 attention_mask = attention_mask[:, None, None, :]
             attn_logits = attn_logits + attention_mask.to(attn_logits.dtype)
 
-        attn_probs = attn_logits.softmax(dim=-1)
-        # Detach + move to CPU + cast to half to keep memory manageable
-        # Average over heads here to drop a 16-32x memory factor.
-        avg_probs = attn_probs.detach().mean(dim=1).to(
-            dtype=torch.float16, device="cpu"
-        )  # (B, q_len, kv_len)
+        attn_probs = attn_logits.softmax(dim=-1)  # (B, heads, q_len, kv_len) fp32
 
+        # Record head-averaged probs on CPU in fp16 to keep memory bounded.
+        # 1 record per call ≈ 1 * q_len * kv_len * 2 bytes; for q_len=1000, kv_len=512
+        # that's ~1 MB/block/timestep, well within the 13 GB free CPU RAM on Colab.
+        avg_probs = attn_probs.detach().mean(dim=1).to(dtype=torch.float16, device="cpu")
         self.store.append({
             "layer": self.name,
-            "attn": avg_probs,                  # (B, q_len, kv_len) head-averaged
+            "attn": avg_probs,
             "q_len": q_len,
             "kv_len": kv_len,
         })
 
-        # Continue forward pass (use the same precision as inputs).
-        attn_probs_for_out = attn_logits.softmax(dim=-1).to(query.dtype)
-        out = torch.matmul(attn_probs_for_out, value)
+        # Continue the forward pass for the model itself (cast back to input dtype).
+        out = torch.matmul(attn_probs.to(query.dtype), value)
         out = out.transpose(1, 2).reshape(batch_size, q_len, heads * head_d)
 
+        # to_out is a Sequential of [Linear, Dropout]
         out = attn.to_out[0](out)
-        out = attn.to_out[1](out) if len(attn.to_out) > 1 else out
+        if len(attn.to_out) > 1:
+            out = attn.to_out[1](out)
 
         return out
 

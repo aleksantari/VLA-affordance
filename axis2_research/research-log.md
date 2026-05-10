@@ -49,3 +49,28 @@
 - Visual story for the paper (the connecting thesis with Axis 1)
 - Whether Cosmos Policy needs proprio padding (zero-vector tested first)
 - Whether the prompt template `"a person {verb} a {object}"` is optimal for Cosmos (it's already proven for Flux/Zhang et al.)
+
+## 2026-05-10 (loop tick) — Resilience hardening + Cosmos extractor bugfix
+
+**Context check:** No Colab results yet (origin/nj-features still at 4cbf7f9 before push). I had 3 unpushed local commits — pushed them so the Colab notebook would clone the latest code with the Cosmos extractor.
+
+**Audit found 2 real bugs in `interaction/cosmos_attention.py`:**
+
+1. `attn.norm_q(hidden_states)` — wrong: diffusers' CosmosAttnProcessor2_0 normalizes the *projected query* (after `to_q`), not the input. My version was double-projecting the unnormalized hidden_states.
+2. `attn.norm_k(key)` was applied AFTER head reshape, but should be applied BEFORE. Diffusers normalizes pre-reshape on the (B, len, heads*head_d) tensor.
+
+Both bugs would have produced incorrect outputs at runtime — likely NaN or garbage attention probs that bias all downstream metrics. Caught by reading the diffusers transformer_cosmos.py source carefully (key insight: their CosmosAttnProcessor2_0 does `query=to_q; key=to_k; query=norm_q(query); key=norm_k(key)`).
+
+**Built a fail-fast smoke test:** `scripts/09b_setup_cosmos.py`.
+- Loads pipeline → registers recorders → counts attn2 modules (must be > 0) → runs 1 inference at 320×320 + 5 frames + 4 steps (~3 min on A100) → checks attention map is non-constant and within [0, 1] → exits with code 2 on any failure.
+- Without this, a buggy extractor would have wasted hours of A100 time before producing visibly wrong CSVs.
+
+**Notebook updated:**
+- Stages 4a/5a now run 09b smoke test (~3 min) before any pilot
+- Stages 4b/5b run a 3×3 mini-pilot (~5 min) to validate AGD20K integration
+- Stages 4c/5c are the long pilots
+- Cleaner structure with proper VRAM cleanup cells
+
+**Committed and pushed:** cb19c07 → origin/nj-features.
+
+**Next:** Build the per-affordance qualitative figure scaffold (Figure 2 from the protocol) so when results arrive, figure generation is one command. Also prepare a minimal axis1+axis2 connecting figure scaffold.
