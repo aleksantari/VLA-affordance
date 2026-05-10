@@ -140,11 +140,26 @@ class AGD20KDataset(Dataset):
         
         # Discover dataset structure
         self.samples = self._discover_samples()
-        
+
         if len(self.samples) == 0:
+            # Print top-level contents so the user can see what actually
+            # ended up in data_dir (helps diagnose nested-zip-extraction).
+            try:
+                contents = sorted(p.name + ('/' if p.is_dir() else '')
+                                  for p in self.data_dir.iterdir())[:20]
+                contents_str = "\n  ".join(contents) if contents else "(empty)"
+            except Exception:
+                contents_str = "(could not list)"
             raise RuntimeError(
-                f"No samples found in {data_dir}. "
-                f"Run `python data/download_agd20k.py` first."
+                f"No AGD20K samples discovered under {data_dir}.\n"
+                f"Top-level contents:\n  {contents_str}\n"
+                f"Expected one of these subpaths to exist:\n"
+                f"  - testset/egocentric/<affordance>/<object>/...\n"
+                f"  - egocentric/<affordance>/...\n"
+                f"  - Seen/testset/egocentric/<affordance>/...\n"
+                f"If your zip extracted to a nested folder (e.g. AGD20K/...), "
+                f"the loader will now recurse one level deep automatically; "
+                f"if you still see this, check the zip layout."
             )
         
         print(f"AGD20K [{split}]: {len(self.samples)} samples across "
@@ -172,24 +187,44 @@ class AGD20KDataset(Dataset):
         """
         samples = []
         
-        # Try hierarchical structure first
-        ego_dirs = [
-            self.data_dir / "testset" / "egocentric",
-            self.data_dir / "egocentric",
-            self.data_dir / "Seen" / "testset" / "egocentric",
-            self.data_dir / "Unseen" / "testset" / "egocentric",
-            self.data_dir,  # fallback: scan root
+        # Try hierarchical structure first. The LOCATE-mirror zip
+        # commonly extracts into a single nested AGD20K/ folder, so we
+        # also look one level deep.
+        candidate_roots = [self.data_dir]
+        try:
+            for child in self.data_dir.iterdir():
+                if child.is_dir():
+                    candidate_roots.append(child)
+        except Exception:
+            pass
+
+        ego_subpaths = [
+            "testset/egocentric",
+            "egocentric",
+            "Seen/testset/egocentric",
+            "Unseen/testset/egocentric",
+            ".",  # fallback: scan root
         ]
-        
+
+        ego_dirs = []
+        for root in candidate_roots:
+            for sub in ego_subpaths:
+                ego_dirs.append(root / sub if sub != "." else root)
+
+        # As a last resort, do a shallow recursive search for any
+        # folder literally named "egocentric" anywhere under data_dir.
+        if all(not p.exists() for p in ego_dirs):
+            for found in self.data_dir.rglob("egocentric"):
+                if found.is_dir():
+                    ego_dirs.append(found)
+
         for ego_dir in ego_dirs:
             if not ego_dir.exists():
                 continue
-            
             samples.extend(self._scan_hierarchical(ego_dir))
-            
             if len(samples) > 0:
                 break
-        
+
         return samples
     
     def _scan_hierarchical(self, ego_dir: Path) -> List[Dict]:

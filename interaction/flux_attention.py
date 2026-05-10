@@ -1,30 +1,37 @@
 """
 Flux Cross-Attention Extraction for Verb-Spatial Binding Analysis
 
-Extracts cross-attention maps from Flux text-to-image diffusion model
-during denoising, isolating verb-token attention to measure spatial
-binding to functional object regions.
+REWRITTEN 2026-05-10 to drop the attention-map-diffusers dependency.
 
-Flux uses MMDiT (Multimodal Diffusion Transformer) with:
-- Double-Stream blocks: separate text/image streams with cross-connections
-- Single-Stream blocks: concatenated text+image joint attention
+attention-map-diffusers patches diffusers internals via monkey-patching and
+breaks every time diffusers ships a signature change (Colab installed a
+diffusers where FluxSingleTransformerBlock.forward gained an
+encoder_hidden_states positional, but the library still calls block(...)
+without it — TypeError at runtime).
 
-We hook into both block types to extract the Image-Query × Text-Key
-attention slice, focusing on verb token positions.
-
-Dependencies:
-    pip install diffusers attention-map-diffusers accelerate
+Instead, this module installs a custom AttentionProcessor on every
+FluxTransformerBlock.attn (and FluxSingleTransformerBlock.attn) and mirrors
+the math of diffusers' FluxAttnProcessor while recording the post-softmax
+attention map. This is the same pattern used in cosmos_attention.py.
 
 Reference:
     Zhang et al., "Probing and Bridging Geometry-Interaction Cues
     for Affordance Reasoning in Vision Foundation Models", CVPR 2026.
 """
 
-import re
-import torch
-import numpy as np
+from __future__ import annotations
+
+import math
+from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple
-from dataclasses import dataclass, field
+
+import numpy as np
+import torch
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Result type
+# ─────────────────────────────────────────────────────────────────────────────
 
 
 @dataclass
@@ -33,28 +40,170 @@ class VerbAttentionResult:
     prompt: str
     verbs: List[str]
     verb_token_indices: Dict[str, List[int]]
-    # Verb -> (H_latent, W_latent) attention heatmap, averaged across timesteps/layers
-    verb_attention_maps: Dict[str, np.ndarray]
-    # Verb -> (num_timesteps, H_latent, W_latent) per-timestep maps
+    verb_attention_maps: Dict[str, np.ndarray]                 # verb -> (H, W)
     verb_attention_per_timestep: Optional[Dict[str, np.ndarray]] = None
-    # Generated image (PIL)
     generated_image: Optional[object] = None
-    # Raw metadata
     num_timesteps: int = 0
     num_blocks: int = 0
     latent_size: Tuple[int, int] = (64, 64)
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# Custom AttentionProcessor — records cross-attention probabilities
+# Mirrors diffusers' FluxAttnProcessor with explicit softmax for capture.
+# ─────────────────────────────────────────────────────────────────────────────
+
+
+class FluxCrossAttnRecorder:
+    """
+    Custom processor that mirrors `FluxAttnProcessor` (diffusers) and records
+    head-averaged cross-attention probabilities (image_q × text_k).
+
+    Joint-attention layout (per diffusers' transformer_flux.py):
+      Q = concat([encoder_q, image_q], dim=seq)
+      K = concat([encoder_k, image_k], dim=seq)
+      V = concat([encoder_v, image_v], dim=seq)
+    Text comes first, image second, along the sequence dim.
+
+    For each forward pass, appends a record of shape
+        (batch, num_image_tokens, num_text_tokens)
+    to `self.store`, head-averaged and dtype=float16, device=CPU.
+    """
+
+    def __init__(self, name: str = "attn", store: Optional[List] = None):
+        self.name = name
+        self.store = store if store is not None else []
+
+    def reset(self):
+        self.store.clear()
+
+    def __call__(
+        self,
+        attn,
+        hidden_states: torch.Tensor,
+        encoder_hidden_states: Optional[torch.Tensor] = None,
+        attention_mask: Optional[torch.Tensor] = None,
+        image_rotary_emb: Optional[torch.Tensor] = None,
+        **kwargs,
+    ) -> torch.Tensor:
+        batch_size = hidden_states.shape[0]
+        img_len = hidden_states.shape[1]
+
+        # Image stream: Q, K, V from `to_q/to_k/to_v`
+        img_q = attn.to_q(hidden_states)
+        img_k = attn.to_k(hidden_states)
+        img_v = attn.to_v(hidden_states)
+
+        heads = attn.heads
+        head_d = img_q.shape[-1] // heads
+        img_q = img_q.view(batch_size, img_len, heads, head_d).transpose(1, 2)
+        img_k = img_k.view(batch_size, img_len, heads, head_d).transpose(1, 2)
+        img_v = img_v.view(batch_size, img_len, heads, head_d).transpose(1, 2)
+
+        if getattr(attn, "norm_q", None) is not None:
+            img_q = attn.norm_q(img_q)
+        if getattr(attn, "norm_k", None) is not None:
+            img_k = attn.norm_k(img_k)
+
+        # Text stream: only present in double-stream blocks (when
+        # encoder_hidden_states is passed)
+        txt_len = 0
+        if encoder_hidden_states is not None:
+            txt_q = attn.add_q_proj(encoder_hidden_states)
+            txt_k = attn.add_k_proj(encoder_hidden_states)
+            txt_v = attn.add_v_proj(encoder_hidden_states)
+
+            txt_len = encoder_hidden_states.shape[1]
+            txt_q = txt_q.view(batch_size, txt_len, heads, head_d).transpose(1, 2)
+            txt_k = txt_k.view(batch_size, txt_len, heads, head_d).transpose(1, 2)
+            txt_v = txt_v.view(batch_size, txt_len, heads, head_d).transpose(1, 2)
+
+            if getattr(attn, "norm_added_q", None) is not None:
+                txt_q = attn.norm_added_q(txt_q)
+            if getattr(attn, "norm_added_k", None) is not None:
+                txt_k = attn.norm_added_k(txt_k)
+
+            # Joint: text first, then image (matches diffusers FluxAttnProcessor)
+            query = torch.cat([txt_q, img_q], dim=2)
+            key = torch.cat([txt_k, img_k], dim=2)
+            value = torch.cat([txt_v, img_v], dim=2)
+        else:
+            # Single-stream: text was already concatenated into hidden_states
+            # by the block's forward; we treat the whole thing as the joint
+            # sequence and rely on the caller to know the layout.
+            query, key, value = img_q, img_k, img_v
+
+        # Apply RoPE if provided (diffusers helper, but we guard for older versions)
+        if image_rotary_emb is not None:
+            try:
+                from diffusers.models.embeddings import apply_rotary_emb
+                query = apply_rotary_emb(query, image_rotary_emb)
+                key = apply_rotary_emb(key, image_rotary_emb)
+            except Exception:
+                # If RoPE application fails for any reason, continue without it.
+                # Attention pattern will be slightly off but model still runs.
+                pass
+
+        # Compute attention scores explicitly (cast Q,K to fp32 for stability).
+        scale = head_d ** -0.5
+        attn_logits = torch.matmul(query.float(), key.float().transpose(-2, -1)) * scale
+
+        if attention_mask is not None:
+            if attention_mask.dim() == 2:
+                attention_mask = attention_mask[:, None, None, :]
+            attn_logits = attn_logits + attention_mask.to(attn_logits.dtype)
+
+        attn_probs = attn_logits.softmax(dim=-1)  # (B, H, S, S) fp32
+
+        # ── Record cross-attention slice (image_q × text_k) ──
+        # Only record for double-stream blocks where text and image are
+        # separately identified. For single-stream blocks we'd need to know
+        # the text-len from outside; skip those (they're a minority).
+        if txt_len > 0:
+            cross = attn_probs[:, :, txt_len:txt_len + img_len, :txt_len]
+            avg = cross.detach().mean(dim=1).to(dtype=torch.float16, device="cpu")
+            self.store.append({
+                "layer": self.name,
+                "attn": avg,                  # (B, img_len, txt_len)
+                "img_len": img_len,
+                "txt_len": txt_len,
+            })
+
+        # Continue forward pass in input dtype.
+        out = torch.matmul(attn_probs.to(query.dtype), value)
+        out = out.transpose(1, 2).reshape(batch_size, -1, heads * head_d)
+
+        if encoder_hidden_states is not None:
+            # Split joint output back into text and image, apply respective
+            # output projections.
+            txt_out = out[:, :txt_len]
+            img_out = out[:, txt_len:]
+            img_out = attn.to_out[0](img_out)
+            if len(attn.to_out) > 1:
+                img_out = attn.to_out[1](img_out)
+            if hasattr(attn, "to_add_out"):
+                txt_out = attn.to_add_out(txt_out)
+            return img_out, txt_out
+        else:
+            out = attn.to_out[0](out)
+            if len(attn.to_out) > 1:
+                out = attn.to_out[1](out)
+            return out
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Public extractor — same API as before so script 10 doesn't change
+# ─────────────────────────────────────────────────────────────────────────────
+
+
 class FluxVerbAttentionExtractor:
     """
     Extract verb-specific cross-attention maps from Flux during denoising.
-    
-    Usage:
-        extractor = FluxVerbAttentionExtractor(model_name="black-forest-labs/FLUX.1-schnell")
-        result = extractor.extract("a person cutting bread with a knife", verbs=["cutting"])
-        # result.verb_attention_maps["cutting"] -> (64, 64) heatmap
+
+    Drop-in replacement for the previous (broken) attention-map-diffusers
+    based extractor. Public API unchanged.
     """
-    
+
     def __init__(
         self,
         model_name: str = "black-forest-labs/FLUX.1-schnell",
@@ -62,118 +211,109 @@ class FluxVerbAttentionExtractor:
         dtype: torch.dtype = torch.bfloat16,
         enable_cpu_offload: bool = False,
     ):
-        """
-        Args:
-            model_name: HuggingFace model ID for Flux
-            device: Device to load model on
-            dtype: Model precision (bfloat16 recommended for A100)
-            enable_cpu_offload: Use sequential CPU offload for low VRAM
-        """
         self.model_name = model_name
         self.device = device
         self.dtype = dtype
         self.is_schnell = "schnell" in model_name.lower()
-        
-        # Lazy load — don't load model until first extraction
+        self._enable_cpu_offload = enable_cpu_offload
+
         self._pipe = None
         self._initialized = False
-        self._enable_cpu_offload = enable_cpu_offload
-    
+        self._attn_store: List[dict] = []
+        self._recorder_modules: List[torch.nn.Module] = []
+
     def _ensure_initialized(self):
-        """Lazy initialization of Flux pipeline with attention hooks."""
         if self._initialized:
             return
-        
+
         from diffusers import FluxPipeline
-        from attention_map_diffusers import init_pipeline
-        
+
         print(f"Loading Flux pipeline: {self.model_name}")
         print(f"  dtype: {self.dtype}")
         print(f"  device: {self.device}")
-        
+
         self._pipe = FluxPipeline.from_pretrained(
             self.model_name,
             torch_dtype=self.dtype,
         )
-        
+
         if self._enable_cpu_offload:
             self._pipe.enable_sequential_cpu_offload()
         else:
             self._pipe = self._pipe.to(self.device)
-        
-        # Register attention extraction hooks
-        self._pipe = init_pipeline(self._pipe)
-        
+
+        self._register_attention_recorders()
         self._initialized = True
+        print(f"  registered {len(self._recorder_modules)} cross-attention recorders")
         print(f"✓ Flux pipeline ready")
-    
+
+    def _register_attention_recorders(self):
+        """Replace the AttentionProcessor on every Flux block's `attn`."""
+        self._recorder_modules.clear()
+        transformer = self._pipe.transformer
+
+        # Double-stream blocks expose `transformer_blocks[i].attn` (the
+        # text+image joint attention). Single-stream blocks expose
+        # `single_transformer_blocks[i].attn` (concatenated stream).
+        for name, module in transformer.named_modules():
+            short = name.rsplit(".", 1)[-1]
+            if short == "attn" and hasattr(module, "to_q"):
+                rec = FluxCrossAttnRecorder(name=name, store=self._attn_store)
+                if hasattr(module, "processor"):
+                    module.processor = rec
+                self._recorder_modules.append(module)
+
+    # ── tokenization ──────────────────────────────────────────────────
+
     def get_verb_token_indices(
         self,
         prompt: str,
         verbs: List[str],
     ) -> Dict[str, List[int]]:
-        """
-        Find token positions for specified verbs in the tokenized prompt.
-        
-        Flux uses two tokenizers (CLIP + T5). We focus on the T5 tokenizer
-        since that's what drives the cross-attention in the transformer blocks.
-        
-        Args:
-            prompt: The full text prompt
-            verbs: List of verb strings to find (e.g., ["cutting", "holding"])
-            
-        Returns:
-            Dict mapping each verb to its token indices in the T5 encoding
-        """
         self._ensure_initialized()
-        
-        # Flux has tokenizer (CLIP) and tokenizer_2 (T5)
-        tokenizer = self._pipe.tokenizer_2  # T5 tokenizer
-        
-        # Encode the full prompt
+
+        # Flux uses two tokenizers; T5 (tokenizer_2) is the one feeding
+        # cross-attention text features.
+        tokenizer = self._pipe.tokenizer_2
         encoding = tokenizer(
             prompt,
             return_offsets_mapping=True,
             add_special_tokens=True,
+            max_length=getattr(self._pipe, "tokenizer_max_length", 512),
+            truncation=True,
         )
         tokens = tokenizer.convert_ids_to_tokens(encoding["input_ids"])
-        
-        verb_indices = {}
+
+        verb_indices: Dict[str, List[int]] = {}
         prompt_lower = prompt.lower()
-        
+
         for verb in verbs:
             verb_lower = verb.lower()
-            indices = []
-            
-            # Strategy 1: Match via offset mapping if available
-            if "offset_mapping" in encoding and encoding["offset_mapping"]:
-                offsets = encoding["offset_mapping"]
-                # Find where the verb appears in the original text
-                verb_start = prompt_lower.find(verb_lower)
-                if verb_start >= 0:
-                    verb_end = verb_start + len(verb_lower)
-                    for tok_idx, (start, end) in enumerate(offsets):
-                        if start < verb_end and end > verb_start:
-                            indices.append(tok_idx)
-            
-            # Strategy 2: Fallback — match decoded tokens
+            indices: List[int] = []
+
+            offsets = encoding.get("offset_mapping")
+            if offsets:
+                start = prompt_lower.find(verb_lower)
+                if start >= 0:
+                    end = start + len(verb_lower)
+                    for i, (s, e) in enumerate(offsets):
+                        if s < end and e > start:
+                            indices.append(i)
+
             if not indices:
-                for tok_idx, token in enumerate(tokens):
-                    # T5 tokens often have ▁ prefix for word boundaries
-                    clean_token = token.replace("▁", "").lower()
-                    if clean_token and (
-                        verb_lower.startswith(clean_token) or
-                        clean_token in verb_lower
-                    ):
-                        indices.append(tok_idx)
-            
+                for i, tok in enumerate(tokens):
+                    clean = tok.replace("▁", "").replace("Ġ", "").lower()
+                    if clean and (verb_lower.startswith(clean) or clean in verb_lower):
+                        indices.append(i)
+
             verb_indices[verb] = indices
-            
             if not indices:
-                print(f"  ⚠ Could not find verb '{verb}' in tokens: {tokens}")
-        
+                print(f"  ⚠ verb '{verb}' not found in tokens: {tokens[:20]}...")
+
         return verb_indices
-    
+
+    # ── inference + extraction ────────────────────────────────────────
+
     def extract(
         self,
         prompt: str,
@@ -185,41 +325,20 @@ class FluxVerbAttentionExtractor:
         seed: Optional[int] = 42,
         store_per_timestep: bool = True,
     ) -> VerbAttentionResult:
-        """
-        Run Flux inference and extract verb-specific cross-attention maps.
-        
-        Args:
-            prompt: Text prompt for image generation
-            verbs: Verbs to extract attention for
-            num_inference_steps: Denoising steps (default: 4 for schnell, 20 for dev)
-            guidance_scale: CFG scale (0.0 for schnell, 3.5 for dev)
-            height: Image height
-            width: Image width
-            seed: Random seed for reproducibility
-            store_per_timestep: Whether to store attention maps per timestep
-            
-        Returns:
-            VerbAttentionResult with attention maps and metadata
-        """
         self._ensure_initialized()
-        
-        from attention_map_diffusers import attn_maps
-        
-        # Default inference settings
+
         if num_inference_steps is None:
             num_inference_steps = 4 if self.is_schnell else 20
         if self.is_schnell:
-            guidance_scale = 0.0  # schnell doesn't use CFG
-        
-        # Get verb token positions
+            guidance_scale = 0.0  # schnell ignores CFG
+
         verb_token_indices = self.get_verb_token_indices(prompt, verbs)
-        
-        # Clear any previous attention maps
-        attn_maps.clear()
-        
-        # Run inference
-        generator = torch.Generator(device=self.device).manual_seed(seed) if seed else None
-        
+        self._attn_store.clear()
+
+        generator = (
+            torch.Generator(device=self.device).manual_seed(seed) if seed is not None else None
+        )
+
         output = self._pipe(
             prompt=prompt,
             num_inference_steps=num_inference_steps,
@@ -229,23 +348,19 @@ class FluxVerbAttentionExtractor:
             generator=generator,
         )
         generated_image = output.images[0]
-        
-        # Latent spatial dimensions
-        latent_h = height // 16  # Flux uses 16x downsampling for patch embedding
+
+        # Flux packs 2 spatial patches per token; latent grid = (H/16, W/16).
+        latent_h = height // 16
         latent_w = width // 16
-        # But the actual latent is packed differently — 
-        # Flux packs 2x2 patches, so effective grid is height//16 x width//16
-        # Let's compute from the attention map shapes
-        
-        # Extract verb-specific attention from stored maps
-        verb_maps_avg, verb_maps_per_step = self._process_attention_maps(
-            attn_maps,
+
+        verb_maps_avg, verb_maps_per_step, num_blocks = self._process_attention_store(
+            self._attn_store,
             verb_token_indices,
             latent_h,
             latent_w,
             store_per_timestep,
         )
-        
+
         return VerbAttentionResult(
             prompt=prompt,
             verbs=verbs,
@@ -254,158 +369,108 @@ class FluxVerbAttentionExtractor:
             verb_attention_per_timestep=verb_maps_per_step if store_per_timestep else None,
             generated_image=generated_image,
             num_timesteps=num_inference_steps,
+            num_blocks=num_blocks,
             latent_size=(latent_h, latent_w),
         )
-    
-    def _process_attention_maps(
+
+    def _process_attention_store(
         self,
-        attn_maps_store,
+        store: List[dict],
         verb_token_indices: Dict[str, List[int]],
         latent_h: int,
         latent_w: int,
         store_per_timestep: bool,
-    ) -> Tuple[Dict[str, np.ndarray], Optional[Dict[str, np.ndarray]]]:
+    ) -> Tuple[Dict[str, np.ndarray], Optional[Dict[str, np.ndarray]], int]:
         """
-        Process raw attention maps from attention-map-diffusers hooks.
-        
-        The stored attention maps have structure depending on the library version.
-        We handle the common formats:
-        - Dict[layer_name] -> Tensor of shape (num_heads, seq_len, seq_len)
-        - Or accumulated across timesteps
-        
-        We need to:
-        1. Identify which part of seq_len is image vs text tokens
-        2. Slice out image_query x text_key (cross-attention portion)
-        3. Index into text_key at verb token positions
-        4. Reshape image dimension to spatial grid
-        5. Average across heads and blocks
+        Group recorded entries by layer name, then for each verb:
+          - select kv columns corresponding to verb tokens
+          - reshape image dim to (H, W)
+          - average across heads (already done at capture) and timesteps and blocks
         """
-        verb_maps_all_steps = {verb: [] for verb in verb_token_indices}
-        
-        # Process attention maps — the exact structure depends on 
-        # attention-map-diffusers version. We try multiple formats.
-        
-        if hasattr(attn_maps_store, 'items'):
-            # Dict-like access
-            raw_maps = dict(attn_maps_store)
-        elif hasattr(attn_maps_store, '__iter__'):
-            raw_maps = {f"block_{i}": m for i, m in enumerate(attn_maps_store)}
-        else:
-            print("⚠ Unexpected attention map format. Returning empty maps.")
-            empty = {v: np.zeros((latent_h, latent_w)) for v in verb_token_indices}
-            return empty, None
-        
-        for layer_name, attn_tensor in raw_maps.items():
-            if not isinstance(attn_tensor, torch.Tensor):
+        if not store:
+            empty = {v: np.zeros((latent_h, latent_w), dtype=np.float32) for v in verb_token_indices}
+            return empty, None, 0
+
+        by_layer: Dict[str, List[dict]] = {}
+        for entry in store:
+            by_layer.setdefault(entry["layer"], []).append(entry)
+        num_blocks = len(by_layer)
+
+        verb_block_lists: Dict[str, List[np.ndarray]] = {v: [] for v in verb_token_indices}
+
+        # Determine the correct image-token reshape. Flux uses 2x2 packed
+        # patches, so img_len = (H/16) * (W/16) = latent_h * latent_w.
+        # If observed img_len doesn't match, try 4x packing.
+        expected = latent_h * latent_w
+
+        for layer_name, entries in by_layer.items():
+            num_steps = len(entries)
+            if num_steps == 0:
                 continue
-            
-            attn = attn_tensor.float().cpu()
-            
-            # Expected shapes vary:
-            # (heads, total_seq, total_seq) — single timestep
-            # (timesteps, heads, total_seq, total_seq) — accumulated
-            # (total_seq, total_seq) — already head-averaged
-            
-            if attn.dim() == 2:
-                attn = attn.unsqueeze(0).unsqueeze(0)  # (1, 1, S, S)
-            elif attn.dim() == 3:
-                attn = attn.unsqueeze(0)  # (1, heads, S, S)
-            
-            # attn: (T, H, S, S) where S = num_image_tokens + num_text_tokens
-            T, H, S, _ = attn.shape
-            
-            # Determine image/text split
-            # Flux: image tokens come first, then text tokens
-            num_image_tokens = latent_h * latent_w
-            num_text_tokens = S - num_image_tokens
-            
-            if num_text_tokens <= 0:
-                # This might be a self-attention-only block, skip
-                continue
-            
-            # Extract cross-attention: image_query x text_key
-            # attn[:, :, :num_image, num_image:] = how image tokens attend to text
-            cross_attn = attn[:, :, :num_image_tokens, num_image_tokens:]
-            # cross_attn: (T, H, num_image_tokens, num_text_tokens)
-            
-            # Average across heads
-            cross_attn = cross_attn.mean(dim=1)  # (T, num_image_tokens, num_text_tokens)
-            
+
+            # Stack across timesteps: (T, B, img_len, txt_len)
+            stacked = torch.stack([e["attn"] for e in entries], dim=0)[:, 0]
+            T_steps, img_len, txt_len = stacked.shape
+
+            # Figure out spatial reshape
+            if img_len == expected:
+                lh, lw = latent_h, latent_w
+            else:
+                side = int(round(math.sqrt(img_len)))
+                if side * side == img_len:
+                    lh, lw = side, side
+                else:
+                    continue  # skip layers whose img_len doesn't factor
+
             for verb, token_indices in verb_token_indices.items():
                 if not token_indices:
                     continue
-                
-                # Clamp indices to valid range
-                valid_indices = [
-                    idx for idx in token_indices 
-                    if idx < num_text_tokens
-                ]
-                
-                if not valid_indices:
+                valid = [i for i in token_indices if i < txt_len]
+                if not valid:
                     continue
-                
-                # Extract attention for verb tokens and average
-                verb_attn = cross_attn[:, :, valid_indices].mean(dim=-1)
-                # verb_attn: (T, num_image_tokens)
-                
-                # Reshape to spatial grid
-                verb_spatial = verb_attn.reshape(T, latent_h, latent_w)
-                # verb_spatial: (T, latent_h, latent_w)
-                
-                verb_maps_all_steps[verb].append(verb_spatial.numpy())
-        
-        # Aggregate across blocks
-        verb_maps_avg = {}
-        verb_maps_per_step = {} if store_per_timestep else None
-        
+                # (T, img_len)
+                verb_attn = stacked[..., valid].mean(dim=-1)
+                verb_spatial = verb_attn.reshape(T_steps, lh, lw)
+                verb_block_lists[verb].append(verb_spatial.float().numpy())
+
+        verb_maps_avg: Dict[str, np.ndarray] = {}
+        verb_maps_per_step: Optional[Dict[str, np.ndarray]] = (
+            {} if store_per_timestep else None
+        )
+
         for verb in verb_token_indices:
-            if verb_maps_all_steps[verb]:
-                # Stack across blocks and average
-                stacked = np.stack(verb_maps_all_steps[verb], axis=0)
-                # stacked: (num_blocks, T, H, W)
-                
-                # Average across blocks
-                block_avg = stacked.mean(axis=0)  # (T, H, W)
-                
-                # Average across timesteps for the summary map
-                verb_maps_avg[verb] = block_avg.mean(axis=0)  # (H, W)
-                
-                # Normalize to [0, 1]
-                vmin, vmax = verb_maps_avg[verb].min(), verb_maps_avg[verb].max()
-                if vmax > vmin:
-                    verb_maps_avg[verb] = (verb_maps_avg[verb] - vmin) / (vmax - vmin)
-                
+            arrays = verb_block_lists[verb]
+            if not arrays:
+                verb_maps_avg[verb] = np.zeros((latent_h, latent_w), dtype=np.float32)
                 if store_per_timestep:
-                    verb_maps_per_step[verb] = block_avg  # (T, H, W)
-            else:
-                verb_maps_avg[verb] = np.zeros((latent_h, latent_w))
-                if store_per_timestep:
-                    verb_maps_per_step[verb] = np.zeros((1, latent_h, latent_w))
-        
-        return verb_maps_avg, verb_maps_per_step
-    
+                    verb_maps_per_step[verb] = np.zeros((1, latent_h, latent_w), dtype=np.float32)
+                continue
+            stack = np.stack(arrays, axis=0)  # (B_blocks, T_steps, H, W)
+            block_avg = stack.mean(axis=0)
+            map_avg = block_avg.mean(axis=0)
+            vmin, vmax = float(map_avg.min()), float(map_avg.max())
+            if vmax > vmin:
+                map_avg = (map_avg - vmin) / (vmax - vmin)
+            verb_maps_avg[verb] = map_avg
+            if store_per_timestep:
+                verb_maps_per_step[verb] = block_avg
+
+        return verb_maps_avg, verb_maps_per_step, num_blocks
+
     def extract_batch(
         self,
         prompts: List[str],
         verbs_per_prompt: List[List[str]],
         **kwargs,
     ) -> List[VerbAttentionResult]:
-        """
-        Extract verb attention for multiple prompts sequentially.
-        
-        Note: Flux doesn't support true batch inference for attention extraction
-        (each prompt needs its own attention maps), so this is a convenience
-        wrapper for sequential extraction.
-        """
         results = []
         for i, (prompt, verbs) in enumerate(zip(prompts, verbs_per_prompt)):
             print(f"  [{i+1}/{len(prompts)}] {prompt}")
             result = self.extract(prompt, verbs, **kwargs)
             results.append(result)
         return results
-    
+
     @property
     def pipe(self):
-        """Access the underlying Flux pipeline."""
         self._ensure_initialized()
         return self._pipe

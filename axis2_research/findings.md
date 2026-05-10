@@ -47,6 +47,20 @@ If H2c is supported, this connects to Axis 1's finding that VLAs *destroy* geome
 - **Cosmos cross-attention layer naming:** `attn2` modules in `CosmosTransformer3DModel`. Custom `AttentionProcessor` registration is the path forward (attention-map-diffusers does not support Cosmos).
 - **Single-image probing for video model:** Cosmos2VideoToWorld accepts a single first-frame image. We use the AGD20K image directly, then average attention over the temporal latent dimension since binding is a spatial property.
 
+## Integration debt found in Colab pilot (2026-05-10)
+
+User's first Colab run hit four real bugs that synthetic-only testing didn't catch. Lessons:
+
+1. **`attention-map-diffusers` is brittle.** The library monkey-patches diffusers internals and breaks every time diffusers ships a signature change. On Colab's diffusers, `FluxSingleTransformerBlock.forward` requires `encoder_hidden_states` as positional but the library calls `block(...)` without it → TypeError. **Fix:** rewrote `interaction/flux_attention.py` to install a custom `AttentionProcessor` on every Flux block's `attn`, mirroring diffusers' own `FluxAttnProcessor` math but with explicit softmax for capture. No external attention library needed.
+
+2. **`cosmos_guardrail` package is broken on Colab.** Cosmos2VideoToWorldPipeline auto-instantiates a `CosmosSafetyChecker` that requires the optional `cosmos_guardrail` PyPI package, which fails to install cleanly. **Fix:** pass `safety_checker=None` to `from_pretrained()` — we're probing attention internals on AGD20K real-human-interaction images, the safety checker is irrelevant for our research.
+
+3. **AGD20K loader didn't recurse into nested unzip dirs.** The LOCATE-mirror zip extracts to `./data/agd20k/AGD20K/Seen/...` (extra nested folder); my hardcoded path list missed it. **Fix:** loader now scans up to one level deep + has a `rglob("egocentric")` fallback. Error message also now prints `data_dir` contents so future failures are diagnosable.
+
+4. **No pre-flight check.** User burned ~2 min on each model download before the bug surfaced. **Fix:** new `scripts/00_diagnostic.py` runs in 5 sec without touching GPU, checks all imports + AGD20K detection. Notebook Cell 2.5 calls it.
+
+Also added: tqdm progress bars on scripts 10 / 10b (user complained about silent black-box runs).
+
 ## H2c Deferred (2026-05-10) — Cosmos Policy is not a diffusers pipeline
 
 **Surfaced when:** user ran `09b_setup_cosmos.py --system cosmos_policy` on Colab — got `404 Not Found` on `https://huggingface.co/nvidia/Cosmos-Policy-ALOHA-Predict2-2B/resolve/main/model_index.json`.

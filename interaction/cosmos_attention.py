@@ -230,9 +230,15 @@ class CosmosVerbAttentionExtractor:
         print(f"  pipeline_type: {self.pipeline_type}")
         print(f"  dtype: {self.dtype}")
 
+        # Bypass the optional `cosmos_guardrail` safety_checker — we're
+        # probing attention internals on AGD20K (real human interaction
+        # photos), not generating videos for end users. The safety checker
+        # would otherwise require the optional `cosmos_guardrail` PyPI
+        # package which fails to install cleanly on Colab.
         self._pipe = PipelineCls.from_pretrained(
             self.model_name,
             torch_dtype=self.dtype,
+            safety_checker=None,
         )
 
         if self._enable_cpu_offload:

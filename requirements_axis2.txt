@@ -1,12 +1,12 @@
 # Axis 2: Interaction Affordance Probing
-# Three systems: Flux + Cosmos-Predict2-2B-Video2World + Cosmos-Policy-ALOHA-Predict2-2B
+# Two systems: Flux + Cosmos-Predict2-2B-Video2World
+# (Cosmos Policy deferred — see axis2_research/findings.md)
 # Install alongside base requirements.txt
 # Designed for Colab Pro (A100 40GB)
 
 # Cosmos pipelines (Cosmos2TextToImagePipeline, Cosmos2VideoToWorldPipeline)
 # require diffusers >= 0.32.0 with Cosmos support merged.
 diffusers>=0.32.0
-attention-map-diffusers          # Flux attention hooks (Cosmos uses interaction/cosmos_attention.py)
 accelerate
 sentencepiece
 protobuf
@@ -17,5 +17,8 @@ transformers>=4.46.0
 
 # Statistics for hypothesis testing in script 12
 scipy>=1.11
+
+# Progress bars in probing scripts
+tqdm
 
 gdown                            # Google Drive download for AGD20K

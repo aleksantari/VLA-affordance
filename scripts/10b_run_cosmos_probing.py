@@ -214,12 +214,29 @@ def main():
         except Exception as _e:
             print(f"    ⚠ git push failed: {_e}")
 
+    try:
+        from tqdm import tqdm
+    except ImportError:
+        def tqdm(it, *a, **k):
+            return it
+
+    # Total work units = sum of per-category sample budgets, minus already done.
+    total_to_do = sum(
+        min(len(dataset.get_samples_by_affordance(c)),
+            args.max_per_category or 10**9)
+        for c in categories
+    ) - len(done_ids)
+    pbar = tqdm(
+        total=max(total_to_do, 0),
+        desc=f"{args.system}",
+        unit="sample",
+        dynamic_ncols=True,
+    )
+
     for cat_idx, category in enumerate(categories):
         sample_indices = dataset.get_samples_by_affordance(category)
         if args.max_per_category:
             sample_indices = sample_indices[:args.max_per_category]
-
-        print(f"\n[{cat_idx+1}/{len(categories)}] {category} ({len(sample_indices)} samples)")
 
         for i, sample_idx in enumerate(sample_indices):
             sample = dataset[sample_idx]
@@ -274,16 +291,20 @@ def main():
                 if args.save_attention_maps:
                     np.save(str(cache_dir / f"{sample_id}.npy"), pred_map)
 
-                if (i + 1) % 10 == 0:
-                    print(
-                        f"    {i+1}/{len(sample_indices)} — "
-                        f"KLD={metrics.kld:.3f} SIM={metrics.sim:.3f} NSS={metrics.nss:.3f}"
-                    )
+                pbar.set_postfix({
+                    "cat": category[:6],
+                    "KLD": f"{metrics.kld:.2f}",
+                    "SIM": f"{metrics.sim:.2f}",
+                    "NSS": f"{metrics.nss:.2f}",
+                })
+                pbar.update(1)
 
             except Exception as e:
                 print(f"    ⚠ Error on {sample_id}: {e}")
                 skipped += 1
+                pbar.update(1)
 
+    pbar.close()
     print(f"\nProcessed: {total}, skipped: {skipped}")
 
     # Step 4: aggregate + save

@@ -200,15 +200,30 @@ def main():
         except Exception as _e:
             print(f"    ⚠ git push failed: {_e}")
     
+    try:
+        from tqdm import tqdm
+    except ImportError:
+        def tqdm(it, *a, **k):
+            return it
+
+    total_to_do = sum(
+        min(len(dataset.get_samples_by_affordance(c)),
+            args.max_per_category or 10**9)
+        for c in categories
+    ) - len(done_ids)
+    pbar = tqdm(
+        total=max(total_to_do, 0),
+        desc=f"flux_{args.model}",
+        unit="sample",
+        dynamic_ncols=True,
+    )
+
     for cat_idx, category in enumerate(categories):
         sample_indices = dataset.get_samples_by_affordance(category)
-        
+
         if args.max_per_category:
             sample_indices = sample_indices[:args.max_per_category]
-        
-        print(f"\n[{cat_idx+1}/{len(categories)}] {category} "
-              f"({len(sample_indices)} samples)")
-        
+
         for i, sample_idx in enumerate(sample_indices):
             sample = dataset[sample_idx]
             sample_id = f"{category}_{i}"
@@ -286,17 +301,21 @@ def main():
                     map_path = cache_dir / f"{sample_id}.npy"
                     np.save(str(map_path), pred_map)
 
-                # Progress
-                if (i + 1) % 10 == 0:
-                    print(f"    {i+1}/{len(sample_indices)} — "
-                          f"KLD={metrics.kld:.3f} SIM={metrics.sim:.3f} "
-                          f"NSS={metrics.nss:.3f}")
-                    
+                pbar.set_postfix({
+                    "cat": category[:6],
+                    "KLD": f"{metrics.kld:.2f}",
+                    "SIM": f"{metrics.sim:.2f}",
+                    "NSS": f"{metrics.nss:.2f}",
+                })
+                pbar.update(1)
+
             except Exception as e:
                 print(f"    ⚠ Error on sample {sample_id}: {e}")
                 skipped += 1
+                pbar.update(1)
                 continue
-    
+
+    pbar.close()
     print(f"\nProcessed: {total_samples} samples, skipped: {skipped}")
     
     # ── Step 4: Aggregate and save metrics ──
