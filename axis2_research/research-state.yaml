@@ -1,0 +1,98 @@
+project: Affordance in the Wild — Axis 2
+title: Interaction Affordance Probing Across Generative World Models
+date_started: 2026-05-10
+status: bootstrap
+
+research_question: |
+  Do language-conditioned diffusion world models (Cosmos Predict2,
+  Cosmos Policy) develop verb-spatial binding analogous to Flux,
+  and does manipulation fine-tuning amplify this binding?
+
+central_thesis: |
+  Generative world model policies amplify interaction affordance
+  because their diffusion backbone creates verb-spatial binding through
+  cross-attention. Manipulation fine-tuning further tightens this
+  binding because manipulation data directly contains verbs engaging
+  with object parts.
+
+systems_under_test:
+  - id: flux
+    name: FLUX.1 (schnell + dev)
+    role: known-good baseline, replicates Zhang et al. interaction findings
+    arch: MMDiT text-to-image diffusion
+    text_encoder: T5-XXL + CLIP
+    inference_steps: { schnell: 4, dev: 20 }
+    expected_metrics_from_zhang: { kld: 1.493, sim: 0.326, nss: 1.090 }
+
+  - id: cosmos_predict2
+    name: Cosmos Predict2 2B
+    role: tests whether base video diffusion develops verb-spatial binding
+    arch: diffusion transformer with T5-XXL cross-attention
+    pretraining: general video
+    status_in_repo: NOT YET IMPLEMENTED
+
+  - id: cosmos_policy
+    name: Cosmos Policy
+    role: tests whether manipulation training amplifies interaction binding
+    arch: same as Cosmos Predict2 (architecturally identical), fine-tuned on manipulation demos
+    status_in_repo: NOT YET IMPLEMENTED
+
+evaluation:
+  dataset: AGD20K
+  split: egocentric
+  num_categories: 36
+  metrics: [KLD, SIM, NSS]
+  prompt_template: "a person {verb} a {object}"
+  primary_metric_for_inner_loop: NSS_overall  # higher is better
+
+hypotheses:
+  H2a:
+    statement: Flux shows strong verb-spatial binding, replicating Zhang et al.
+    prediction: KLD ≤ 1.7, SIM ≥ 0.30, NSS ≥ 1.0 on AGD20K (overall)
+    status: not_started
+    rationale: Direct replication of Zhang et al.'s methodology
+
+  H2b:
+    statement: Cosmos Predict2 shows verb-spatial binding via T5-XXL cross-attention
+    prediction: NSS_predict2 > 0.5 (significantly better than blind baseline ~0)
+    status: not_started
+    rationale: Same conditioning mechanism as Flux
+
+  H2c:
+    statement: Cosmos Policy shows STRONGER verb-spatial binding than Cosmos Predict2
+    prediction: NSS_policy > NSS_predict2 by ≥ 10% relative; manipulation verbs (hold, pick_up, pour) most affected
+    status: not_started
+    rationale: Manipulation demos contain explicit verb-part interactions
+
+bootstrap_status:
+  literature_surveyed: false
+  protocols_locked: false
+  baseline_running: false
+
+infrastructure:
+  flux_extractor: BUILT (interaction/flux_attention.py)
+  flux_metrics: BUILT (interaction/verb_spatial_binding.py)
+  agd20k_loader: BUILT (data/agd20k_dataset.py)
+  flux_visualization: BUILT (interaction/visualization.py)
+  flux_setup_script: BUILT (scripts/09_setup_flux.py)
+  flux_probing_script: BUILT (scripts/10_run_interaction_probing.py)
+  axis2_report_script: BUILT (scripts/11_generate_axis2_report.py)
+  cosmos_predict2_extractor: NOT_BUILT
+  cosmos_policy_extractor: NOT_BUILT
+  three_way_comparison_script: NOT_BUILT
+  colab_notebook_flux: BUILT (notebooks/axis2_flux_colab.ipynb)
+  colab_notebook_cosmos: NOT_BUILT
+
+compute:
+  user_runs_training_on: Colab Pro (A100 40GB)
+  agent_runs_locally_on: RTX 5060 8GB (insufficient for Flux/Cosmos inference)
+  agent_role: orchestration, code, analysis, reports
+  user_role: execute Colab cells, return result CSVs/JSONs
+
+current_priorities:
+  - Bootstrap literature search (Cosmos Predict2 paper, Cosmos Policy paper, attention extraction methods)
+  - Lock H2a/H2b/H2c protocols
+  - Build Cosmos extractors mirroring FluxVerbAttentionExtractor API
+  - Prepare a clean Colab notebook covering all 3 systems
+
+trajectory: []  # populated as experiments run
