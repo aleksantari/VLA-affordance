@@ -162,8 +162,26 @@ class AGD20KDataset(Dataset):
                 f"if you still see this, check the zip layout."
             )
         
+        # Sanity-check: how many samples have a heatmap path resolved?
+        n_with_gt = sum(1 for s in self.samples if s.get("heatmap_path"))
+        n_without_gt = len(self.samples) - n_with_gt
+        if n_with_gt == 0 and len(self.samples) > 0:
+            # Sample one image_path to help the user fix the layout
+            example = self.samples[0]["image_path"]
+            raise RuntimeError(
+                f"AGD20K loaded {len(self.samples)} images but found ZERO "
+                f"matching heatmaps (GT files). Probing scripts will skip "
+                f"every sample with no GT heatmap.\n"
+                f"  Example image: {example}\n"
+                f"  Expected heatmap location (LOCATE-mirror layout):\n"
+                f"    same path with `egocentric` -> `GT` and extension `.png`.\n"
+                f"  Verify the GT/ directory exists alongside egocentric/ "
+                f"under your AGD20K root."
+            )
+
         print(f"AGD20K [{split}]: {len(self.samples)} samples across "
-              f"{len(set(s['affordance'] for s in self.samples))} affordances")
+              f"{len(set(s['affordance'] for s in self.samples))} affordances "
+              f"({n_with_gt} with GT heatmap, {n_without_gt} without)")
     
     def _discover_samples(self) -> List[Dict]:
         """
@@ -326,11 +344,44 @@ class AGD20KDataset(Dataset):
         return samples
     
     def _find_heatmap(self, img_path: Path) -> Optional[Path]:
-        """Try to find a heatmap file corresponding to an image."""
+        """
+        Try to find a heatmap file corresponding to an image.
+
+        AGD20K (LOCATE-mirror layout) stores heatmaps in a *parallel* GT
+        directory tree, not next to the images. Example:
+            .../Seen/testset/egocentric/cut/knife/image_001.jpg
+            .../Seen/testset/GT/cut/knife/image_001.png  ← the heatmap
+
+        We first check the LOCATE-style parallel GT path; if nothing matches
+        we fall back to side-by-side and other common naming conventions.
+        """
         stem = img_path.stem
         parent = img_path.parent
-        
-        # Common heatmap naming patterns
+
+        # ── Strategy 1: parallel GT/ tree (LOCATE-mirror layout) ──
+        # Walk up the path. When we find a segment named "egocentric",
+        # construct the same path with that segment replaced by "GT" and
+        # look there for <stem>.png.
+        try:
+            parts = list(img_path.parts)
+            for i in range(len(parts) - 1, -1, -1):
+                if parts[i].lower() == "egocentric":
+                    for gt_label in ("GT", "gt", "Heatmap", "heatmap", "heatmaps"):
+                        gt_parts = parts.copy()
+                        gt_parts[i] = gt_label
+                        gt_dir = Path(*gt_parts).parent
+                        if gt_dir.exists():
+                            cand = gt_dir / f"{stem}.png"
+                            if cand.exists():
+                                return cand
+                            # Some heatmaps are .jpg or have suffixes
+                            for ext in (".png", ".jpg", ".jpeg"):
+                                for c in gt_dir.glob(f"{stem}*{ext}"):
+                                    return c
+        except Exception:
+            pass
+
+        # ── Strategy 2: side-by-side naming patterns ──
         candidates = [
             parent / f"{stem}_heatmap.png",
             parent / f"{stem}_gt.png",

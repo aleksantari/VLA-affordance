@@ -114,7 +114,6 @@ def main():
         if not data_dir.exists():
             raise FileNotFoundError(f"{data_dir} does not exist — run Cell 2")
 
-        # Top-level listing
         try:
             top = sorted(p.name for p in data_dir.iterdir())[:10]
         except Exception:
@@ -124,8 +123,14 @@ def main():
         ds = AGD20KDataset(data_dir=str(data_dir), image_size=224)
         if len(ds) == 0:
             raise RuntimeError("loader returned 0 samples")
+        # Also verify GT heatmap finder works for at least one sample
+        n_with_gt = sum(1 for s in ds.samples if s.get("heatmap_path"))
+        if n_with_gt == 0:
+            raise RuntimeError(
+                f"loader found {len(ds)} images but ZERO heatmaps — probing would skip everything"
+            )
         n_cats = len(ds.get_affordance_categories())
-        return f"{len(ds)} samples across {n_cats} affordances"
+        return f"{len(ds)} samples ({n_with_gt} with GT) across {n_cats} affordances"
 
     check("AGD20KDataset loads", _check_agd20k)
 

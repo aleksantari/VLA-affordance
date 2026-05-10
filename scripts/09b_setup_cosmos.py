@@ -29,6 +29,25 @@ import numpy as np
 import torch
 from PIL import Image
 
+# Silence verbose param-materialization logs from transformers/accelerate.
+import logging
+import os as _os
+_os.environ.setdefault("TRANSFORMERS_VERBOSITY", "error")
+_os.environ.setdefault("DIFFUSERS_VERBOSITY", "error")
+_os.environ.setdefault("ACCELERATE_LOG_LEVEL", "ERROR")
+for _noisy in ("transformers", "diffusers", "accelerate", "huggingface_hub"):
+    logging.getLogger(_noisy).setLevel(logging.ERROR)
+try:
+    import transformers as _t
+    _t.logging.set_verbosity_error()
+except Exception:
+    pass
+try:
+    import diffusers as _d
+    _d.logging.set_verbosity_error()
+except Exception:
+    pass
+
 
 SYSTEM_CONFIG = {
     "cosmos_predict2_t2i": {
