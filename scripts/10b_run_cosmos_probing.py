@@ -88,6 +88,18 @@ def main():
         "--save_attention_maps", action="store_true",
         help="Save raw per-sample attention maps to disk (uses space)",
     )
+    parser.add_argument(
+        "--resume", action="store_true", default=True,
+        help="Skip samples already present in the per-sample CSV (default: on)",
+    )
+    parser.add_argument(
+        "--no_resume", dest="resume", action="store_false",
+        help="Disable resume — overwrite existing per-sample CSV",
+    )
+    parser.add_argument(
+        "--commit_every", type=int, default=0,
+        help="If >0, run `git add+commit+push` every N samples (Colab durability)",
+    )
     args = parser.parse_args()
 
     cfg = SYSTEM_CONFIG[args.system]
@@ -143,11 +155,48 @@ def main():
         evaluate_single,
         aggregate_metrics_by_affordance,
         print_metrics_table,
+        BindingMetrics,
     )
+    from interaction.incremental_results import IncrementalCSVWriter
+
+    per_sample_path = tables_dir / f"axis2_{args.system}_per_sample.csv"
+    if not args.resume and per_sample_path.exists():
+        per_sample_path.unlink()
+    csv_writer = IncrementalCSVWriter(
+        per_sample_path,
+        columns=["sample_id", "system", "affordance", "prompt", "kld", "sim", "nss"],
+    )
+    done_ids = csv_writer.done_sample_ids() if args.resume else set()
+    if done_ids:
+        print(f"  Resume: {len(done_ids)} samples already done — skipping")
 
     all_results = {}
-    total = 0
+    if done_ids:
+        import csv as _csv
+        with open(per_sample_path) as _f:
+            for r in _csv.DictReader(_f):
+                all_results[r["sample_id"]] = BindingMetrics(
+                    kld=float(r["kld"]), sim=float(r["sim"]), nss=float(r["nss"]),
+                    affordance=r.get("affordance", ""), prompt=r.get("prompt", ""),
+                )
+
+    total = len(done_ids)
     skipped = 0
+
+    def _maybe_git_push(n_done: int):
+        if not args.commit_every or n_done % args.commit_every != 0:
+            return
+        try:
+            import subprocess
+            subprocess.run(["git", "add", str(per_sample_path)], check=False)
+            subprocess.run(
+                ["git", "commit", "-m",
+                 f"results({args.system}): incremental {n_done} samples"],
+                check=False,
+            )
+            subprocess.run(["git", "push", "origin", "HEAD"], check=False)
+        except Exception as _e:
+            print(f"    ⚠ git push failed: {_e}")
 
     for cat_idx, category in enumerate(categories):
         sample_indices = dataset.get_samples_by_affordance(category)
@@ -159,6 +208,9 @@ def main():
         for i, sample_idx in enumerate(sample_indices):
             sample = dataset[sample_idx]
             sample_id = f"{category}_{i}"
+
+            if sample_id in done_ids:
+                continue
 
             if sample["gt_heatmap"] is None:
                 skipped += 1
@@ -196,6 +248,13 @@ def main():
                 all_results[sample_id] = metrics
                 total += 1
 
+                csv_writer.append({
+                    "sample_id": sample_id, "system": args.system,
+                    "affordance": category, "prompt": prompt,
+                    "kld": metrics.kld, "sim": metrics.sim, "nss": metrics.nss,
+                })
+                _maybe_git_push(total)
+
                 if args.save_attention_maps:
                     np.save(str(cache_dir / f"{sample_id}.npy"), pred_map)
 
@@ -215,13 +274,7 @@ def main():
     aggregated = aggregate_metrics_by_affordance(all_results)
     print_metrics_table(aggregated)
 
-    per_sample_path = tables_dir / f"axis2_{args.system}_per_sample.csv"
-    with open(per_sample_path, "w", newline="") as f:
-        w = csv.writer(f)
-        w.writerow(["sample_id", "system", "affordance", "prompt", "kld", "sim", "nss"])
-        for sid, m in sorted(all_results.items()):
-            w.writerow([sid, args.system, m.affordance, m.prompt,
-                        f"{m.kld:.6f}", f"{m.sim:.6f}", f"{m.nss:.6f}"])
+    csv_writer.close()  # per-sample CSV is durable on disk via incremental writes
 
     agg_path = tables_dir / f"axis2_{args.system}_metrics.json"
     with open(agg_path, "w") as f:
