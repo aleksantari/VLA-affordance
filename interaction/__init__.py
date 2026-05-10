@@ -1,7 +1,8 @@
 # Axis 2: Interaction Affordance Probing
-# Flux cross-attention extraction and verb-spatial binding analysis
+# Cross-attention extraction (Flux + Cosmos) and verb-spatial binding analysis
 
-from .flux_attention import FluxVerbAttentionExtractor
+from .flux_attention import FluxVerbAttentionExtractor, VerbAttentionResult
+from .cosmos_attention import CosmosVerbAttentionExtractor, CosmosVerbAttentionResult
 from .verb_spatial_binding import compute_kld, compute_sim, compute_nss, evaluate_verb_spatial_binding
 from .visualization import (
     plot_attention_overlay,

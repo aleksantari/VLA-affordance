@@ -35,10 +35,17 @@ If H2c is supported, this connects to Axis 1's finding that VLAs *destroy* geome
 
 ## Open Questions
 
-- Is Cosmos Policy publicly downloadable, or only behind NVIDIA NGC auth?
-- For Cosmos (video diffusion), what is the natural "single-image" probing protocol? Conditioning on a still frame? Generating a one-frame video?
-- How do we make Flux ↔ Cosmos cross-attention scales comparable? (different latent grid sizes, different num text tokens)
-- Should we control for image generation quality? If Cosmos generates worse images than Flux, NSS may be lower for trivial reasons unrelated to interaction priors.
+- Will Cosmos Policy accept image+text only without proprio, or will the pipeline error? (Plan: pass zeros for proprio; cross-attention shouldn't depend on it. Mitigation: thin wrapper if needed.)
+- VRAM headroom: Cosmos V2W 480×704 × 17 frames × 12 steps may push the A100 40GB. Will fall back to 480×480 × 9 frames if OOM.
+- Final-quality runs: should Flux switch to dev (20 steps, guidance=3.5) for the publication numbers? Decide after pilot.
+
+## Resolved Questions (2026-05-10)
+
+- **Cosmos Policy availability:** publicly available on HuggingFace as `nvidia/Cosmos-Policy-ALOHA-Predict2-2B`.
+- **Cosmos base model:** Cosmos Policy is fine-tuned from `Cosmos-Predict2-2B-Video2World`, NOT Text2Image. H2b/H2c paired comparison must use Video2World base.
+- **Cosmos text encoder:** T5-11B (not T5-XXL as proposal stated). max_seq_length=512.
+- **Cosmos cross-attention layer naming:** `attn2` modules in `CosmosTransformer3DModel`. Custom `AttentionProcessor` registration is the path forward (attention-map-diffusers does not support Cosmos).
+- **Single-image probing for video model:** Cosmos2VideoToWorld accepts a single first-frame image. We use the AGD20K image directly, then average attention over the temporal latent dimension since binding is a spatial property.
 
 ## Trajectory Log
 

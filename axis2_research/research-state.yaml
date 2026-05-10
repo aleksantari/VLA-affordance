@@ -1,7 +1,7 @@
 project: Affordance in the Wild — Axis 2
 title: Interaction Affordance Probing Across Generative World Models
 date_started: 2026-05-10
-status: bootstrap
+status: awaiting_colab_pilot
 
 research_question: |
   Do language-conditioned diffusion world models (Cosmos Predict2,
@@ -65,9 +65,9 @@ hypotheses:
     rationale: Manipulation demos contain explicit verb-part interactions
 
 bootstrap_status:
-  literature_surveyed: false
-  protocols_locked: false
-  baseline_running: false
+  literature_surveyed: true     # Cosmos models, attention extraction patterns
+  protocols_locked: true        # axis2_research/experiments/H2_protocol.md committed
+  baseline_running: false       # Flux pilot pending Colab
 
 infrastructure:
   flux_extractor: BUILT (interaction/flux_attention.py)
@@ -77,11 +77,12 @@ infrastructure:
   flux_setup_script: BUILT (scripts/09_setup_flux.py)
   flux_probing_script: BUILT (scripts/10_run_interaction_probing.py)
   axis2_report_script: BUILT (scripts/11_generate_axis2_report.py)
-  cosmos_predict2_extractor: NOT_BUILT
-  cosmos_policy_extractor: NOT_BUILT
-  three_way_comparison_script: NOT_BUILT
+  cosmos_predict2_extractor: BUILT (interaction/cosmos_attention.py)
+  cosmos_policy_extractor: BUILT (same module, different model_name)
+  three_way_comparison_script: BUILT (scripts/12_three_way_comparison.py)
+  cosmos_probing_script: BUILT (scripts/10b_run_cosmos_probing.py)
   colab_notebook_flux: BUILT (notebooks/axis2_flux_colab.ipynb)
-  colab_notebook_cosmos: NOT_BUILT
+  colab_notebook_unified: BUILT (notebooks/axis2_unified_colab.ipynb)
 
 compute:
   user_runs_training_on: Colab Pro (A100 40GB)
