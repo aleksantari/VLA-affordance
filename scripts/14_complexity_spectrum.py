@@ -1,18 +1,14 @@
 """
-Script 14: Complexity-spectrum analysis (PAVE-inspired methodology transfer).
+Script 14: Binary peak-in-GT-region analysis on cached attention maps.
 
-PAVE (Jain 2026, github.com/nitik1998/PAVE) shows that the standard multi-class
-probing metric overstates the encoder deficit relative to the perception
-sub-problem manipulation actually solves. The 27pp deficit on UMD's 5-class
-IoU collapses to <3pp on binary part-discrimination formulations.
+Reports a complementary binary metric to KLD/SIM/NSS on AGD20K: for each
+(image, verb) pair, does the verb-attention peak land inside the GT
+functional region? Gives a coarser but interpretable view that bypasses
+distributional-metric sensitivities to map smoothness, scale, and noise.
 
-This script applies the same logic to Axis 2: alongside the distributional
-metrics (KLD/SIM/NSS) on AGD20K, compute the simpler binary
-"peak-in-GT-region" hit rate per system per affordance.
-
-  - If KLD/SIM/NSS show a big Flux-vs-Cosmos gap but peak_in_gt is similar:
-    our metrics overstate the gap (mirrors PAVE).
-  - If both gaps agree: the metrics report the real deficit.
+  - Large KLD/SIM/NSS gap + small binary gap → metrics may be picking up
+    map-smoothness differences, not real perceptual differences.
+  - Both gaps agree → real deficit.
 
 Inputs:
   results/cached_features/<system>_attention/*.npy   (per-sample attention maps)
@@ -59,7 +55,7 @@ def main():
     from interaction.verb_spatial_binding import peak_in_gt_region
 
     print("=" * 60)
-    print("AXIS 2 — Complexity Spectrum (PAVE methodology transfer)")
+    print("AXIS 2 — Binary peak-in-GT-region analysis")
     print("=" * 60)
 
     cache_root = Path(args.results_dir) / "cached_features"

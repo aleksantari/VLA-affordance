@@ -163,18 +163,12 @@ def peak_in_gt_region(
     gt_threshold_percentile: float = 80.0,
 ) -> int:
     """
-    Binary part-discrimination metric (PAVE-inspired methodology transfer).
+    Binary "did the attention peak land in the GT region?" metric.
 
     Returns 1 if the argmax of the predicted attention map falls inside the
     binarised GT functional region (top (100 - threshold_percentile)% pixels);
-    0 otherwise. This is the simplest possible "did the verb attention land in
-    the right place?" test — bypassing the distributional metrics' sensitivity
-    to map smoothness, scale, and noise.
-
-    The motivation: PAVE (Jain 2026) shows that for VLA encoder probing on
-    UMD, a 27pp multi-class IoU gap collapses to <3pp on binary
-    part-discrimination. If our KLD/SIM/NSS gap between Flux and Cosmos is
-    large but peak_in_gt is similar, we have the same methodological caveat.
+    0 otherwise. Complementary to the distributional KLD/SIM/NSS metrics —
+    bypasses their sensitivity to map smoothness, scale, and noise.
     """
     # Resize pred_map to match gt_heatmap if needed
     if pred_map.shape != gt_heatmap.shape:

@@ -7,13 +7,9 @@
 
 Do language-conditioned diffusion world models (Cosmos Predict2, Cosmos Policy) develop verb-spatial binding analogous to Flux, and does manipulation fine-tuning amplify this binding?
 
-## Axis 1 results — two complementary sources
+## Axis 1 results (from aleksantari/Probing_Bridging_Affordance @ VLA-affordance)
 
-Axis 1 (geometric affordance probing) draws on two of Nitik's projects.
-The story is **stronger as a synthesis** than either source alone.
-
-### Source A — aleksantari/Probing_Bridging_Affordance @ VLA-affordance
-
+Repo: https://github.com/aleksantari/Probing_Bridging_Affordance
 Path: `geometry_probing/umd_linear_probing/results.md`.
 
 **Linear probe mIoU on UMD (5 affordance + bg classes):**
@@ -31,43 +27,9 @@ Path: `geometry_probing/umd_linear_probing/results.md`.
 - Native UMD res (480×640): VLA fine-tuning degrades by −7.9 pp (raw → π0). DINOv2 remains the ceiling — "best-supported claim of the project."
 - 224 (VLA op-res): VLA fine-tuning *improves* monotonically by +7.7 pp. π0.5 (0.389) beats DINOv2-L (0.377).
 
-### Source B — PAVE (Nitik's other class project, github.com/nitik1998/PAVE)
+**Implication for paper narrative:** VLA training doesn't simply destroy geometric structure — it specialises SigLIP to the resolution it sees during fine-tuning. The high-resolution generalisation that the raw contrastive encoder had is sacrificed for in-distribution geometric competence. More interesting than the original H1 hypothesis.
 
-PAVE probes the same SigLIP-from-VLA encoders on UMD with a different question and obtains complementary findings:
-
-**Per-class IoU pattern (PAVE, validation split, 224 inputs):**
-- `cut` drops 27 pp on π0 vs standalone SigLIP (0.455 → 0.181). On OpenVLA: −22 pp. Asymmetric loss generalises across two VLA families.
-- `contain` is preserved within 2 pp on all three VLAs probed.
-- `support` drops 17 pp.
-- **Effect is class-selective**, not uniform.
-
-**Layer-wise mechanism (linear CKA between standalone and each VLA, PAVE):**
-- π0 keeps the encoder identical through layer 12 (CKA > 0.95), then rotates the *final block* to CKA = 0.023.
-- π0.5 spreads divergence across middle layers (final CKA ≈ 0.36).
-- OpenVLA reorganises least (final CKA ≈ 0.61).
-- Per-class final-layer drift correlates with per-class IoU drop (Spearman ρ = 0.90, p = 0.037 on π0; Pearson r = 0.95, p = 0.012 on OpenVLA). **Encoder-internal geometry predicts downstream probing accuracy.**
-
-**Intervention finding (PAVE):** a 297K-parameter MLP adapter on frozen VLA features recovers 82% of the cut-class gap on π0. The lost signal is *rotated*, not *deleted*.
-
-**Methodological finding (PAVE complexity spectrum):** the headline 27 pp deficit on multi-class IoU collapses to <3 pp on binary part-discrimination formulations (cut-vs-other-foreground, handle-vs-blade) — the protocols downstream manipulation pipelines actually use. **The standard probing metric overstates the deficit relative to the perception sub-problem manipulation solves.**
-
-### Synthesised Axis 1 narrative for this paper
-
-VLA training is **resolution-specialised, class-asymmetric, mechanistically localised, and recoverable specialization — not destruction**:
-
-1. The effect is resolution-dependent (Source A): degrades at native UMD resolution but improves at the VLA's operating resolution.
-2. The effect is class-asymmetric (Source B): cut drops 27 pp; contain preserved within 2 pp.
-3. The effect is layer-localised (Source B): rotation concentrated in the final transformer block that cross-attends with the action head.
-4. The effect is recoverable (Source B): a 297K-param adapter on frozen features closes 82% of the cut gap.
-5. The deficit is protocol-dependent (Source B): on binary part-discrimination tasks, the gap collapses to <3 pp.
-
-This is a stronger Axis 1 story than the original proposal predicted. It also composes cleanly with Axis 2: VLAs and world models each specialise the visual representation to their own training distribution, with the specialisation visible at different "frequency bands" of the affordance signal.
-
-### Methodology transfer from PAVE → Axis 2
-
-PAVE's complexity-spectrum insight generalises. Alongside our KLD/SIM/NSS on AGD20K, we should also report a **binary peak-in-GT-region hit-rate**: for each (image, verb) pair, does the verb-attention peak fall inside the GT functional region (binary 1/0)? If the gap between Flux and Cosmos in KLD/SIM/NSS is large but the binary hit rate is similar, that mirrors PAVE's finding and suggests our metrics may also overstate the actual perceptual gap.
-
-One extra analysis cell after the pilots, ~10 min compute. Adds a methodological hardening claim to Axis 2 without changing the main pipeline.
+**Connecting with Axis 2:** Both axes show resolution/specialisation tradeoffs. VLAs gain resolution-locked geometric competence; world models bind verbs to spatial regions through cross-attention. Complementary specialisations.
 
 ## Current Understanding
 
