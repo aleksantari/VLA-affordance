@@ -1,0 +1,2 @@
+system,n,kld_mean,kld_std,kld_ci_lo,kld_ci_hi,sim_mean,sim_std,sim_ci_lo,sim_ci_hi,nss_mean,nss_std,nss_ci_lo,nss_ci_hi
+flux,1675,1.8645,0.7315,1.8306,1.9019,0.2456,0.1344,0.2389,0.2520,0.4333,0.5451,0.4061,0.4592

@@ -1,0 +1,17 @@
+{
+  "H2a": {
+    "system": "flux",
+    "kld_mean": 1.864519130149254,
+    "sim_mean": 0.24556594805970147,
+    "nss_mean": 0.43327435940298503,
+    "thresholds": {
+      "kld_le": 1.7,
+      "sim_ge": 0.3,
+      "nss_ge": 1.0
+    },
+    "kld_pass": false,
+    "sim_pass": false,
+    "nss_pass": false,
+    "overall_pass": false
+  }
+}

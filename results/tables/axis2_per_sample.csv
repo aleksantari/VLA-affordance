@@ -1,0 +1,1676 @@
+sample_id,system,affordance,prompt,kld,sim,nss
+beat_0,flux_schnell,beat,a person beating a drum,0.690555,0.514741,0.935823
+beat_1,flux_schnell,beat,a person beating a drum,1.628239,0.249841,0.753138
+beat_2,flux_schnell,beat,a person beating a drum,0.767024,0.493495,0.049880
+beat_3,flux_schnell,beat,a person beating a drum,0.358764,0.694228,0.200822
+beat_4,flux_schnell,beat,a person beating a drum,1.842634,0.199044,-0.153967
+beat_5,flux_schnell,beat,a person beating a drum,1.185456,0.340728,0.606997
+beat_6,flux_schnell,beat,a person beating a drum,2.289414,0.150834,0.083516
+beat_7,flux_schnell,beat,a person beating a drum,0.790804,0.469842,0.908284
+beat_8,flux_schnell,beat,a person beating a drum,1.300020,0.308533,0.531059
+beat_9,flux_schnell,beat,a person beating a drum,1.583158,0.261398,0.554071
+beat_10,flux_schnell,beat,a person beating a drum,1.276754,0.321594,0.968173
+beat_11,flux_schnell,beat,a person beating a drum,1.895263,0.195765,0.309414
+boxing_0,flux_schnell,boxing,a person boxing a punching bag,1.890924,0.210115,0.629371
+boxing_1,flux_schnell,boxing,a person boxing a punching bag,1.213463,0.343551,1.066380
+boxing_2,flux_schnell,boxing,a person boxing a punching bag,1.236128,0.318141,0.552201
+boxing_3,flux_schnell,boxing,a person boxing a punching bag,1.297801,0.331165,1.337055
+boxing_4,flux_schnell,boxing,a person boxing a punching bag,1.387575,0.319584,1.039667
+boxing_5,flux_schnell,boxing,a person boxing a punching bag,1.221017,0.335621,0.418999
+boxing_6,flux_schnell,boxing,a person boxing a punching bag,0.886725,0.438929,0.467445
+boxing_7,flux_schnell,boxing,a person boxing a punching bag,0.608557,0.563276,0.998242
+boxing_8,flux_schnell,boxing,a person boxing a punching bag,1.343587,0.319394,1.239242
+boxing_9,flux_schnell,boxing,a person boxing a punching bag,1.111135,0.359811,-0.006856
+boxing_10,flux_schnell,boxing,a person boxing a punching bag,1.257621,0.330691,0.486520
+boxing_11,flux_schnell,boxing,a person boxing a punching bag,1.227000,0.346076,1.213419
+boxing_12,flux_schnell,boxing,a person boxing a punching bag,2.225330,0.173793,0.562453
+boxing_13,flux_schnell,boxing,a person boxing a punching bag,0.484942,0.622839,1.001711
+boxing_14,flux_schnell,boxing,a person boxing a punching bag,1.068642,0.403945,1.120999
+boxing_15,flux_schnell,boxing,a person boxing a punching bag,1.634063,0.255111,0.804012
+boxing_16,flux_schnell,boxing,a person boxing a punching bag,1.524155,0.297438,0.914444
+boxing_17,flux_schnell,boxing,a person boxing a punching bag,1.575266,0.252797,0.656722
+boxing_18,flux_schnell,boxing,a person boxing a punching bag,1.490337,0.288381,0.858050
+boxing_19,flux_schnell,boxing,a person boxing a punching bag,1.012410,0.395850,1.285068
+boxing_20,flux_schnell,boxing,a person boxing a punching bag,1.213931,0.360836,1.123811
+boxing_21,flux_schnell,boxing,a person boxing a punching bag,1.897739,0.203146,0.133676
+boxing_22,flux_schnell,boxing,a person boxing a punching bag,0.578913,0.582452,0.894133
+brush_with_0,flux_schnell,brush_with,a person brushing with a toothbrush,1.625871,0.255191,0.678412
+brush_with_1,flux_schnell,brush_with,a person brushing with a toothbrush,2.865833,0.095601,-0.665604
+brush_with_2,flux_schnell,brush_with,a person brushing with a toothbrush,2.356256,0.125076,-0.184682
+brush_with_3,flux_schnell,brush_with,a person brushing with a toothbrush,3.400391,0.055260,-0.839650
+brush_with_4,flux_schnell,brush_with,a person brushing with a toothbrush,2.134069,0.165138,0.052576
+brush_with_5,flux_schnell,brush_with,a person brushing with a toothbrush,3.270087,0.068371,-0.404675
+brush_with_6,flux_schnell,brush_with,a person brushing with a toothbrush,3.406428,0.059307,0.091261
+brush_with_7,flux_schnell,brush_with,a person brushing with a toothbrush,2.520883,0.107998,-0.539384
+brush_with_8,flux_schnell,brush_with,a person brushing with a toothbrush,2.494056,0.111175,-0.531068
+brush_with_9,flux_schnell,brush_with,a person brushing with a toothbrush,2.456733,0.140246,0.611620
+brush_with_10,flux_schnell,brush_with,a person brushing with a toothbrush,3.152808,0.076252,-0.437929
+brush_with_11,flux_schnell,brush_with,a person brushing with a toothbrush,2.078326,0.189158,0.806375
+brush_with_12,flux_schnell,brush_with,a person brushing with a toothbrush,2.966658,0.084658,0.256049
+brush_with_13,flux_schnell,brush_with,a person brushing with a toothbrush,3.085883,0.082887,-0.177989
+carry_0,flux_schnell,carry,a person carrying a skateboard,2.329501,0.146251,-0.083975
+carry_1,flux_schnell,carry,a person carrying a skateboard,1.464729,0.300033,-0.101802
+carry_2,flux_schnell,carry,a person carrying a skateboard,1.310951,0.340036,-0.405913
+carry_3,flux_schnell,carry,a person carrying a skateboard,1.263462,0.341816,-0.215603
+carry_4,flux_schnell,carry,a person carrying a skateboard,1.306958,0.307675,1.359128
+carry_5,flux_schnell,carry,a person carrying a skateboard,1.706971,0.229620,0.129677
+carry_6,flux_schnell,carry,a person carrying a skateboard,1.250509,0.330243,0.362161
+carry_7,flux_schnell,carry,a person carrying a skateboard,0.984461,0.425215,0.059163
+carry_8,flux_schnell,carry,a person carrying a skateboard,1.144471,0.360777,0.247470
+carry_9,flux_schnell,carry,a person carrying a skateboard,1.092558,0.414696,-0.157170
+carry_10,flux_schnell,carry,a person carrying a skateboard,1.017842,0.439352,0.032233
+carry_11,flux_schnell,carry,a person carrying a skateboard,1.139157,0.370357,0.090873
+carry_12,flux_schnell,carry,a person carrying a skateboard,1.229056,0.373322,-0.033336
+carry_13,flux_schnell,carry,a person carrying a skateboard,1.051385,0.412708,0.271070
+carry_14,flux_schnell,carry,a person carrying a skateboard,1.142775,0.368448,1.190045
+carry_15,flux_schnell,carry,a person carrying a skateboard,2.257059,0.160564,0.066623
+carry_16,flux_schnell,carry,a person carrying a skateboard,0.899471,0.458673,-0.026242
+carry_17,flux_schnell,carry,a person carrying a skateboard,1.541722,0.256286,0.554893
+carry_18,flux_schnell,carry,a person carrying a skateboard,1.302804,0.333219,0.059378
+carry_19,flux_schnell,carry,a person carrying a skateboard,1.334622,0.326945,-0.251905
+carry_20,flux_schnell,carry,a person carrying a skis,2.109458,0.177067,0.505612
+carry_21,flux_schnell,carry,a person carrying a skis,2.013023,0.185588,1.360957
+carry_22,flux_schnell,carry,a person carrying a skis,2.089710,0.167895,0.351939
+carry_23,flux_schnell,carry,a person carrying a skis,2.071506,0.175730,1.260393
+carry_24,flux_schnell,carry,a person carrying a skis,2.173589,0.164040,1.149577
+carry_25,flux_schnell,carry,a person carrying a skis,2.082151,0.190662,0.777421
+carry_26,flux_schnell,carry,a person carrying a skis,2.300612,0.168510,0.005697
+carry_27,flux_schnell,carry,a person carrying a skis,2.446401,0.138106,0.675911
+carry_28,flux_schnell,carry,a person carrying a skis,2.565285,0.099065,-0.716483
+carry_29,flux_schnell,carry,a person carrying a skis,2.426311,0.129402,-0.247852
+catch_0,flux_schnell,catch,a person catching a frisbee,0.887117,0.442185,-0.288802
+catch_1,flux_schnell,catch,a person catching a frisbee,0.917763,0.450186,-0.363025
+catch_2,flux_schnell,catch,a person catching a frisbee,0.888330,0.441414,-0.273620
+catch_3,flux_schnell,catch,a person catching a frisbee,0.952560,0.419726,-0.381890
+catch_4,flux_schnell,catch,a person catching a frisbee,0.922825,0.429072,-0.205075
+catch_5,flux_schnell,catch,a person catching a frisbee,0.947665,0.427081,-0.344072
+catch_6,flux_schnell,catch,a person catching a frisbee,0.664727,0.536030,0.405782
+catch_7,flux_schnell,catch,a person catching a frisbee,0.999312,0.408027,-0.276753
+catch_8,flux_schnell,catch,a person catching a frisbee,0.999155,0.409105,-0.469110
+catch_9,flux_schnell,catch,a person catching a frisbee,0.944222,0.426108,0.062846
+catch_10,flux_schnell,catch,a person catching a frisbee,0.985597,0.412737,-0.404670
+catch_11,flux_schnell,catch,a person catching a frisbee,0.864314,0.456966,-0.191275
+catch_12,flux_schnell,catch,a person catching a frisbee,0.918665,0.435298,0.104218
+catch_13,flux_schnell,catch,a person catching a frisbee,0.892962,0.444479,-0.301545
+catch_14,flux_schnell,catch,a person catching a frisbee,1.041311,0.413100,-0.453626
+catch_15,flux_schnell,catch,a person catching a frisbee,0.498916,0.595613,0.297643
+catch_16,flux_schnell,catch,a person catching a frisbee,0.940767,0.419066,-0.312043
+catch_17,flux_schnell,catch,a person catching a frisbee,0.918784,0.442080,0.197737
+catch_18,flux_schnell,catch,a person catching a rugby ball,0.864221,0.466854,0.734124
+catch_19,flux_schnell,catch,a person catching a rugby ball,0.791797,0.465398,0.999268
+catch_20,flux_schnell,catch,a person catching a rugby ball,0.825165,0.468260,0.944154
+catch_21,flux_schnell,catch,a person catching a rugby ball,0.311738,0.715165,0.721231
+catch_22,flux_schnell,catch,a person catching a rugby ball,0.528892,0.628063,-0.225639
+catch_23,flux_schnell,catch,a person catching a rugby ball,1.198267,0.338378,0.814611
+catch_24,flux_schnell,catch,a person catching a rugby ball,0.491382,0.643810,0.244186
+catch_25,flux_schnell,catch,a person catching a rugby ball,0.730444,0.510609,0.925819
+catch_26,flux_schnell,catch,a person catching a rugby ball,0.593309,0.570534,0.676997
+catch_27,flux_schnell,catch,a person catching a rugby ball,1.103098,0.373645,1.088288
+catch_28,flux_schnell,catch,a person catching a soccer ball,1.051674,0.379429,1.036791
+catch_29,flux_schnell,catch,a person catching a soccer ball,2.123881,0.172504,0.674638
+cut_0,flux_schnell,cut,a person cutting a apple,0.554797,0.613992,0.609750
+cut_1,flux_schnell,cut,a person cutting a apple,1.392282,0.297564,-0.290847
+cut_2,flux_schnell,cut,a person cutting a apple,0.562585,0.578290,1.294842
+cut_3,flux_schnell,cut,a person cutting a apple,0.577367,0.572836,1.078937
+cut_4,flux_schnell,cut,a person cutting a apple,2.396773,0.135052,-0.093908
+cut_5,flux_schnell,cut,a person cutting a apple,0.802933,0.468997,1.198905
+cut_6,flux_schnell,cut,a person cutting a apple,0.889390,0.443365,1.325739
+cut_7,flux_schnell,cut,a person cutting a apple,0.913042,0.438145,0.840593
+cut_8,flux_schnell,cut,a person cutting a apple,0.757858,0.489353,1.348975
+cut_9,flux_schnell,cut,a person cutting a apple,0.633279,0.541089,1.397534
+cut_10,flux_schnell,cut,a person cutting a apple,0.552132,0.582482,0.769176
+cut_11,flux_schnell,cut,a person cutting a apple,0.357023,0.663884,0.318361
+cut_12,flux_schnell,cut,a person cutting a apple,0.700457,0.515530,0.545355
+cut_13,flux_schnell,cut,a person cutting a apple,0.341169,0.677443,-0.091431
+cut_14,flux_schnell,cut,a person cutting a apple,0.622588,0.574464,0.795673
+cut_15,flux_schnell,cut,a person cutting a apple,0.616547,0.559807,1.248459
+cut_16,flux_schnell,cut,a person cutting a banana,1.107196,0.360591,1.138920
+cut_17,flux_schnell,cut,a person cutting a banana,1.615674,0.250967,0.957327
+cut_18,flux_schnell,cut,a person cutting a banana,1.045324,0.414186,1.130776
+cut_19,flux_schnell,cut,a person cutting a banana,0.982225,0.399080,0.966233
+cut_20,flux_schnell,cut,a person cutting a banana,1.313612,0.306659,0.976648
+cut_21,flux_schnell,cut,a person cutting a banana,0.775891,0.479994,0.985383
+cut_22,flux_schnell,cut,a person cutting a banana,0.771871,0.492333,0.018894
+cut_23,flux_schnell,cut,a person cutting a banana,0.971869,0.418164,0.281290
+cut_24,flux_schnell,cut,a person cutting a banana,0.564357,0.591291,0.419178
+cut_25,flux_schnell,cut,a person cutting a banana,0.708267,0.521123,0.927397
+cut_26,flux_schnell,cut,a person cutting a banana,1.775664,0.220021,-0.118207
+cut_27,flux_schnell,cut,a person cutting a banana,1.519166,0.273425,1.300406
+cut_28,flux_schnell,cut,a person cutting a banana,1.231801,0.354657,0.426626
+cut_29,flux_schnell,cut,a person cutting a banana,0.945643,0.416405,1.116331
+cut_with_0,flux_schnell,cut_with,a person cutting with a knife,2.809221,0.102546,0.316512
+cut_with_1,flux_schnell,cut_with,a person cutting with a knife,1.996660,0.185840,0.585485
+cut_with_2,flux_schnell,cut_with,a person cutting with a knife,1.529723,0.268266,0.463473
+cut_with_3,flux_schnell,cut_with,a person cutting with a knife,1.599168,0.250075,0.826340
+cut_with_4,flux_schnell,cut_with,a person cutting with a knife,2.971860,0.082313,0.144155
+cut_with_5,flux_schnell,cut_with,a person cutting with a knife,2.435698,0.140980,0.656850
+cut_with_6,flux_schnell,cut_with,a person cutting with a knife,1.983059,0.202276,0.201837
+cut_with_7,flux_schnell,cut_with,a person cutting with a knife,2.018267,0.187370,1.249158
+cut_with_8,flux_schnell,cut_with,a person cutting with a knife,1.561200,0.254504,1.221567
+cut_with_9,flux_schnell,cut_with,a person cutting with a knife,2.139369,0.164449,0.512547
+cut_with_10,flux_schnell,cut_with,a person cutting with a knife,1.475809,0.296639,0.743200
+cut_with_11,flux_schnell,cut_with,a person cutting with a knife,2.217953,0.161196,0.501142
+cut_with_12,flux_schnell,cut_with,a person cutting with a knife,1.903528,0.203224,0.737812
+cut_with_13,flux_schnell,cut_with,a person cutting with a knife,1.507363,0.274294,0.780134
+cut_with_14,flux_schnell,cut_with,a person cutting with a knife,1.697906,0.227830,0.948505
+cut_with_15,flux_schnell,cut_with,a person cutting with a knife,1.846316,0.198314,0.221985
+cut_with_16,flux_schnell,cut_with,a person cutting with a knife,2.403980,0.125099,-0.496251
+cut_with_17,flux_schnell,cut_with,a person cutting with a knife,2.364858,0.141388,0.095243
+cut_with_18,flux_schnell,cut_with,a person cutting with a knife,1.749468,0.219080,0.952583
+cut_with_19,flux_schnell,cut_with,a person cutting with a knife,1.756222,0.218155,1.081660
+cut_with_20,flux_schnell,cut_with,a person cutting with a knife,1.717750,0.229708,1.365975
+cut_with_21,flux_schnell,cut_with,a person cutting with a knife,1.597706,0.245362,0.963581
+cut_with_22,flux_schnell,cut_with,a person cutting with a knife,1.949157,0.197564,0.232079
+cut_with_23,flux_schnell,cut_with,a person cutting with a knife,2.636817,0.104628,-0.014791
+cut_with_24,flux_schnell,cut_with,a person cutting with a knife,2.357724,0.128780,0.010145
+cut_with_25,flux_schnell,cut_with,a person cutting with a knife,1.519689,0.260516,1.151233
+cut_with_26,flux_schnell,cut_with,a person cutting with a knife,1.783180,0.214435,0.424137
+cut_with_27,flux_schnell,cut_with,a person cutting with a knife,1.842530,0.206634,0.459249
+cut_with_28,flux_schnell,cut_with,a person cutting with a knife,1.847269,0.204786,0.480547
+cut_with_29,flux_schnell,cut_with,a person cutting with a knife,2.214743,0.155197,0.324601
+drag_0,flux_schnell,drag,a person dragging a suitcase,3.837940,0.043802,-0.381956
+drag_1,flux_schnell,drag,a person dragging a suitcase,3.292906,0.073594,0.277489
+drag_2,flux_schnell,drag,a person dragging a suitcase,3.081246,0.072679,0.398062
+drag_3,flux_schnell,drag,a person dragging a suitcase,3.113909,0.074003,0.596154
+drag_4,flux_schnell,drag,a person dragging a suitcase,3.317074,0.060380,-0.391265
+drag_5,flux_schnell,drag,a person dragging a suitcase,3.284594,0.069716,0.436614
+drag_6,flux_schnell,drag,a person dragging a suitcase,3.087665,0.075261,0.198912
+drag_7,flux_schnell,drag,a person dragging a suitcase,3.465961,0.061159,0.120280
+drag_8,flux_schnell,drag,a person dragging a suitcase,2.968389,0.079926,0.803397
+drink_with_0,flux_schnell,drink_with,a person drinking with a bottle,2.994938,0.085128,0.459153
+drink_with_1,flux_schnell,drink_with,a person drinking with a bottle,2.128731,0.171186,0.147241
+drink_with_2,flux_schnell,drink_with,a person drinking with a bottle,2.872111,0.094001,0.282888
+drink_with_3,flux_schnell,drink_with,a person drinking with a bottle,3.304777,0.061608,-0.409727
+drink_with_4,flux_schnell,drink_with,a person drinking with a bottle,3.205169,0.071378,0.185592
+drink_with_5,flux_schnell,drink_with,a person drinking with a bottle,3.179240,0.076370,0.021533
+drink_with_6,flux_schnell,drink_with,a person drinking with a bottle,2.401919,0.124926,0.178527
+drink_with_7,flux_schnell,drink_with,a person drinking with a bottle,2.568264,0.121122,0.838196
+drink_with_8,flux_schnell,drink_with,a person drinking with a bottle,2.688292,0.111736,0.586046
+drink_with_9,flux_schnell,drink_with,a person drinking with a bottle,3.183565,0.080067,0.281382
+drink_with_10,flux_schnell,drink_with,a person drinking with a bottle,3.736645,0.049973,0.023628
+drink_with_11,flux_schnell,drink_with,a person drinking with a bottle,2.910353,0.093123,0.202927
+drink_with_12,flux_schnell,drink_with,a person drinking with a bottle,2.649226,0.119516,-0.052315
+drink_with_13,flux_schnell,drink_with,a person drinking with a bottle,3.360008,0.062678,-0.025968
+drink_with_14,flux_schnell,drink_with,a person drinking with a bottle,2.993125,0.088783,0.078301
+drink_with_15,flux_schnell,drink_with,a person drinking with a bottle,3.008590,0.087798,-0.185321
+drink_with_16,flux_schnell,drink_with,a person drinking with a cup,1.162241,0.360800,-0.024929
+drink_with_17,flux_schnell,drink_with,a person drinking with a cup,1.490342,0.280615,0.379830
+drink_with_18,flux_schnell,drink_with,a person drinking with a cup,1.945090,0.193872,1.379158
+drink_with_19,flux_schnell,drink_with,a person drinking with a cup,1.602613,0.243102,0.177597
+drink_with_20,flux_schnell,drink_with,a person drinking with a cup,1.276748,0.348620,0.676534
+drink_with_21,flux_schnell,drink_with,a person drinking with a cup,1.928096,0.187963,0.619159
+drink_with_22,flux_schnell,drink_with,a person drinking with a cup,1.573000,0.291482,0.460982
+drink_with_23,flux_schnell,drink_with,a person drinking with a cup,1.016774,0.397257,0.737347
+drink_with_24,flux_schnell,drink_with,a person drinking with a cup,2.401485,0.140149,0.185839
+drink_with_25,flux_schnell,drink_with,a person drinking with a cup,1.807423,0.201742,0.183059
+drink_with_26,flux_schnell,drink_with,a person drinking with a cup,0.915608,0.428720,0.943960
+drink_with_27,flux_schnell,drink_with,a person drinking with a cup,1.184488,0.340815,0.897306
+drink_with_28,flux_schnell,drink_with,a person drinking with a cup,2.029300,0.182591,0.815610
+drink_with_29,flux_schnell,drink_with,a person drinking with a cup,1.000620,0.408721,0.610425
+eat_0,flux_schnell,eat,a person eating a apple,0.588097,0.584279,0.514230
+eat_1,flux_schnell,eat,a person eating a apple,1.362193,0.307615,-0.219394
+eat_2,flux_schnell,eat,a person eating a apple,0.757370,0.472351,0.880608
+eat_3,flux_schnell,eat,a person eating a apple,0.693390,0.505066,0.743205
+eat_4,flux_schnell,eat,a person eating a apple,2.141027,0.162855,0.420502
+eat_5,flux_schnell,eat,a person eating a apple,1.043835,0.375425,0.709291
+eat_6,flux_schnell,eat,a person eating a apple,1.113825,0.353347,0.969467
+eat_7,flux_schnell,eat,a person eating a apple,0.987256,0.405944,0.643041
+eat_8,flux_schnell,eat,a person eating a apple,0.910273,0.419154,0.997411
+eat_9,flux_schnell,eat,a person eating a apple,0.791098,0.467615,1.063091
+eat_10,flux_schnell,eat,a person eating a apple,0.643441,0.531428,0.657010
+eat_11,flux_schnell,eat,a person eating a apple,0.312496,0.715519,0.393674
+eat_12,flux_schnell,eat,a person eating a apple,0.655464,0.526942,0.748905
+eat_13,flux_schnell,eat,a person eating a apple,0.420422,0.645864,-0.442937
+eat_14,flux_schnell,eat,a person eating a apple,0.661336,0.531805,0.562099
+eat_15,flux_schnell,eat,a person eating a apple,0.840868,0.447405,0.609357
+eat_16,flux_schnell,eat,a person eating a banana,1.236793,0.317922,0.809138
+eat_17,flux_schnell,eat,a person eating a banana,1.413288,0.284260,1.200276
+eat_18,flux_schnell,eat,a person eating a banana,1.245669,0.365059,0.729703
+eat_19,flux_schnell,eat,a person eating a banana,0.970448,0.401168,0.968339
+eat_20,flux_schnell,eat,a person eating a banana,1.363473,0.298920,0.855799
+eat_21,flux_schnell,eat,a person eating a banana,0.825151,0.466044,0.848465
+eat_22,flux_schnell,eat,a person eating a banana,0.671459,0.529334,0.269079
+eat_23,flux_schnell,eat,a person eating a banana,1.122907,0.387143,-0.020783
+eat_24,flux_schnell,eat,a person eating a banana,0.578898,0.584043,0.289356
+eat_25,flux_schnell,eat,a person eating a banana,0.737537,0.495127,0.751713
+eat_26,flux_schnell,eat,a person eating a banana,1.992451,0.185611,-0.523444
+eat_27,flux_schnell,eat,a person eating a banana,1.696504,0.232112,0.997643
+eat_28,flux_schnell,eat,a person eating a banana,1.223686,0.340948,0.414549
+eat_29,flux_schnell,eat,a person eating a banana,0.904492,0.425798,1.240025
+hit_0,flux_schnell,hit,a person hitting a axe,1.230385,0.329797,0.749578
+hit_1,flux_schnell,hit,a person hitting a axe,1.557397,0.260992,0.675843
+hit_2,flux_schnell,hit,a person hitting a axe,1.357709,0.301293,0.860558
+hit_3,flux_schnell,hit,a person hitting a axe,1.040022,0.390699,0.259462
+hit_4,flux_schnell,hit,a person hitting a axe,1.560935,0.258812,1.407291
+hit_5,flux_schnell,hit,a person hitting a axe,1.389552,0.297662,0.719156
+hit_6,flux_schnell,hit,a person hitting a axe,1.445344,0.293246,0.871214
+hit_7,flux_schnell,hit,a person hitting a baseball bat,1.594922,0.254301,-0.026179
+hit_8,flux_schnell,hit,a person hitting a baseball bat,2.424290,0.121295,0.241676
+hit_9,flux_schnell,hit,a person hitting a baseball bat,2.994546,0.077811,-0.522191
+hit_10,flux_schnell,hit,a person hitting a baseball bat,2.305323,0.147532,0.295896
+hit_11,flux_schnell,hit,a person hitting a baseball bat,2.277088,0.153432,0.241229
+hit_12,flux_schnell,hit,a person hitting a baseball bat,2.336798,0.140524,0.014941
+hit_13,flux_schnell,hit,a person hitting a baseball bat,2.582175,0.111485,-0.299136
+hit_14,flux_schnell,hit,a person hitting a baseball bat,2.675125,0.111034,0.068419
+hit_15,flux_schnell,hit,a person hitting a baseball bat,2.244635,0.147573,0.210954
+hit_16,flux_schnell,hit,a person hitting a baseball bat,2.350312,0.148031,0.507542
+hit_17,flux_schnell,hit,a person hitting a baseball bat,2.309261,0.167811,0.346468
+hit_18,flux_schnell,hit,a person hitting a baseball bat,1.530636,0.258681,0.263111
+hit_19,flux_schnell,hit,a person hitting a baseball bat,3.045357,0.079657,-0.064702
+hit_20,flux_schnell,hit,a person hitting a baseball bat,2.404394,0.132190,-0.384063
+hit_21,flux_schnell,hit,a person hitting a baseball bat,3.361824,0.057772,-0.783595
+hit_22,flux_schnell,hit,a person hitting a baseball bat,2.773034,0.107863,-0.467625
+hit_23,flux_schnell,hit,a person hitting a baseball bat,2.278983,0.148584,0.009472
+hit_24,flux_schnell,hit,a person hitting a hammer,3.104742,0.073793,-0.633656
+hit_25,flux_schnell,hit,a person hitting a hammer,2.558049,0.124858,0.596986
+hit_26,flux_schnell,hit,a person hitting a hammer,1.933653,0.199245,0.584330
+hit_27,flux_schnell,hit,a person hitting a hammer,1.931284,0.196711,0.785241
+hit_28,flux_schnell,hit,a person hitting a hammer,1.642794,0.250991,0.621197
+hit_29,flux_schnell,hit,a person hitting a hammer,1.422352,0.282983,1.094698
+hold_0,flux_schnell,hold,a person holding a axe,1.653345,0.242751,-0.455844
+hold_1,flux_schnell,hold,a person holding a axe,1.653298,0.239506,0.074860
+hold_2,flux_schnell,hold,a person holding a axe,1.521010,0.268139,0.181385
+hold_3,flux_schnell,hold,a person holding a axe,1.192466,0.370068,-0.285817
+hold_4,flux_schnell,hold,a person holding a axe,1.909275,0.206737,0.465888
+hold_5,flux_schnell,hold,a person holding a axe,1.534045,0.263170,0.226281
+hold_6,flux_schnell,hold,a person holding a axe,1.725600,0.225850,-0.150220
+hold_7,flux_schnell,hold,a person holding a badminton racket,3.414008,0.059000,1.803670
+hold_8,flux_schnell,hold,a person holding a badminton racket,1.641353,0.239128,1.421316
+hold_9,flux_schnell,hold,a person holding a badminton racket,2.064176,0.179333,0.156661
+hold_10,flux_schnell,hold,a person holding a badminton racket,2.451550,0.133777,0.562868
+hold_11,flux_schnell,hold,a person holding a badminton racket,1.593866,0.284033,1.228314
+hold_12,flux_schnell,hold,a person holding a badminton racket,2.611691,0.124530,0.284137
+hold_13,flux_schnell,hold,a person holding a baseball bat,1.656597,0.250420,-0.107158
+hold_14,flux_schnell,hold,a person holding a baseball bat,2.557210,0.114795,0.053004
+hold_15,flux_schnell,hold,a person holding a baseball bat,3.138278,0.071218,-0.791149
+hold_16,flux_schnell,hold,a person holding a baseball bat,2.241443,0.152754,0.309013
+hold_17,flux_schnell,hold,a person holding a baseball bat,1.978852,0.199263,0.818581
+hold_18,flux_schnell,hold,a person holding a baseball bat,2.001260,0.184510,0.820651
+hold_19,flux_schnell,hold,a person holding a baseball bat,2.904149,0.082625,-0.778319
+hold_20,flux_schnell,hold,a person holding a baseball bat,2.151742,0.161803,0.785015
+hold_21,flux_schnell,hold,a person holding a baseball bat,2.862746,0.099981,-0.528165
+hold_22,flux_schnell,hold,a person holding a baseball bat,2.602690,0.127301,0.189095
+hold_23,flux_schnell,hold,a person holding a baseball bat,1.883297,0.212952,0.961431
+hold_24,flux_schnell,hold,a person holding a baseball bat,1.807814,0.218487,0.024783
+hold_25,flux_schnell,hold,a person holding a baseball bat,3.430963,0.055720,-0.719323
+hold_26,flux_schnell,hold,a person holding a baseball bat,2.028821,0.180976,0.349787
+hold_27,flux_schnell,hold,a person holding a baseball bat,3.268601,0.062823,-0.601366
+hold_28,flux_schnell,hold,a person holding a baseball bat,1.860328,0.214548,1.283079
+hold_29,flux_schnell,hold,a person holding a baseball bat,2.256824,0.155582,0.144065
+jump_0,flux_schnell,jump,a person jumping a skateboard,2.099783,0.173432,0.986452
+jump_1,flux_schnell,jump,a person jumping a skateboard,2.274754,0.161015,-0.035986
+jump_2,flux_schnell,jump,a person jumping a skateboard,1.793228,0.240920,0.529187
+jump_3,flux_schnell,jump,a person jumping a skateboard,1.788238,0.259939,0.518879
+jump_4,flux_schnell,jump,a person jumping a skateboard,1.765880,0.221755,1.542441
+jump_5,flux_schnell,jump,a person jumping a skateboard,2.053074,0.196648,0.731667
+jump_6,flux_schnell,jump,a person jumping a skateboard,1.522848,0.284610,1.083300
+jump_7,flux_schnell,jump,a person jumping a skateboard,1.503304,0.295480,0.558136
+jump_8,flux_schnell,jump,a person jumping a skateboard,1.300431,0.312232,0.883317
+jump_9,flux_schnell,jump,a person jumping a skateboard,1.911850,0.233360,0.134880
+jump_10,flux_schnell,jump,a person jumping a skateboard,1.706181,0.251754,0.598981
+jump_11,flux_schnell,jump,a person jumping a skateboard,2.021260,0.206817,0.386448
+jump_12,flux_schnell,jump,a person jumping a skateboard,1.797299,0.242774,0.192447
+jump_13,flux_schnell,jump,a person jumping a skateboard,1.597814,0.248789,0.421060
+jump_14,flux_schnell,jump,a person jumping a skateboard,1.567960,0.270819,1.282542
+jump_15,flux_schnell,jump,a person jumping a skateboard,2.113048,0.170806,0.696007
+jump_16,flux_schnell,jump,a person jumping a skateboard,1.815506,0.212844,-0.160955
+jump_17,flux_schnell,jump,a person jumping a skateboard,1.889314,0.197524,0.393699
+jump_18,flux_schnell,jump,a person jumping a skateboard,1.800704,0.230410,0.307606
+jump_19,flux_schnell,jump,a person jumping a skateboard,2.005304,0.208010,0.079462
+jump_20,flux_schnell,jump,a person jumping a skis,2.102517,0.174232,0.553130
+jump_21,flux_schnell,jump,a person jumping a skis,1.890155,0.205053,1.580648
+jump_22,flux_schnell,jump,a person jumping a skis,1.820608,0.215759,0.999169
+jump_23,flux_schnell,jump,a person jumping a skis,1.986421,0.185903,1.509494
+jump_24,flux_schnell,jump,a person jumping a skis,2.034872,0.186448,1.464327
+jump_25,flux_schnell,jump,a person jumping a skis,2.006664,0.202498,0.983036
+jump_26,flux_schnell,jump,a person jumping a skis,2.029952,0.201427,0.455586
+jump_27,flux_schnell,jump,a person jumping a skis,2.164548,0.168010,1.263628
+jump_28,flux_schnell,jump,a person jumping a skis,2.859381,0.080746,-0.820979
+jump_29,flux_schnell,jump,a person jumping a skis,2.159979,0.166292,0.411702
+kick_0,flux_schnell,kick,a person kicking a punching bag,1.812136,0.222306,0.737129
+kick_1,flux_schnell,kick,a person kicking a punching bag,1.281598,0.333569,1.108814
+kick_2,flux_schnell,kick,a person kicking a punching bag,1.517089,0.267505,0.178946
+kick_3,flux_schnell,kick,a person kicking a punching bag,1.426262,0.299913,1.302393
+kick_4,flux_schnell,kick,a person kicking a punching bag,1.311026,0.332707,1.121137
+kick_5,flux_schnell,kick,a person kicking a punching bag,1.057604,0.382641,0.865743
+kick_6,flux_schnell,kick,a person kicking a punching bag,0.799876,0.476054,0.835196
+kick_7,flux_schnell,kick,a person kicking a punching bag,0.639928,0.554461,0.922206
+kick_8,flux_schnell,kick,a person kicking a punching bag,1.339601,0.305436,1.047813
+kick_9,flux_schnell,kick,a person kicking a punching bag,0.934278,0.417661,0.509255
+kick_10,flux_schnell,kick,a person kicking a punching bag,1.171203,0.357429,0.685897
+kick_11,flux_schnell,kick,a person kicking a punching bag,1.317294,0.318627,1.142456
+kick_12,flux_schnell,kick,a person kicking a punching bag,2.221803,0.174521,0.550273
+kick_13,flux_schnell,kick,a person kicking a punching bag,0.483226,0.627945,0.945345
+kick_14,flux_schnell,kick,a person kicking a punching bag,1.036632,0.406350,1.195127
+kick_15,flux_schnell,kick,a person kicking a punching bag,1.470845,0.294923,1.088137
+kick_16,flux_schnell,kick,a person kicking a punching bag,1.578543,0.265452,0.788242
+kick_17,flux_schnell,kick,a person kicking a punching bag,1.814156,0.215903,0.300234
+kick_18,flux_schnell,kick,a person kicking a punching bag,1.389342,0.315726,1.046687
+kick_19,flux_schnell,kick,a person kicking a punching bag,1.197901,0.336971,1.004347
+kick_20,flux_schnell,kick,a person kicking a punching bag,1.446205,0.286962,0.894701
+kick_21,flux_schnell,kick,a person kicking a punching bag,1.830950,0.220220,0.209037
+kick_22,flux_schnell,kick,a person kicking a punching bag,0.537748,0.599518,1.120683
+kick_23,flux_schnell,kick,a person kicking a rugby ball,0.854062,0.443397,0.707972
+kick_24,flux_schnell,kick,a person kicking a rugby ball,0.848661,0.458967,0.985642
+kick_25,flux_schnell,kick,a person kicking a rugby ball,0.860466,0.449674,0.849291
+kick_26,flux_schnell,kick,a person kicking a rugby ball,0.364739,0.684065,0.223430
+kick_27,flux_schnell,kick,a person kicking a rugby ball,0.452508,0.649359,0.484467
+kick_28,flux_schnell,kick,a person kicking a rugby ball,1.292075,0.315489,0.650820
+kick_29,flux_schnell,kick,a person kicking a rugby ball,0.440155,0.640151,0.285876
+lie_on_0,flux_schnell,lie_on,a person lying on a bed,1.839052,0.209098,0.883891
+lie_on_1,flux_schnell,lie_on,a person lying on a bed,1.966544,0.187401,1.101884
+lie_on_2,flux_schnell,lie_on,a person lying on a bed,1.135254,0.352896,0.507246
+lie_on_3,flux_schnell,lie_on,a person lying on a bed,1.280590,0.331731,0.475505
+lie_on_4,flux_schnell,lie_on,a person lying on a bed,1.810641,0.223695,0.906355
+lie_on_5,flux_schnell,lie_on,a person lying on a bed,1.747506,0.219886,1.034166
+lie_on_6,flux_schnell,lie_on,a person lying on a bed,2.336855,0.146403,0.607877
+lie_on_7,flux_schnell,lie_on,a person lying on a bed,1.445713,0.280650,1.386627
+lie_on_8,flux_schnell,lie_on,a person lying on a bed,1.734472,0.232054,0.545279
+lie_on_9,flux_schnell,lie_on,a person lying on a bench,1.155319,0.358512,0.744837
+lie_on_10,flux_schnell,lie_on,a person lying on a bench,1.482429,0.280063,0.738779
+lie_on_11,flux_schnell,lie_on,a person lying on a bench,1.174846,0.355315,0.325994
+lie_on_12,flux_schnell,lie_on,a person lying on a bench,2.265202,0.166617,1.447009
+lie_on_13,flux_schnell,lie_on,a person lying on a bench,1.082085,0.377383,1.066183
+lie_on_14,flux_schnell,lie_on,a person lying on a bench,1.397279,0.285866,1.200054
+lie_on_15,flux_schnell,lie_on,a person lying on a bench,1.428163,0.293949,0.661056
+lie_on_16,flux_schnell,lie_on,a person lying on a bench,1.289792,0.326874,1.072695
+lie_on_17,flux_schnell,lie_on,a person lying on a bench,1.484182,0.282083,1.121726
+lie_on_18,flux_schnell,lie_on,a person lying on a bench,1.497032,0.277893,1.173803
+lie_on_19,flux_schnell,lie_on,a person lying on a bench,1.398104,0.303128,0.984848
+lie_on_20,flux_schnell,lie_on,a person lying on a bench,2.731059,0.110871,0.187406
+lie_on_21,flux_schnell,lie_on,a person lying on a bench,1.157167,0.355336,1.134807
+lie_on_22,flux_schnell,lie_on,a person lying on a bench,1.344412,0.307661,1.019710
+lie_on_23,flux_schnell,lie_on,a person lying on a bench,1.161554,0.341291,1.461227
+lie_on_24,flux_schnell,lie_on,a person lying on a bench,1.611621,0.246294,1.039463
+lie_on_25,flux_schnell,lie_on,a person lying on a bench,1.261208,0.331243,1.278882
+lie_on_26,flux_schnell,lie_on,a person lying on a bench,1.772533,0.220690,0.106799
+lie_on_27,flux_schnell,lie_on,a person lying on a bench,2.759430,0.098236,-0.397344
+lie_on_28,flux_schnell,lie_on,a person lying on a bench,1.075485,0.371692,1.218601
+lie_on_29,flux_schnell,lie_on,a person lying on a bench,1.688936,0.238712,-0.055331
+lift_0,flux_schnell,lift,a person lifting a fork,2.859571,0.090918,-0.618793
+lift_1,flux_schnell,lift,a person lifting a fork,1.715424,0.227179,0.524698
+lift_2,flux_schnell,lift,a person lifting a fork,3.489661,0.057185,-0.708480
+lift_3,flux_schnell,lift,a person lifting a fork,2.271416,0.142351,0.365437
+lift_4,flux_schnell,lift,a person lifting a fork,1.701371,0.230727,0.766536
+lift_5,flux_schnell,lift,a person lifting a fork,2.596006,0.111155,-0.351314
+lift_6,flux_schnell,lift,a person lifting a fork,1.356892,0.317813,0.216982
+lift_7,flux_schnell,lift,a person lifting a fork,1.901859,0.196525,0.596910
+lift_8,flux_schnell,lift,a person lifting a fork,1.757172,0.218195,0.447208
+lift_9,flux_schnell,lift,a person lifting a fork,1.606936,0.244685,0.812648
+lift_10,flux_schnell,lift,a person lifting a fork,1.793819,0.211033,0.586811
+lift_11,flux_schnell,lift,a person lifting a fork,1.883631,0.200037,0.881881
+lift_12,flux_schnell,lift,a person lifting a fork,1.835270,0.208395,0.805543
+lift_13,flux_schnell,lift,a person lifting a fork,0.870378,0.437561,0.659650
+look_out_0,flux_schnell,look_out,a person looking out of a binoculars,1.173709,0.365459,0.974371
+look_out_1,flux_schnell,look_out,a person looking out of a binoculars,1.774403,0.235318,-0.163101
+look_out_2,flux_schnell,look_out,a person looking out of a binoculars,1.712029,0.237827,0.823403
+look_out_3,flux_schnell,look_out,a person looking out of a binoculars,1.612673,0.245475,0.245728
+look_out_4,flux_schnell,look_out,a person looking out of a binoculars,1.068379,0.384306,0.981028
+open_0,flux_schnell,open,a person opening a book,1.401123,0.310202,0.675364
+open_1,flux_schnell,open,a person opening a book,1.174947,0.362963,0.771697
+open_2,flux_schnell,open,a person opening a book,1.239193,0.331127,1.106095
+open_3,flux_schnell,open,a person opening a book,2.094046,0.183228,0.181011
+open_4,flux_schnell,open,a person opening a book,1.126619,0.375982,0.169509
+open_5,flux_schnell,open,a person opening a book,1.297449,0.319203,1.132502
+open_6,flux_schnell,open,a person opening a book,1.638479,0.248130,-0.079947
+open_7,flux_schnell,open,a person opening a book,1.315120,0.345346,0.291761
+open_8,flux_schnell,open,a person opening a book,1.065392,0.391871,0.767951
+open_9,flux_schnell,open,a person opening a book,1.230428,0.364215,0.910070
+open_10,flux_schnell,open,a person opening a book,1.286114,0.332114,1.015811
+open_11,flux_schnell,open,a person opening a book,1.001641,0.405505,0.297506
+open_12,flux_schnell,open,a person opening a book,1.026470,0.408206,0.795212
+open_13,flux_schnell,open,a person opening a book,1.110185,0.382952,0.299155
+open_14,flux_schnell,open,a person opening a book,1.704563,0.249853,-0.319381
+open_15,flux_schnell,open,a person opening a book,1.877865,0.214870,0.207748
+open_16,flux_schnell,open,a person opening a book,2.594815,0.124415,0.389767
+open_17,flux_schnell,open,a person opening a book,1.136291,0.358765,1.029276
+open_18,flux_schnell,open,a person opening a book,1.278637,0.340374,0.028546
+open_19,flux_schnell,open,a person opening a bottle,2.917767,0.083968,0.099156
+open_20,flux_schnell,open,a person opening a bottle,3.252437,0.076870,0.650384
+open_21,flux_schnell,open,a person opening a bottle,2.584267,0.117272,0.371898
+open_22,flux_schnell,open,a person opening a bottle,2.574528,0.125119,0.959248
+open_23,flux_schnell,open,a person opening a bottle,2.976692,0.085435,0.580948
+open_24,flux_schnell,open,a person opening a bottle,3.545961,0.057645,-0.783348
+open_25,flux_schnell,open,a person opening a microwave,1.847001,0.203867,-0.200710
+open_26,flux_schnell,open,a person opening a microwave,1.931932,0.196920,0.495769
+open_27,flux_schnell,open,a person opening a oven,1.899047,0.193462,-0.189393
+open_28,flux_schnell,open,a person opening a oven,2.245142,0.147843,-0.506744
+open_29,flux_schnell,open,a person opening a oven,1.545912,0.267834,1.056462
+pack_0,flux_schnell,pack,a person packing a suitcase,0.719356,0.504937,0.504101
+pack_1,flux_schnell,pack,a person packing a suitcase,1.471848,0.265021,0.581506
+pack_2,flux_schnell,pack,a person packing a suitcase,2.013700,0.181990,0.441997
+pack_3,flux_schnell,pack,a person packing a suitcase,0.555725,0.586566,0.762986
+pack_4,flux_schnell,pack,a person packing a suitcase,1.251131,0.314827,0.755368
+pack_5,flux_schnell,pack,a person packing a suitcase,0.334186,0.669585,-0.164313
+pack_6,flux_schnell,pack,a person packing a suitcase,0.951968,0.424783,0.715411
+pack_7,flux_schnell,pack,a person packing a suitcase,1.128316,0.360075,0.666968
+pack_8,flux_schnell,pack,a person packing a suitcase,1.158154,0.342283,0.891413
+pack_9,flux_schnell,pack,a person packing a suitcase,1.656625,0.246986,0.713527
+pack_10,flux_schnell,pack,a person packing a suitcase,0.673718,0.536136,0.391182
+pack_11,flux_schnell,pack,a person packing a suitcase,1.338368,0.302174,0.786911
+pack_12,flux_schnell,pack,a person packing a suitcase,0.668119,0.529866,0.459403
+peel_0,flux_schnell,peel,a person peeling a apple,0.664183,0.528776,0.806078
+peel_1,flux_schnell,peel,a person peeling a apple,2.023061,0.175957,0.447682
+peel_2,flux_schnell,peel,a person peeling a apple,0.919904,0.414999,0.959238
+peel_3,flux_schnell,peel,a person peeling a apple,0.989941,0.390945,1.266243
+peel_4,flux_schnell,peel,a person peeling a apple,0.767692,0.474592,1.209816
+peel_5,flux_schnell,peel,a person peeling a apple,0.487692,0.610985,0.968917
+peel_6,flux_schnell,peel,a person peeling a apple,0.685506,0.514719,0.624788
+peel_7,flux_schnell,peel,a person peeling a apple,0.744009,0.484585,0.969631
+peel_8,flux_schnell,peel,a person peeling a banana,1.207213,0.330865,1.025754
+peel_9,flux_schnell,peel,a person peeling a banana,1.667069,0.231983,0.842496
+peel_10,flux_schnell,peel,a person peeling a banana,1.000792,0.388908,0.929161
+peel_11,flux_schnell,peel,a person peeling a banana,1.520404,0.268414,0.690492
+peel_12,flux_schnell,peel,a person peeling a banana,0.882055,0.448097,0.713276
+peel_13,flux_schnell,peel,a person peeling a banana,0.789501,0.490485,0.149390
+peel_14,flux_schnell,peel,a person peeling a banana,0.952008,0.405176,0.341376
+peel_15,flux_schnell,peel,a person peeling a banana,1.349441,0.289879,0.594475
+peel_16,flux_schnell,peel,a person peeling a banana,1.599375,0.250793,1.256266
+peel_17,flux_schnell,peel,a person peeling a banana,1.287154,0.326995,0.263183
+peel_18,flux_schnell,peel,a person peeling a banana,0.927324,0.415443,1.065484
+peel_19,flux_schnell,peel,a person peeling a banana,2.505303,0.120698,-0.369225
+peel_20,flux_schnell,peel,a person peeling a banana,1.491137,0.265951,1.010875
+peel_21,flux_schnell,peel,a person peeling a carrot,2.587102,0.122441,0.268706
+peel_22,flux_schnell,peel,a person peeling a carrot,1.384081,0.292881,1.401538
+peel_23,flux_schnell,peel,a person peeling a orange,1.197202,0.343100,1.064120
+pick_up_0,flux_schnell,pick_up,a person picking up a skis,2.073007,0.163303,0.395865
+pick_up_1,flux_schnell,pick_up,a person picking up a skis,2.529883,0.128408,0.663291
+pick_up_2,flux_schnell,pick_up,a person picking up a skis,2.010439,0.189104,0.816787
+pick_up_3,flux_schnell,pick_up,a person picking up a skis,2.011719,0.199396,0.476254
+pick_up_4,flux_schnell,pick_up,a person picking up a skis,2.016191,0.189093,0.604857
+pick_up_5,flux_schnell,pick_up,a person picking up a skis,1.730277,0.224945,0.537654
+pick_up_6,flux_schnell,pick_up,a person picking up a skis,2.398652,0.149129,1.012113
+pick_up_7,flux_schnell,pick_up,a person picking up a suitcase,2.902310,0.093529,-0.413556
+pick_up_8,flux_schnell,pick_up,a person picking up a suitcase,2.137729,0.165161,0.393139
+pick_up_9,flux_schnell,pick_up,a person picking up a suitcase,2.363018,0.137766,0.507034
+pick_up_10,flux_schnell,pick_up,a person picking up a suitcase,1.500710,0.268109,0.589471
+pick_up_11,flux_schnell,pick_up,a person picking up a suitcase,3.181624,0.071795,0.012961
+pick_up_12,flux_schnell,pick_up,a person picking up a suitcase,2.218142,0.156937,0.938144
+pick_up_13,flux_schnell,pick_up,a person picking up a suitcase,2.655927,0.107201,0.212921
+pick_up_14,flux_schnell,pick_up,a person picking up a suitcase,2.765391,0.100241,-0.184869
+pick_up_15,flux_schnell,pick_up,a person picking up a suitcase,2.781988,0.113231,0.253479
+pick_up_16,flux_schnell,pick_up,a person picking up a suitcase,3.455896,0.063012,0.216338
+pick_up_17,flux_schnell,pick_up,a person picking up a suitcase,2.564634,0.128624,0.015151
+pick_up_18,flux_schnell,pick_up,a person picking up a suitcase,3.409553,0.064018,0.269336
+pick_up_19,flux_schnell,pick_up,a person picking up a suitcase,2.617198,0.100757,1.017989
+pick_up_20,flux_schnell,pick_up,a person picking up a suitcase,3.221515,0.069289,0.288900
+pick_up_21,flux_schnell,pick_up,a person picking up a suitcase,2.544183,0.135077,1.252627
+pour_0,flux_schnell,pour,a person pouring a bottle,1.800027,0.209834,0.529010
+pour_1,flux_schnell,pour,a person pouring a bottle,1.283014,0.326389,0.276473
+pour_2,flux_schnell,pour,a person pouring a bottle,2.724407,0.110740,-0.194173
+pour_3,flux_schnell,pour,a person pouring a bottle,1.101423,0.354950,0.644295
+pour_4,flux_schnell,pour,a person pouring a bottle,1.426438,0.283726,1.125237
+pour_5,flux_schnell,pour,a person pouring a bottle,2.188918,0.162075,-0.044151
+pour_6,flux_schnell,pour,a person pouring a bottle,0.766385,0.486264,0.971144
+pour_7,flux_schnell,pour,a person pouring a bottle,1.830717,0.207687,0.386418
+pour_8,flux_schnell,pour,a person pouring a bottle,1.921151,0.196639,0.434809
+pour_9,flux_schnell,pour,a person pouring a bottle,1.847370,0.203932,0.104882
+pour_10,flux_schnell,pour,a person pouring a bottle,1.216380,0.324710,0.858017
+pour_11,flux_schnell,pour,a person pouring a bottle,1.963754,0.183736,0.669506
+pour_12,flux_schnell,pour,a person pouring a bottle,1.863246,0.215706,0.250747
+pour_13,flux_schnell,pour,a person pouring a bottle,1.885017,0.192914,0.466674
+pour_14,flux_schnell,pour,a person pouring a bottle,1.901889,0.200996,0.315367
+pour_15,flux_schnell,pour,a person pouring a bottle,1.248334,0.326748,0.844546
+pour_16,flux_schnell,pour,a person pouring a cup,3.121563,0.080345,-0.528936
+pour_17,flux_schnell,pour,a person pouring a cup,2.011870,0.184578,0.898672
+pour_18,flux_schnell,pour,a person pouring a cup,2.831343,0.101163,-0.042734
+pour_19,flux_schnell,pour,a person pouring a cup,3.537235,0.056350,-0.539288
+pour_20,flux_schnell,pour,a person pouring a cup,3.152797,0.076933,-0.471753
+pour_21,flux_schnell,pour,a person pouring a cup,2.914784,0.092599,-0.295854
+pour_22,flux_schnell,pour,a person pouring a cup,3.049645,0.079942,-0.241889
+pour_23,flux_schnell,pour,a person pouring a cup,2.593918,0.118574,0.579405
+pour_24,flux_schnell,pour,a person pouring a cup,2.648756,0.112323,0.090953
+pour_25,flux_schnell,pour,a person pouring a cup,3.127313,0.079142,-0.540745
+pour_26,flux_schnell,pour,a person pouring a cup,2.738962,0.099902,-0.441314
+pour_27,flux_schnell,pour,a person pouring a cup,2.494992,0.128933,0.206965
+pour_28,flux_schnell,pour,a person pouring a cup,2.731982,0.106912,0.019985
+pour_29,flux_schnell,pour,a person pouring a cup,3.233943,0.074048,-0.637635
+push_0,flux_schnell,push,a person pushing a bicycle,2.823127,0.103205,0.154386
+push_1,flux_schnell,push,a person pushing a bicycle,2.931066,0.090698,-0.388649
+push_2,flux_schnell,push,a person pushing a bicycle,2.210095,0.164367,0.666923
+push_3,flux_schnell,push,a person pushing a bicycle,2.655568,0.117104,-0.208630
+push_4,flux_schnell,push,a person pushing a bicycle,2.939638,0.086336,-0.270895
+push_5,flux_schnell,push,a person pushing a bicycle,2.777158,0.114641,0.908965
+push_6,flux_schnell,push,a person pushing a bicycle,2.840059,0.102659,0.110181
+push_7,flux_schnell,push,a person pushing a bicycle,3.176562,0.076922,-0.541638
+push_8,flux_schnell,push,a person pushing a bicycle,2.861200,0.090806,-0.302089
+push_9,flux_schnell,push,a person pushing a bicycle,2.561344,0.122517,-0.023774
+push_10,flux_schnell,push,a person pushing a bicycle,2.972585,0.093314,-0.199621
+push_11,flux_schnell,push,a person pushing a bicycle,2.750594,0.105803,-0.113633
+push_12,flux_schnell,push,a person pushing a bicycle,2.730432,0.107371,0.153276
+push_13,flux_schnell,push,a person pushing a bicycle,3.395536,0.060967,-0.664312
+push_14,flux_schnell,push,a person pushing a bicycle,2.277472,0.143040,0.543786
+push_15,flux_schnell,push,a person pushing a bicycle,2.739555,0.098773,-0.183005
+push_16,flux_schnell,push,a person pushing a motorcycle,2.648139,0.116538,-0.742637
+push_17,flux_schnell,push,a person pushing a motorcycle,1.847306,0.223018,0.330881
+push_18,flux_schnell,push,a person pushing a motorcycle,2.416149,0.153513,-0.115741
+push_19,flux_schnell,push,a person pushing a motorcycle,2.201263,0.204418,0.462885
+push_20,flux_schnell,push,a person pushing a motorcycle,1.860638,0.220456,0.563779
+push_21,flux_schnell,push,a person pushing a motorcycle,1.845162,0.230718,0.782719
+push_22,flux_schnell,push,a person pushing a motorcycle,1.792664,0.226408,0.710199
+push_23,flux_schnell,push,a person pushing a motorcycle,2.260890,0.175113,0.619055
+push_24,flux_schnell,push,a person pushing a motorcycle,1.786842,0.225279,0.309808
+push_25,flux_schnell,push,a person pushing a motorcycle,2.204114,0.170029,0.404163
+ride_0,flux_schnell,ride,a person riding a bicycle,1.663039,0.298337,0.498381
+ride_1,flux_schnell,ride,a person riding a bicycle,1.526097,0.296208,1.097263
+ride_2,flux_schnell,ride,a person riding a bicycle,1.992197,0.195559,1.028283
+ride_3,flux_schnell,ride,a person riding a bicycle,1.838890,0.250534,0.307351
+ride_4,flux_schnell,ride,a person riding a bicycle,1.842113,0.219070,0.403303
+ride_5,flux_schnell,ride,a person riding a bicycle,2.215743,0.195474,-0.149236
+ride_6,flux_schnell,ride,a person riding a bicycle,1.820513,0.278095,0.442388
+ride_7,flux_schnell,ride,a person riding a bicycle,1.903568,0.265329,0.045828
+ride_8,flux_schnell,ride,a person riding a bicycle,2.322269,0.180984,0.057241
+ride_9,flux_schnell,ride,a person riding a bicycle,1.745234,0.252262,0.283965
+ride_10,flux_schnell,ride,a person riding a bicycle,2.130961,0.206733,0.029518
+ride_11,flux_schnell,ride,a person riding a bicycle,1.975026,0.218399,0.504256
+ride_12,flux_schnell,ride,a person riding a bicycle,1.617387,0.297773,0.682053
+ride_13,flux_schnell,ride,a person riding a bicycle,1.581461,0.283080,0.393492
+ride_14,flux_schnell,ride,a person riding a bicycle,1.734788,0.243824,0.386199
+ride_15,flux_schnell,ride,a person riding a bicycle,1.536876,0.277153,1.393900
+ride_16,flux_schnell,ride,a person riding a bicycle,2.031670,0.224963,0.349956
+ride_17,flux_schnell,ride,a person riding a bicycle,1.883477,0.260615,0.161978
+ride_18,flux_schnell,ride,a person riding a bicycle,1.521762,0.300673,0.555841
+ride_19,flux_schnell,ride,a person riding a bicycle,2.103037,0.190866,-0.105214
+ride_20,flux_schnell,ride,a person riding a bicycle,1.852166,0.253579,0.273571
+ride_21,flux_schnell,ride,a person riding a bicycle,1.747301,0.276035,0.179510
+ride_22,flux_schnell,ride,a person riding a bicycle,1.557574,0.281979,1.127919
+ride_23,flux_schnell,ride,a person riding a bicycle,1.933934,0.242246,0.897548
+ride_24,flux_schnell,ride,a person riding a bicycle,1.908061,0.240169,0.053421
+ride_25,flux_schnell,ride,a person riding a bicycle,1.850981,0.254261,0.281588
+ride_26,flux_schnell,ride,a person riding a bicycle,1.680793,0.292130,0.407435
+ride_27,flux_schnell,ride,a person riding a bicycle,1.844748,0.257604,0.409063
+ride_28,flux_schnell,ride,a person riding a bicycle,2.133803,0.191564,-0.001008
+ride_29,flux_schnell,ride,a person riding a bicycle,1.944136,0.259974,0.266513
+sip_16,flux_schnell,sip,a person sipping a cup,1.177830,0.354149,-0.063152
+sip_17,flux_schnell,sip,a person sipping a cup,1.517488,0.281588,0.336791
+sip_18,flux_schnell,sip,a person sipping a cup,1.937934,0.196888,1.398225
+sip_19,flux_schnell,sip,a person sipping a cup,1.678803,0.230839,0.072423
+sip_20,flux_schnell,sip,a person sipping a cup,1.315848,0.347639,0.678472
+sip_21,flux_schnell,sip,a person sipping a cup,1.893686,0.192877,0.653597
+sip_22,flux_schnell,sip,a person sipping a cup,1.639838,0.262687,0.177772
+sip_23,flux_schnell,sip,a person sipping a cup,0.938874,0.418960,0.854558
+sip_24,flux_schnell,sip,a person sipping a cup,2.372842,0.145054,0.237413
+sip_25,flux_schnell,sip,a person sipping a cup,1.775029,0.208808,0.221474
+sip_26,flux_schnell,sip,a person sipping a cup,1.057341,0.396336,0.611526
+sip_27,flux_schnell,sip,a person sipping a cup,1.170483,0.345781,0.919492
+sip_28,flux_schnell,sip,a person sipping a cup,1.856237,0.206861,1.005356
+sip_29,flux_schnell,sip,a person sipping a cup,1.018939,0.411645,0.604123
+sit_on_0,flux_schnell,sit_on,a person sitting on a bed,1.283531,0.316280,1.498347
+sit_on_1,flux_schnell,sit_on,a person sitting on a bed,1.825647,0.207499,1.113883
+sit_on_2,flux_schnell,sit_on,a person sitting on a bed,0.784410,0.473832,1.186569
+sit_on_3,flux_schnell,sit_on,a person sitting on a bed,1.098287,0.385150,0.747879
+sit_on_4,flux_schnell,sit_on,a person sitting on a bed,1.291434,0.323807,1.541753
+sit_on_5,flux_schnell,sit_on,a person sitting on a bed,1.289643,0.311629,1.577959
+sit_on_6,flux_schnell,sit_on,a person sitting on a bed,1.727479,0.235204,1.653337
+sit_on_7,flux_schnell,sit_on,a person sitting on a bed,1.479957,0.281025,0.931785
+sit_on_8,flux_schnell,sit_on,a person sitting on a bed,1.256251,0.331328,1.296742
+sit_on_9,flux_schnell,sit_on,a person sitting on a bench,0.975016,0.411161,0.999029
+sit_on_10,flux_schnell,sit_on,a person sitting on a bench,1.306478,0.326751,1.034727
+sit_on_11,flux_schnell,sit_on,a person sitting on a bench,0.845813,0.465055,0.917584
+sit_on_12,flux_schnell,sit_on,a person sitting on a bench,1.981140,0.185769,1.548622
+sit_on_13,flux_schnell,sit_on,a person sitting on a bench,1.247234,0.355989,0.688089
+sit_on_14,flux_schnell,sit_on,a person sitting on a bench,1.307294,0.313303,1.178289
+sit_on_15,flux_schnell,sit_on,a person sitting on a bench,1.236935,0.358789,1.028924
+sit_on_16,flux_schnell,sit_on,a person sitting on a bench,1.118893,0.381691,1.211388
+sit_on_17,flux_schnell,sit_on,a person sitting on a bench,1.249453,0.328533,1.311309
+sit_on_18,flux_schnell,sit_on,a person sitting on a bench,1.158784,0.355132,1.305025
+sit_on_19,flux_schnell,sit_on,a person sitting on a bench,1.742839,0.226343,0.123298
+sit_on_20,flux_schnell,sit_on,a person sitting on a bench,2.023826,0.187349,1.347611
+sit_on_21,flux_schnell,sit_on,a person sitting on a bench,1.164078,0.359613,1.043602
+sit_on_22,flux_schnell,sit_on,a person sitting on a bench,1.082319,0.379979,1.354580
+sit_on_23,flux_schnell,sit_on,a person sitting on a bench,1.403931,0.287405,0.926783
+sit_on_24,flux_schnell,sit_on,a person sitting on a bench,1.565066,0.284214,1.153960
+sit_on_25,flux_schnell,sit_on,a person sitting on a bench,1.111657,0.372549,1.351531
+sit_on_26,flux_schnell,sit_on,a person sitting on a bench,1.994691,0.180775,-0.279884
+sit_on_27,flux_schnell,sit_on,a person sitting on a bench,2.265316,0.153326,0.364658
+sit_on_28,flux_schnell,sit_on,a person sitting on a bench,1.125716,0.389824,1.126416
+sit_on_29,flux_schnell,sit_on,a person sitting on a bench,2.209776,0.155838,-0.486428
+stick_0,flux_schnell,stick,a person sticking a fork,2.345508,0.135763,-0.002885
+stick_1,flux_schnell,stick,a person sticking a fork,2.886698,0.092958,-0.525798
+stick_2,flux_schnell,stick,a person sticking a fork,2.761239,0.109127,0.058724
+stick_3,flux_schnell,stick,a person sticking a fork,3.369863,0.062241,-0.775913
+stick_4,flux_schnell,stick,a person sticking a fork,2.770764,0.098491,-0.155149
+stick_5,flux_schnell,stick,a person sticking a fork,2.661464,0.120757,0.373889
+stick_6,flux_schnell,stick,a person sticking a fork,1.915463,0.182312,-0.706592
+stick_7,flux_schnell,stick,a person sticking a fork,2.897129,0.080251,-0.373302
+stick_8,flux_schnell,stick,a person sticking a fork,3.035059,0.080632,-0.339142
+stick_9,flux_schnell,stick,a person sticking a fork,3.051398,0.071167,-0.553874
+stick_10,flux_schnell,stick,a person sticking a fork,2.869551,0.093147,-0.332169
+stick_11,flux_schnell,stick,a person sticking a fork,2.168860,0.155488,0.236196
+stick_12,flux_schnell,stick,a person sticking a fork,3.187777,0.067957,-0.645513
+stick_13,flux_schnell,stick,a person sticking a fork,2.483269,0.120054,-0.741976
+stick_14,flux_schnell,stick,a person sticking a knife,2.428622,0.139180,1.541395
+stick_15,flux_schnell,stick,a person sticking a knife,2.847181,0.105937,0.793032
+stick_16,flux_schnell,stick,a person sticking a knife,4.191696,0.029202,-0.838113
+stick_17,flux_schnell,stick,a person sticking a knife,3.612028,0.050079,-0.732147
+stick_18,flux_schnell,stick,a person sticking a knife,3.107109,0.081987,0.611279
+stick_19,flux_schnell,stick,a person sticking a knife,3.053877,0.083279,-0.020144
+stick_20,flux_schnell,stick,a person sticking a knife,3.979743,0.042908,-0.246367
+stick_21,flux_schnell,stick,a person sticking a knife,2.496366,0.131850,1.337655
+stick_22,flux_schnell,stick,a person sticking a knife,3.373063,0.068260,-0.362258
+stick_23,flux_schnell,stick,a person sticking a knife,3.553219,0.057191,-0.309889
+stick_24,flux_schnell,stick,a person sticking a knife,2.793157,0.111673,0.091535
+stick_25,flux_schnell,stick,a person sticking a knife,3.061551,0.092979,0.252114
+stick_26,flux_schnell,stick,a person sticking a knife,2.787138,0.105592,0.284353
+stick_27,flux_schnell,stick,a person sticking a knife,2.738340,0.114272,-0.399172
+stick_28,flux_schnell,stick,a person sticking a knife,2.639646,0.116973,0.614939
+stick_29,flux_schnell,stick,a person sticking a knife,3.571787,0.046878,-0.561061
+stir_0,flux_schnell,stir,a person stirring a bowl,0.766625,0.482573,1.015856
+stir_1,flux_schnell,stir,a person stirring a bowl,0.793475,0.493700,1.010948
+stir_2,flux_schnell,stir,a person stirring a bowl,1.518423,0.273497,0.454197
+stir_3,flux_schnell,stir,a person stirring a bowl,1.471811,0.330469,0.448320
+stir_4,flux_schnell,stir,a person stirring a bowl,1.595049,0.280973,0.670331
+stir_5,flux_schnell,stir,a person stirring a bowl,0.378554,0.669112,0.832252
+stir_6,flux_schnell,stir,a person stirring a bowl,0.927023,0.443247,1.074443
+stir_7,flux_schnell,stir,a person stirring a bowl,0.976781,0.471578,-0.130462
+swing_0,flux_schnell,swing,a person swinging a badminton racket,4.639421,0.023019,-0.705415
+swing_1,flux_schnell,swing,a person swinging a badminton racket,2.551510,0.114071,-0.193953
+swing_2,flux_schnell,swing,a person swinging a badminton racket,2.181878,0.165410,-0.050948
+swing_3,flux_schnell,swing,a person swinging a badminton racket,2.958782,0.089037,-0.352278
+swing_4,flux_schnell,swing,a person swinging a badminton racket,2.225957,0.158489,0.040147
+swing_5,flux_schnell,swing,a person swinging a badminton racket,2.457555,0.128360,0.334628
+swing_6,flux_schnell,swing,a person swinging a baseball bat,1.340838,0.300665,0.460650
+swing_7,flux_schnell,swing,a person swinging a baseball bat,3.000971,0.082585,-0.398180
+swing_8,flux_schnell,swing,a person swinging a baseball bat,2.819378,0.091030,-0.347655
+swing_9,flux_schnell,swing,a person swinging a baseball bat,2.487375,0.127467,-0.095858
+swing_10,flux_schnell,swing,a person swinging a baseball bat,2.170604,0.161493,0.261934
+swing_11,flux_schnell,swing,a person swinging a baseball bat,2.443126,0.133315,0.126775
+swing_12,flux_schnell,swing,a person swinging a baseball bat,2.661445,0.100029,-0.549657
+swing_13,flux_schnell,swing,a person swinging a baseball bat,2.673352,0.103190,-0.244831
+swing_14,flux_schnell,swing,a person swinging a baseball bat,2.146319,0.164010,0.388313
+swing_15,flux_schnell,swing,a person swinging a baseball bat,2.407860,0.139945,0.441691
+swing_16,flux_schnell,swing,a person swinging a baseball bat,2.173822,0.178046,0.471844
+swing_17,flux_schnell,swing,a person swinging a baseball bat,1.505316,0.277327,0.472860
+swing_18,flux_schnell,swing,a person swinging a baseball bat,3.270077,0.064613,-0.541223
+swing_19,flux_schnell,swing,a person swinging a baseball bat,2.358759,0.130264,-0.571549
+swing_20,flux_schnell,swing,a person swinging a baseball bat,3.388235,0.070475,-0.259545
+swing_21,flux_schnell,swing,a person swinging a baseball bat,2.538548,0.126536,-0.014504
+swing_22,flux_schnell,swing,a person swinging a baseball bat,2.503673,0.124755,-0.292198
+swing_23,flux_schnell,swing,a person swinging a golf clubs,2.558425,0.120792,-0.116849
+swing_24,flux_schnell,swing,a person swinging a golf clubs,3.662827,0.046152,-0.856003
+swing_25,flux_schnell,swing,a person swinging a golf clubs,2.690112,0.106012,-0.357950
+swing_26,flux_schnell,swing,a person swinging a golf clubs,3.059417,0.076355,-0.802931
+swing_27,flux_schnell,swing,a person swinging a golf clubs,3.025042,0.090871,0.023064
+swing_28,flux_schnell,swing,a person swinging a golf clubs,2.798647,0.093030,-0.314233
+swing_29,flux_schnell,swing,a person swinging a golf clubs,2.850160,0.103089,-0.054125
+take_photo_0,flux_schnell,take_photo,a person taking a photo with a camera,1.741103,0.260916,-0.264984
+take_photo_1,flux_schnell,take_photo,a person taking a photo with a camera,1.258466,0.325118,0.726349
+take_photo_2,flux_schnell,take_photo,a person taking a photo with a camera,1.189166,0.336052,0.440780
+take_photo_3,flux_schnell,take_photo,a person taking a photo with a camera,1.878885,0.203487,1.554299
+take_photo_4,flux_schnell,take_photo,a person taking a photo with a camera,0.784223,0.478899,1.150505
+take_photo_5,flux_schnell,take_photo,a person taking a photo with a camera,1.561620,0.260167,0.361253
+take_photo_6,flux_schnell,take_photo,a person taking a photo with a camera,1.100082,0.391437,1.125138
+take_photo_7,flux_schnell,take_photo,a person taking a photo with a camera,1.185668,0.351415,0.966604
+take_photo_8,flux_schnell,take_photo,a person taking a photo with a camera,1.247028,0.343549,1.065302
+take_photo_9,flux_schnell,take_photo,a person taking a photo with a camera,1.086401,0.370438,0.565659
+take_photo_10,flux_schnell,take_photo,a person taking a photo with a camera,1.130520,0.365698,1.068041
+take_photo_11,flux_schnell,take_photo,a person taking a photo with a camera,1.219639,0.341149,1.384852
+take_photo_12,flux_schnell,take_photo,a person taking a photo with a camera,1.097377,0.385915,-0.157553
+take_photo_13,flux_schnell,take_photo,a person taking a photo with a camera,1.201557,0.361369,0.611656
+take_photo_14,flux_schnell,take_photo,a person taking a photo with a camera,0.971963,0.409781,0.555890
+take_photo_15,flux_schnell,take_photo,a person taking a photo with a camera,0.794587,0.503243,0.643098
+take_photo_16,flux_schnell,take_photo,a person taking a photo with a camera,1.222221,0.342186,0.118087
+take_photo_17,flux_schnell,take_photo,a person taking a photo with a camera,1.707347,0.247976,-0.165058
+take_photo_18,flux_schnell,take_photo,a person taking a photo with a camera,2.695170,0.112619,0.085555
+take_photo_19,flux_schnell,take_photo,a person taking a photo with a camera,1.787893,0.238473,0.608503
+take_photo_20,flux_schnell,take_photo,a person taking a photo with a camera,1.852904,0.232729,-0.520412
+take_photo_21,flux_schnell,take_photo,a person taking a photo with a camera,0.727402,0.540098,0.589270
+take_photo_22,flux_schnell,take_photo,a person taking a photo with a cell phone,1.548747,0.275481,0.437351
+take_photo_23,flux_schnell,take_photo,a person taking a photo with a cell phone,0.848942,0.461511,0.123219
+take_photo_24,flux_schnell,take_photo,a person taking a photo with a cell phone,1.221175,0.340761,0.711561
+take_photo_25,flux_schnell,take_photo,a person taking a photo with a cell phone,1.469638,0.325263,0.744558
+take_photo_26,flux_schnell,take_photo,a person taking a photo with a cell phone,1.255161,0.365590,-0.000350
+take_photo_27,flux_schnell,take_photo,a person taking a photo with a cell phone,1.578833,0.279858,1.485302
+take_photo_28,flux_schnell,take_photo,a person taking a photo with a cell phone,1.118060,0.397921,0.796479
+take_photo_29,flux_schnell,take_photo,a person taking a photo with a cell phone,1.110579,0.412927,0.582154
+talk_on_0,flux_schnell,talk_on,a person talking on a cell phone,2.168599,0.170736,0.313266
+talk_on_1,flux_schnell,talk_on,a person talking on a cell phone,1.144089,0.385785,0.582055
+talk_on_2,flux_schnell,talk_on,a person talking on a cell phone,1.371457,0.317083,0.911809
+talk_on_3,flux_schnell,talk_on,a person talking on a cell phone,1.158870,0.350800,1.368580
+talk_on_4,flux_schnell,talk_on,a person talking on a cell phone,1.033868,0.409293,0.839406
+talk_on_5,flux_schnell,talk_on,a person talking on a cell phone,1.371647,0.293581,1.613576
+talk_on_6,flux_schnell,talk_on,a person talking on a cell phone,1.591138,0.285980,0.394237
+talk_on_7,flux_schnell,talk_on,a person talking on a cell phone,1.246651,0.342173,1.015746
+talk_on_8,flux_schnell,talk_on,a person talking on a cell phone,1.968822,0.199969,0.378126
+text_on_0,flux_schnell,text_on,a person texting on a cell phone,1.969335,0.191356,0.745984
+text_on_1,flux_schnell,text_on,a person texting on a cell phone,1.092420,0.375690,0.483640
+text_on_2,flux_schnell,text_on,a person texting on a cell phone,1.666555,0.246630,0.685439
+text_on_3,flux_schnell,text_on,a person texting on a cell phone,1.872719,0.218252,1.068849
+text_on_4,flux_schnell,text_on,a person texting on a cell phone,1.765263,0.232926,0.245718
+text_on_5,flux_schnell,text_on,a person texting on a cell phone,1.866981,0.204640,1.442945
+text_on_6,flux_schnell,text_on,a person texting on a cell phone,1.309358,0.306803,0.471317
+text_on_7,flux_schnell,text_on,a person texting on a cell phone,1.388124,0.288437,1.335901
+text_on_8,flux_schnell,text_on,a person texting on a cell phone,2.230352,0.150223,0.029563
+throw_0,flux_schnell,throw,a person throwing a baseball,1.537571,0.257166,0.654739
+throw_1,flux_schnell,throw,a person throwing a baseball,0.770058,0.491376,1.018219
+throw_2,flux_schnell,throw,a person throwing a baseball,2.067889,0.174713,1.179263
+throw_3,flux_schnell,throw,a person throwing a basketball,0.216705,0.753970,0.198706
+throw_4,flux_schnell,throw,a person throwing a basketball,0.919068,0.431246,1.026130
+throw_5,flux_schnell,throw,a person throwing a basketball,0.817009,0.461503,0.923720
+throw_6,flux_schnell,throw,a person throwing a basketball,1.008863,0.409896,0.745813
+throw_7,flux_schnell,throw,a person throwing a basketball,2.226671,0.157828,0.426786
+throw_8,flux_schnell,throw,a person throwing a basketball,1.109743,0.376531,1.134398
+throw_9,flux_schnell,throw,a person throwing a basketball,0.704477,0.506567,1.123329
+throw_10,flux_schnell,throw,a person throwing a basketball,3.251582,0.079370,-0.108654
+throw_11,flux_schnell,throw,a person throwing a basketball,0.756148,0.482398,0.992451
+throw_12,flux_schnell,throw,a person throwing a basketball,2.424974,0.162037,0.880973
+throw_13,flux_schnell,throw,a person throwing a basketball,1.304787,0.312520,0.683052
+throw_14,flux_schnell,throw,a person throwing a discus,0.960829,0.432185,-0.175710
+throw_15,flux_schnell,throw,a person throwing a discus,0.536737,0.607526,0.488772
+throw_16,flux_schnell,throw,a person throwing a discus,1.012110,0.425134,-0.295347
+throw_17,flux_schnell,throw,a person throwing a discus,1.000530,0.411103,-0.353468
+throw_18,flux_schnell,throw,a person throwing a discus,1.028645,0.396037,0.401065
+throw_19,flux_schnell,throw,a person throwing a discus,1.025479,0.394499,0.433009
+throw_20,flux_schnell,throw,a person throwing a discus,1.023771,0.407385,-0.332254
+throw_21,flux_schnell,throw,a person throwing a discus,0.927087,0.432293,0.695452
+throw_22,flux_schnell,throw,a person throwing a frisbee,0.913494,0.433543,-0.236798
+throw_23,flux_schnell,throw,a person throwing a frisbee,0.897813,0.453449,-0.491675
+throw_24,flux_schnell,throw,a person throwing a frisbee,0.932528,0.426089,-0.307682
+throw_25,flux_schnell,throw,a person throwing a frisbee,0.876408,0.443359,-0.185206
+throw_26,flux_schnell,throw,a person throwing a frisbee,0.922473,0.424297,-0.293854
+throw_27,flux_schnell,throw,a person throwing a frisbee,0.959550,0.409449,-0.399926
+throw_28,flux_schnell,throw,a person throwing a frisbee,0.665886,0.530035,0.251461
+throw_29,flux_schnell,throw,a person throwing a frisbee,0.932259,0.429767,-0.151467
+type_on_0,flux_schnell,type_on,a person typing on a keyboard,0.876560,0.465349,0.608094
+type_on_1,flux_schnell,type_on,a person typing on a keyboard,0.741786,0.490728,0.708347
+type_on_2,flux_schnell,type_on,a person typing on a keyboard,0.614960,0.551563,1.156944
+type_on_3,flux_schnell,type_on,a person typing on a keyboard,1.081637,0.391037,0.987111
+type_on_4,flux_schnell,type_on,a person typing on a keyboard,1.261414,0.312592,0.223073
+type_on_5,flux_schnell,type_on,a person typing on a keyboard,0.503939,0.641270,0.599498
+type_on_6,flux_schnell,type_on,a person typing on a keyboard,0.755213,0.495189,0.531161
+type_on_7,flux_schnell,type_on,a person typing on a keyboard,0.711140,0.525927,0.681642
+type_on_8,flux_schnell,type_on,a person typing on a keyboard,1.311927,0.306066,0.582789
+type_on_9,flux_schnell,type_on,a person typing on a keyboard,1.244420,0.328237,0.486398
+type_on_10,flux_schnell,type_on,a person typing on a keyboard,1.369680,0.317198,0.258874
+type_on_11,flux_schnell,type_on,a person typing on a keyboard,1.513202,0.252108,0.130268
+type_on_12,flux_schnell,type_on,a person typing on a keyboard,1.786132,0.220342,0.722926
+type_on_13,flux_schnell,type_on,a person typing on a keyboard,1.246711,0.323980,0.770712
+type_on_14,flux_schnell,type_on,a person typing on a keyboard,1.268461,0.346629,-0.434078
+type_on_15,flux_schnell,type_on,a person typing on a keyboard,0.927330,0.412148,1.276122
+type_on_16,flux_schnell,type_on,a person typing on a keyboard,0.766596,0.519691,0.361467
+type_on_17,flux_schnell,type_on,a person typing on a laptop,1.473730,0.266153,-0.002233
+type_on_18,flux_schnell,type_on,a person typing on a laptop,1.174332,0.347629,1.327224
+type_on_19,flux_schnell,type_on,a person typing on a laptop,1.254248,0.321042,1.203846
+type_on_20,flux_schnell,type_on,a person typing on a laptop,1.369045,0.303262,1.276707
+type_on_21,flux_schnell,type_on,a person typing on a laptop,0.941490,0.428101,1.162760
+type_on_22,flux_schnell,type_on,a person typing on a laptop,1.651235,0.242134,0.511846
+type_on_23,flux_schnell,type_on,a person typing on a laptop,1.347998,0.310006,0.671193
+type_on_24,flux_schnell,type_on,a person typing on a laptop,1.126805,0.366036,1.119088
+type_on_25,flux_schnell,type_on,a person typing on a laptop,1.306616,0.327070,1.044610
+type_on_26,flux_schnell,type_on,a person typing on a laptop,1.492080,0.285206,0.802968
+type_on_27,flux_schnell,type_on,a person typing on a laptop,2.243532,0.143936,-0.441362
+type_on_28,flux_schnell,type_on,a person typing on a laptop,1.210481,0.335725,1.465976
+wash_0,flux_schnell,wash,a person washing a bowl,1.513210,0.258996,0.308971
+wash_1,flux_schnell,wash,a person washing a bowl,1.716977,0.231209,0.304129
+wash_2,flux_schnell,wash,a person washing a bowl,1.196451,0.344176,-0.719073
+wash_3,flux_schnell,wash,a person washing a cup,2.453383,0.130944,0.204370
+wash_4,flux_schnell,wash,a person washing a cup,2.488498,0.127158,-0.356627
+wash_5,flux_schnell,wash,a person washing a cup,2.333904,0.152878,0.820791
+wash_6,flux_schnell,wash,a person washing a cup,2.946754,0.086335,-0.683452
+wash_7,flux_schnell,wash,a person washing a cup,2.156598,0.157245,-0.127002
+wash_8,flux_schnell,wash,a person washing a cup,2.354328,0.134546,-0.391043
+wash_9,flux_schnell,wash,a person washing a fork,2.454187,0.117568,-0.440597
+wash_10,flux_schnell,wash,a person washing a fork,2.638898,0.105185,-0.528319
+wash_11,flux_schnell,wash,a person washing a fork,2.434730,0.123793,-0.296926
+wash_12,flux_schnell,wash,a person washing a fork,1.999549,0.183025,-0.371912
+wash_13,flux_schnell,wash,a person washing a knife,1.442034,0.284298,0.914816
+wash_14,flux_schnell,wash,a person washing a knife,2.419170,0.135162,-0.403006
+wash_15,flux_schnell,wash,a person washing a knife,1.559318,0.274310,0.746572
+wash_16,flux_schnell,wash,a person washing a knife,1.863516,0.207884,0.426570
+wash_17,flux_schnell,wash,a person washing a knife,1.883271,0.202212,0.808847
+wash_18,flux_schnell,wash,a person washing a knife,1.492539,0.273207,0.302815
+wash_19,flux_schnell,wash,a person washing a knife,1.755563,0.221649,0.748032
+wash_20,flux_schnell,wash,a person washing a knife,2.344001,0.137814,0.529102
+wash_21,flux_schnell,wash,a person washing a orange,1.625792,0.243222,-0.000263
+wash_22,flux_schnell,wash,a person washing a toothbrush,2.608773,0.113904,-0.439819
+wash_23,flux_schnell,wash,a person washing a toothbrush,3.059381,0.082676,-0.344441
+wash_24,flux_schnell,wash,a person washing a toothbrush,1.814553,0.194015,-0.448722
+wash_25,flux_schnell,wash,a person washing a wine glass,1.784302,0.206151,0.202251
+wash_26,flux_schnell,wash,a person washing a wine glass,1.113328,0.350177,0.390056
+wash_27,flux_schnell,wash,a person washing a wine glass,1.307452,0.297356,0.548131
+write_0,flux_schnell,write,a person writing a pen,2.771357,0.108097,-0.301894
+write_1,flux_schnell,write,a person writing a pen,2.614297,0.117886,0.109327
+write_2,flux_schnell,write,a person writing a pen,1.880092,0.205330,0.616448
+write_3,flux_schnell,write,a person writing a pen,2.945264,0.107889,0.832746
+write_4,flux_schnell,write,a person writing a pen,2.417604,0.136552,1.133547
+write_5,flux_schnell,write,a person writing a pen,2.034948,0.187748,1.453228
+write_6,flux_schnell,write,a person writing a pen,2.796956,0.099711,0.160622
+write_7,flux_schnell,write,a person writing a pen,1.820056,0.213709,1.337331
+write_8,flux_schnell,write,a person writing a pen,2.445784,0.132522,0.965970
+write_9,flux_schnell,write,a person writing a pen,2.809612,0.104846,0.083576
+write_10,flux_schnell,write,a person writing a pen,2.060948,0.178701,1.399085
+write_11,flux_schnell,write,a person writing a pen,2.391353,0.142843,1.053917
+write_12,flux_schnell,write,a person writing a pen,2.548275,0.125032,0.411975
+write_13,flux_schnell,write,a person writing a pen,3.034694,0.084541,-0.396929
+write_14,flux_schnell,write,a person writing a pen,2.806583,0.104948,0.162636
+write_15,flux_schnell,write,a person writing a pen,2.174452,0.168307,0.694417
+write_16,flux_schnell,write,a person writing a pen,2.412393,0.147179,1.293332
+write_17,flux_schnell,write,a person writing a pen,2.527820,0.117840,-0.113846
+write_18,flux_schnell,write,a person writing a pen,2.322843,0.151254,0.735720
+write_19,flux_schnell,write,a person writing a pen,1.941152,0.194298,1.034578
+carry_30,flux_dev,carry,a person carrying a skis,2.002513,0.204982,0.247661
+carry_31,flux_dev,carry,a person carrying a skis,1.856598,0.207044,1.294022
+carry_32,flux_dev,carry,a person carrying a snowboard,1.876031,0.223379,0.278461
+carry_33,flux_dev,carry,a person carrying a snowboard,2.288261,0.159362,1.476997
+carry_34,flux_dev,carry,a person carrying a snowboard,1.940149,0.213808,0.146876
+carry_35,flux_dev,carry,a person carrying a snowboard,1.728382,0.238189,0.286202
+carry_36,flux_dev,carry,a person carrying a snowboard,2.820554,0.110707,0.436327
+carry_37,flux_dev,carry,a person carrying a snowboard,1.573363,0.260702,0.516084
+carry_38,flux_dev,carry,a person carrying a surfboard,1.518148,0.266173,0.529750
+carry_39,flux_dev,carry,a person carrying a surfboard,2.403089,0.139869,0.816832
+carry_40,flux_dev,carry,a person carrying a surfboard,1.891562,0.208451,-0.054353
+carry_41,flux_dev,carry,a person carrying a surfboard,1.540515,0.260521,0.499951
+carry_42,flux_dev,carry,a person carrying a surfboard,1.797202,0.219088,1.516996
+carry_43,flux_dev,carry,a person carrying a surfboard,1.562753,0.269730,0.456608
+carry_44,flux_dev,carry,a person carrying a surfboard,1.686351,0.224319,0.872279
+carry_45,flux_dev,carry,a person carrying a surfboard,1.834044,0.207665,1.111625
+catch_30,flux_dev,catch,a person catching a soccer ball,2.068263,0.172564,0.342384
+catch_31,flux_dev,catch,a person catching a soccer ball,1.507913,0.259365,1.035468
+catch_32,flux_dev,catch,a person catching a soccer ball,2.101762,0.177136,1.383095
+catch_33,flux_dev,catch,a person catching a soccer ball,2.706729,0.110530,0.411691
+catch_34,flux_dev,catch,a person catching a soccer ball,1.074358,0.367897,1.074509
+catch_35,flux_dev,catch,a person catching a soccer ball,0.647717,0.548468,0.886937
+catch_36,flux_dev,catch,a person catching a soccer ball,1.100426,0.373751,1.037759
+catch_37,flux_dev,catch,a person catching a soccer ball,2.433667,0.140795,0.545377
+catch_38,flux_dev,catch,a person catching a soccer ball,1.725644,0.224467,1.137853
+catch_39,flux_dev,catch,a person catching a soccer ball,2.362674,0.136828,0.038570
+catch_40,flux_dev,catch,a person catching a soccer ball,0.932891,0.416585,1.260484
+catch_41,flux_dev,catch,a person catching a soccer ball,1.148255,0.360003,0.547685
+catch_42,flux_dev,catch,a person catching a soccer ball,0.701748,0.547512,-0.333197
+catch_43,flux_dev,catch,a person catching a soccer ball,0.994049,0.408082,1.126814
+catch_44,flux_dev,catch,a person catching a soccer ball,1.736837,0.228468,1.206502
+cut_30,flux_dev,cut,a person cutting a banana,1.321969,0.322841,0.446103
+cut_31,flux_dev,cut,a person cutting a banana,1.910692,0.191561,0.579070
+cut_32,flux_dev,cut,a person cutting a banana,1.645269,0.238481,0.716544
+cut_33,flux_dev,cut,a person cutting a banana,2.773195,0.120343,0.493423
+cut_34,flux_dev,cut,a person cutting a carrot,1.071564,0.368565,0.925578
+cut_35,flux_dev,cut,a person cutting a carrot,2.301405,0.161897,0.200842
+cut_36,flux_dev,cut,a person cutting a carrot,3.152390,0.082884,-0.448133
+cut_37,flux_dev,cut,a person cutting a carrot,1.799633,0.212535,0.319202
+cut_38,flux_dev,cut,a person cutting a orange,1.271895,0.321590,1.021754
+cut_with_30,flux_dev,cut_with,a person cutting with a knife,3.045805,0.085911,-0.488962
+cut_with_31,flux_dev,cut_with,a person cutting with a knife,2.400303,0.138464,0.480492
+cut_with_32,flux_dev,cut_with,a person cutting with a knife,2.348674,0.168707,0.196266
+cut_with_33,flux_dev,cut_with,a person cutting with a knife,2.864229,0.088404,-0.347699
+cut_with_34,flux_dev,cut_with,a person cutting with a knife,2.519122,0.130794,0.835737
+cut_with_35,flux_dev,cut_with,a person cutting with a scissors,2.015729,0.185122,1.329607
+cut_with_36,flux_dev,cut_with,a person cutting with a scissors,2.366348,0.138608,-0.082719
+cut_with_37,flux_dev,cut_with,a person cutting with a scissors,2.598291,0.113894,0.596676
+cut_with_38,flux_dev,cut_with,a person cutting with a scissors,1.829829,0.209693,0.678988
+cut_with_39,flux_dev,cut_with,a person cutting with a scissors,2.162505,0.167567,0.415644
+cut_with_40,flux_dev,cut_with,a person cutting with a scissors,1.626091,0.239735,0.964673
+cut_with_41,flux_dev,cut_with,a person cutting with a scissors,2.461065,0.128716,0.399373
+cut_with_42,flux_dev,cut_with,a person cutting with a scissors,1.975180,0.186624,0.759518
+cut_with_43,flux_dev,cut_with,a person cutting with a scissors,3.133044,0.075154,-0.471128
+cut_with_44,flux_dev,cut_with,a person cutting with a scissors,1.748068,0.222660,-0.161109
+cut_with_45,flux_dev,cut_with,a person cutting with a scissors,3.533585,0.054807,-0.753510
+cut_with_46,flux_dev,cut_with,a person cutting with a scissors,2.497324,0.134294,0.860787
+cut_with_47,flux_dev,cut_with,a person cutting with a scissors,2.626600,0.106219,-0.560222
+drink_with_30,flux_dev,drink_with,a person drinking with a cup,1.812063,0.201296,0.035579
+drink_with_31,flux_dev,drink_with,a person drinking with a cup,1.823005,0.205771,-0.012808
+drink_with_32,flux_dev,drink_with,a person drinking with a cup,1.087267,0.384519,1.094154
+drink_with_33,flux_dev,drink_with,a person drinking with a cup,2.457710,0.131232,0.073428
+drink_with_34,flux_dev,drink_with,a person drinking with a cup,1.479474,0.302544,0.267182
+drink_with_35,flux_dev,drink_with,a person drinking with a cup,1.614890,0.247619,0.794033
+drink_with_36,flux_dev,drink_with,a person drinking with a cup,2.079915,0.172643,0.271201
+drink_with_37,flux_dev,drink_with,a person drinking with a cup,1.451671,0.317901,0.224677
+drink_with_38,flux_dev,drink_with,a person drinking with a cup,1.382801,0.330981,0.829862
+drink_with_39,flux_dev,drink_with,a person drinking with a wine glass,2.898086,0.096669,-0.282001
+drink_with_40,flux_dev,drink_with,a person drinking with a wine glass,2.102539,0.165737,0.227608
+drink_with_41,flux_dev,drink_with,a person drinking with a wine glass,3.090585,0.076151,-0.215677
+drink_with_42,flux_dev,drink_with,a person drinking with a wine glass,1.985004,0.197420,-0.066164
+drink_with_43,flux_dev,drink_with,a person drinking with a wine glass,2.647185,0.106574,-0.297548
+drink_with_44,flux_dev,drink_with,a person drinking with a wine glass,2.873344,0.094059,-0.027136
+drink_with_45,flux_dev,drink_with,a person drinking with a wine glass,2.537191,0.121664,-0.207187
+drink_with_46,flux_dev,drink_with,a person drinking with a wine glass,2.123075,0.172463,0.731062
+drink_with_47,flux_dev,drink_with,a person drinking with a wine glass,1.628292,0.252084,0.301162
+drink_with_48,flux_dev,drink_with,a person drinking with a wine glass,2.449965,0.136146,0.489832
+drink_with_49,flux_dev,drink_with,a person drinking with a wine glass,1.408492,0.292994,0.810324
+drink_with_50,flux_dev,drink_with,a person drinking with a wine glass,2.285304,0.152025,1.099252
+drink_with_51,flux_dev,drink_with,a person drinking with a wine glass,2.614544,0.123532,0.176191
+drink_with_52,flux_dev,drink_with,a person drinking with a wine glass,2.909417,0.089983,-0.363001
+drink_with_53,flux_dev,drink_with,a person drinking with a wine glass,3.064176,0.088726,-0.288083
+drink_with_54,flux_dev,drink_with,a person drinking with a wine glass,2.314892,0.139109,-0.040937
+drink_with_55,flux_dev,drink_with,a person drinking with a wine glass,2.243607,0.151450,0.643568
+drink_with_56,flux_dev,drink_with,a person drinking with a wine glass,2.080169,0.162216,-0.654569
+drink_with_57,flux_dev,drink_with,a person drinking with a wine glass,1.918332,0.195030,1.101363
+drink_with_58,flux_dev,drink_with,a person drinking with a wine glass,2.745056,0.097745,-0.369682
+drink_with_59,flux_dev,drink_with,a person drinking with a wine glass,2.399818,0.140249,1.002656
+drink_with_60,flux_dev,drink_with,a person drinking with a wine glass,2.461613,0.126792,0.081065
+drink_with_61,flux_dev,drink_with,a person drinking with a wine glass,2.414511,0.130890,-0.246913
+drink_with_62,flux_dev,drink_with,a person drinking with a wine glass,2.038460,0.191246,0.779866
+drink_with_63,flux_dev,drink_with,a person drinking with a wine glass,2.202221,0.156751,0.523977
+eat_30,flux_dev,eat,a person eating a banana,1.150365,0.363462,0.712742
+eat_31,flux_dev,eat,a person eating a banana,2.160319,0.164485,0.238003
+eat_32,flux_dev,eat,a person eating a banana,1.273474,0.318263,1.214743
+eat_33,flux_dev,eat,a person eating a banana,2.491434,0.132202,0.470697
+eat_34,flux_dev,eat,a person eating a broccoli,0.614660,0.556680,0.792330
+eat_35,flux_dev,eat,a person eating a broccoli,1.459016,0.279523,0.925935
+eat_36,flux_dev,eat,a person eating a broccoli,1.379323,0.289297,0.597801
+eat_37,flux_dev,eat,a person eating a broccoli,1.585949,0.246661,-0.025587
+eat_38,flux_dev,eat,a person eating a carrot,0.997324,0.395793,0.886124
+eat_39,flux_dev,eat,a person eating a carrot,2.389403,0.142826,-0.159759
+eat_40,flux_dev,eat,a person eating a carrot,2.957270,0.087760,-0.280112
+eat_41,flux_dev,eat,a person eating a carrot,1.750083,0.228563,0.518819
+eat_42,flux_dev,eat,a person eating a hot dog,1.370685,0.313393,1.122888
+eat_43,flux_dev,eat,a person eating a hot dog,0.932616,0.438915,0.873089
+eat_44,flux_dev,eat,a person eating a hot dog,0.564878,0.606564,-0.133925
+eat_45,flux_dev,eat,a person eating a hot dog,1.203671,0.385515,0.051913
+eat_46,flux_dev,eat,a person eating a hot dog,0.651514,0.521478,0.762766
+eat_47,flux_dev,eat,a person eating a hot dog,0.807198,0.478080,0.306659
+eat_48,flux_dev,eat,a person eating a hot dog,0.888476,0.449345,0.793679
+eat_49,flux_dev,eat,a person eating a orange,1.205103,0.370369,1.036531
+hit_30,flux_dev,hit,a person hitting a hammer,1.415796,0.286155,0.164254
+hit_31,flux_dev,hit,a person hitting a hammer,2.229331,0.158946,0.871302
+hit_32,flux_dev,hit,a person hitting a hammer,2.455558,0.129637,-0.195897
+hit_33,flux_dev,hit,a person hitting a tennis racket,2.771005,0.095811,0.069003
+hit_34,flux_dev,hit,a person hitting a tennis racket,2.199357,0.156443,0.382340
+hit_35,flux_dev,hit,a person hitting a tennis racket,2.577326,0.120885,-0.151985
+hit_36,flux_dev,hit,a person hitting a tennis racket,2.230228,0.160327,0.306181
+hit_37,flux_dev,hit,a person hitting a tennis racket,2.039482,0.185558,0.004536
+hit_38,flux_dev,hit,a person hitting a tennis racket,2.579562,0.121338,0.326049
+hit_39,flux_dev,hit,a person hitting a tennis racket,2.264997,0.162079,1.382796
+hit_40,flux_dev,hit,a person hitting a tennis racket,1.957505,0.186192,1.161750
+hit_41,flux_dev,hit,a person hitting a tennis racket,2.064159,0.159886,0.054178
+hit_42,flux_dev,hit,a person hitting a tennis racket,1.972133,0.177802,0.275295
+hit_43,flux_dev,hit,a person hitting a tennis racket,1.984937,0.184901,0.636214
+hold_30,flux_dev,hold,a person holding a book,1.254312,0.339097,0.892419
+hold_31,flux_dev,hold,a person holding a book,1.364597,0.321620,0.427432
+hold_32,flux_dev,hold,a person holding a book,1.539806,0.277882,0.510497
+hold_33,flux_dev,hold,a person holding a book,1.942739,0.185608,0.117639
+hold_34,flux_dev,hold,a person holding a book,0.927814,0.427001,0.639240
+hold_35,flux_dev,hold,a person holding a book,1.250842,0.334380,1.162636
+hold_36,flux_dev,hold,a person holding a book,1.612471,0.248546,-0.104758
+hold_37,flux_dev,hold,a person holding a book,1.538369,0.284938,-0.278192
+hold_38,flux_dev,hold,a person holding a book,1.315018,0.336510,0.342553
+hold_39,flux_dev,hold,a person holding a book,1.639072,0.265924,-0.043701
+hold_40,flux_dev,hold,a person holding a book,1.161470,0.367632,1.289260
+hold_41,flux_dev,hold,a person holding a book,0.957273,0.427484,0.492527
+hold_42,flux_dev,hold,a person holding a book,1.038649,0.396242,0.689754
+hold_43,flux_dev,hold,a person holding a book,0.977618,0.437538,0.704134
+hold_44,flux_dev,hold,a person holding a book,1.194492,0.356720,0.651726
+hold_45,flux_dev,hold,a person holding a book,2.229115,0.154208,-0.571592
+hold_46,flux_dev,hold,a person holding a book,2.355316,0.147047,0.869584
+hold_47,flux_dev,hold,a person holding a book,1.418669,0.293587,0.598547
+hold_48,flux_dev,hold,a person holding a book,1.037948,0.397018,0.527935
+hold_49,flux_dev,hold,a person holding a bottle,0.109049,0.811118,0.000000
+hold_50,flux_dev,hold,a person holding a bottle,1.060289,0.383754,0.837100
+hold_51,flux_dev,hold,a person holding a bottle,2.476384,0.136728,0.239204
+hold_52,flux_dev,hold,a person holding a bottle,0.976681,0.428733,1.042716
+hold_53,flux_dev,hold,a person holding a bottle,1.591894,0.262062,0.904533
+hold_54,flux_dev,hold,a person holding a bottle,1.930138,0.206585,0.376397
+hold_55,flux_dev,hold,a person holding a bottle,0.896616,0.445509,0.517452
+hold_56,flux_dev,hold,a person holding a bottle,1.741561,0.226774,0.550414
+hold_57,flux_dev,hold,a person holding a bottle,1.536791,0.261948,1.024369
+hold_58,flux_dev,hold,a person holding a bottle,1.478847,0.267884,0.694255
+hold_59,flux_dev,hold,a person holding a bottle,2.052158,0.175738,-0.619252
+hold_60,flux_dev,hold,a person holding a bottle,1.970482,0.193545,0.794224
+hold_61,flux_dev,hold,a person holding a bottle,2.054116,0.171862,-0.244924
+hold_62,flux_dev,hold,a person holding a bottle,1.810873,0.219833,0.769459
+hold_63,flux_dev,hold,a person holding a bottle,1.887991,0.195638,0.215109
+hold_64,flux_dev,hold,a person holding a bottle,1.305318,0.329029,0.839295
+hold_65,flux_dev,hold,a person holding a bowl,0.881210,0.449464,0.256280
+hold_66,flux_dev,hold,a person holding a bowl,0.865525,0.463369,0.238091
+hold_67,flux_dev,hold,a person holding a bowl,0.718204,0.507700,1.020826
+hold_68,flux_dev,hold,a person holding a bowl,0.682998,0.521664,0.631294
+hold_69,flux_dev,hold,a person holding a bowl,1.051088,0.401743,0.230213
+hold_70,flux_dev,hold,a person holding a bowl,0.832185,0.461122,0.310507
+hold_71,flux_dev,hold,a person holding a bowl,1.080235,0.387291,0.537907
+hold_72,flux_dev,hold,a person holding a bowl,0.531593,0.599120,0.805910
+hold_73,flux_dev,hold,a person holding a cup,2.633446,0.124742,0.608748
+hold_74,flux_dev,hold,a person holding a cup,1.946838,0.193315,0.948820
+hold_75,flux_dev,hold,a person holding a cup,2.470105,0.133311,0.454102
+hold_76,flux_dev,hold,a person holding a cup,3.199056,0.079042,0.185987
+hold_77,flux_dev,hold,a person holding a cup,3.442007,0.062008,-0.677444
+hold_78,flux_dev,hold,a person holding a cup,3.128819,0.084573,-0.265421
+hold_79,flux_dev,hold,a person holding a cup,2.907331,0.095605,0.129368
+hold_80,flux_dev,hold,a person holding a cup,2.592843,0.117879,0.488816
+hold_81,flux_dev,hold,a person holding a cup,2.356627,0.148554,0.978538
+hold_82,flux_dev,hold,a person holding a cup,2.820825,0.096074,-0.089948
+hold_83,flux_dev,hold,a person holding a cup,2.293482,0.142790,0.346061
+hold_84,flux_dev,hold,a person holding a cup,2.851630,0.109560,0.006152
+hold_85,flux_dev,hold,a person holding a cup,2.100225,0.169479,1.103166
+hold_86,flux_dev,hold,a person holding a cup,2.987969,0.087565,-0.196006
+hold_87,flux_dev,hold,a person holding a cup,2.955625,0.089025,-0.045025
+hold_88,flux_dev,hold,a person holding a cup,2.365708,0.142722,-0.371105
+hold_89,flux_dev,hold,a person holding a cup,2.258352,0.150854,0.357319
+hold_90,flux_dev,hold,a person holding a cup,2.266419,0.151302,0.375607
+hold_91,flux_dev,hold,a person holding a cup,2.842882,0.108939,-0.091803
+hold_92,flux_dev,hold,a person holding a cup,2.746024,0.113584,-0.113799
+hold_93,flux_dev,hold,a person holding a cup,2.087619,0.179041,-0.010030
+hold_94,flux_dev,hold,a person holding a cup,2.034026,0.178230,1.352375
+hold_95,flux_dev,hold,a person holding a cup,2.113425,0.185909,-0.401174
+hold_96,flux_dev,hold,a person holding a fork,2.943725,0.082419,-0.515804
+hold_97,flux_dev,hold,a person holding a fork,1.810928,0.218568,0.286907
+hold_98,flux_dev,hold,a person holding a fork,3.575814,0.057000,-0.370192
+hold_99,flux_dev,hold,a person holding a fork,2.398104,0.142997,0.371927
+hold_100,flux_dev,hold,a person holding a fork,1.839614,0.211328,0.335356
+hold_101,flux_dev,hold,a person holding a fork,2.735079,0.103133,-0.265198
+hold_102,flux_dev,hold,a person holding a fork,1.354831,0.321188,0.212394
+hold_103,flux_dev,hold,a person holding a fork,1.458060,0.282359,1.346888
+hold_104,flux_dev,hold,a person holding a fork,1.764717,0.223582,0.372841
+hold_105,flux_dev,hold,a person holding a fork,1.908618,0.204195,0.164048
+hold_106,flux_dev,hold,a person holding a fork,1.981834,0.198303,0.342898
+hold_107,flux_dev,hold,a person holding a fork,1.483717,0.271766,1.321313
+hold_108,flux_dev,hold,a person holding a fork,1.503488,0.261472,1.000101
+hold_109,flux_dev,hold,a person holding a fork,1.030170,0.395074,0.210042
+hold_110,flux_dev,hold,a person holding a frisbee,0.818585,0.482864,-0.053588
+hold_111,flux_dev,hold,a person holding a frisbee,0.841458,0.502292,-0.080345
+hold_112,flux_dev,hold,a person holding a frisbee,0.879041,0.457037,-0.218260
+hold_113,flux_dev,hold,a person holding a frisbee,0.937603,0.441327,-0.311897
+hold_114,flux_dev,hold,a person holding a frisbee,0.910932,0.442753,-0.170928
+hold_115,flux_dev,hold,a person holding a frisbee,0.936397,0.435096,-0.366610
+hold_116,flux_dev,hold,a person holding a frisbee,0.590456,0.557647,0.594133
+hold_117,flux_dev,hold,a person holding a frisbee,0.956397,0.428293,-0.115809
+hold_118,flux_dev,hold,a person holding a frisbee,0.950328,0.433251,-0.305489
+hold_119,flux_dev,hold,a person holding a frisbee,0.930886,0.433870,0.080044
+hold_120,flux_dev,hold,a person holding a frisbee,0.728456,0.523220,0.180831
+hold_121,flux_dev,hold,a person holding a frisbee,0.830455,0.468503,-0.190233
+hold_122,flux_dev,hold,a person holding a frisbee,0.943428,0.434544,0.121910
+hold_123,flux_dev,hold,a person holding a frisbee,1.051911,0.402411,-0.471648
+hold_124,flux_dev,hold,a person holding a frisbee,0.959829,0.440799,-0.363889
+hold_125,flux_dev,hold,a person holding a frisbee,0.561182,0.583095,0.029312
+hold_126,flux_dev,hold,a person holding a frisbee,1.025651,0.404613,-0.295619
+hold_127,flux_dev,hold,a person holding a frisbee,1.014131,0.395079,-0.089019
+hold_128,flux_dev,hold,a person holding a golf clubs,2.829923,0.107802,-0.380811
+hold_129,flux_dev,hold,a person holding a golf clubs,3.824637,0.046403,-0.687124
+hold_130,flux_dev,hold,a person holding a golf clubs,2.561085,0.109422,-0.347607
+hold_131,flux_dev,hold,a person holding a golf clubs,3.371350,0.060954,-1.035353
+hold_132,flux_dev,hold,a person holding a golf clubs,2.968089,0.084316,-0.321761
+hold_133,flux_dev,hold,a person holding a golf clubs,3.018911,0.083324,-0.439338
+hold_134,flux_dev,hold,a person holding a golf clubs,2.660802,0.110443,0.138186
+hold_135,flux_dev,hold,a person holding a golf clubs,2.272281,0.137173,0.083859
+hold_136,flux_dev,hold,a person holding a hammer,3.315859,0.064501,-0.603200
+hold_137,flux_dev,hold,a person holding a hammer,2.102272,0.178710,1.372307
+hold_138,flux_dev,hold,a person holding a hammer,2.123307,0.183908,0.018148
+hold_139,flux_dev,hold,a person holding a hammer,2.283576,0.152723,0.270786
+hold_140,flux_dev,hold,a person holding a hammer,1.636760,0.244300,0.288885
+hold_141,flux_dev,hold,a person holding a hammer,1.830097,0.208094,0.045609
+hold_142,flux_dev,hold,a person holding a hammer,1.468408,0.267365,-0.025563
+hold_143,flux_dev,hold,a person holding a hammer,2.984247,0.089145,-0.362157
+hold_144,flux_dev,hold,a person holding a hammer,2.875319,0.092140,-0.613190
+hold_145,flux_dev,hold,a person holding a knife,2.747704,0.107270,0.055250
+hold_146,flux_dev,hold,a person holding a knife,3.181756,0.077082,0.020054
+hold_147,flux_dev,hold,a person holding a knife,2.513794,0.121204,0.336749
+hold_148,flux_dev,hold,a person holding a knife,2.662352,0.112834,-0.502942
+hold_149,flux_dev,hold,a person holding a knife,2.379036,0.142035,0.556612
+hold_150,flux_dev,hold,a person holding a knife,2.025736,0.186230,0.252527
+hold_151,flux_dev,hold,a person holding a knife,1.538895,0.269999,0.146172
+hold_152,flux_dev,hold,a person holding a knife,2.755590,0.107523,-0.575148
+hold_153,flux_dev,hold,a person holding a knife,2.734169,0.105103,-0.274826
+hold_154,flux_dev,hold,a person holding a knife,1.946544,0.191080,0.136917
+hold_155,flux_dev,hold,a person holding a knife,1.952738,0.195402,0.143621
+hold_156,flux_dev,hold,a person holding a knife,2.530717,0.121269,-0.217503
+hold_157,flux_dev,hold,a person holding a knife,2.650603,0.115967,-0.043488
+hold_158,flux_dev,hold,a person holding a knife,1.910976,0.208021,0.368015
+hold_159,flux_dev,hold,a person holding a knife,1.965216,0.192173,0.617071
+hold_160,flux_dev,hold,a person holding a knife,1.472844,0.275898,1.033905
+hold_161,flux_dev,hold,a person holding a knife,3.179300,0.067528,-0.503772
+hold_162,flux_dev,hold,a person holding a knife,2.073616,0.166269,0.200293
+hold_163,flux_dev,hold,a person holding a knife,1.694823,0.238013,0.000690
+hold_164,flux_dev,hold,a person holding a knife,2.890039,0.097485,0.226833
+hold_165,flux_dev,hold,a person holding a knife,2.486319,0.133479,-0.025904
+hold_166,flux_dev,hold,a person holding a knife,2.838207,0.105861,0.584648
+hold_167,flux_dev,hold,a person holding a knife,2.398341,0.133890,0.025246
+hold_168,flux_dev,hold,a person holding a knife,2.778555,0.106663,-0.038264
+hold_169,flux_dev,hold,a person holding a knife,1.818767,0.213444,0.777116
+hold_170,flux_dev,hold,a person holding a knife,3.076114,0.078914,-0.070450
+hold_171,flux_dev,hold,a person holding a knife,2.282938,0.149334,-0.461106
+hold_172,flux_dev,hold,a person holding a knife,2.843280,0.098218,-0.374155
+hold_173,flux_dev,hold,a person holding a knife,1.853814,0.213115,0.480519
+hold_174,flux_dev,hold,a person holding a knife,3.035339,0.078980,-0.426955
+hold_175,flux_dev,hold,a person holding a knife,2.139898,0.164352,0.306302
+hold_176,flux_dev,hold,a person holding a knife,2.300153,0.147320,0.523209
+hold_178,flux_dev,hold,a person holding a knife,2.513080,0.124529,-0.347892
+hold_179,flux_dev,hold,a person holding a knife,2.571436,0.120534,0.742655
+hold_180,flux_dev,hold,a person holding a scissors,2.684913,0.109801,-0.439513
+hold_181,flux_dev,hold,a person holding a scissors,1.480291,0.272373,0.292164
+hold_182,flux_dev,hold,a person holding a scissors,2.758438,0.088531,-0.166675
+hold_183,flux_dev,hold,a person holding a scissors,1.603299,0.261915,0.450558
+hold_184,flux_dev,hold,a person holding a scissors,2.047827,0.173999,-0.443511
+hold_185,flux_dev,hold,a person holding a scissors,1.830054,0.201929,0.081406
+hold_186,flux_dev,hold,a person holding a scissors,1.740526,0.217619,-0.078983
+hold_187,flux_dev,hold,a person holding a scissors,2.238803,0.140031,-0.448591
+hold_188,flux_dev,hold,a person holding a scissors,2.026807,0.193109,0.252247
+hold_189,flux_dev,hold,a person holding a scissors,1.490134,0.297019,0.196775
+hold_190,flux_dev,hold,a person holding a scissors,1.305385,0.305061,1.044288
+hold_191,flux_dev,hold,a person holding a scissors,1.889793,0.192719,0.446822
+hold_192,flux_dev,hold,a person holding a scissors,1.711977,0.227195,0.440709
+hold_193,flux_dev,hold,a person holding a skateboard,2.410468,0.142975,-0.123374
+hold_194,flux_dev,hold,a person holding a skateboard,1.604879,0.299831,-0.222145
+hold_195,flux_dev,hold,a person holding a skateboard,1.272725,0.365317,-0.116045
+hold_196,flux_dev,hold,a person holding a skateboard,1.892145,0.302510,-0.354931
+hold_197,flux_dev,hold,a person holding a skateboard,1.581558,0.263189,0.896248
+hold_198,flux_dev,hold,a person holding a skateboard,1.854489,0.204940,-0.154694
+hold_199,flux_dev,hold,a person holding a skateboard,1.304272,0.339067,0.519611
+hold_200,flux_dev,hold,a person holding a skateboard,1.284252,0.399286,-0.167909
+hold_201,flux_dev,hold,a person holding a skateboard,1.225348,0.341125,0.334165
+hold_202,flux_dev,hold,a person holding a skateboard,1.449361,0.330758,-0.538508
+hold_203,flux_dev,hold,a person holding a skateboard,1.090421,0.423572,0.035075
+hold_204,flux_dev,hold,a person holding a skateboard,1.447087,0.328591,-0.069687
+hold_205,flux_dev,hold,a person holding a skateboard,1.187604,0.384449,0.050843
+hold_206,flux_dev,hold,a person holding a skateboard,1.025151,0.425218,0.362047
+hold_207,flux_dev,hold,a person holding a skateboard,1.298584,0.317635,0.597476
+hold_208,flux_dev,hold,a person holding a skateboard,2.044042,0.175332,0.085292
+hold_209,flux_dev,hold,a person holding a skateboard,1.116409,0.378312,-0.331688
+hold_210,flux_dev,hold,a person holding a skateboard,1.681358,0.239534,0.359117
+hold_211,flux_dev,hold,a person holding a skateboard,1.325333,0.332520,-0.047594
+hold_212,flux_dev,hold,a person holding a skateboard,1.347482,0.350243,0.072620
+hold_213,flux_dev,hold,a person holding a skis,2.625673,0.116646,-0.295980
+hold_214,flux_dev,hold,a person holding a skis,2.413437,0.142956,0.881208
+hold_215,flux_dev,hold,a person holding a skis,1.964155,0.181766,0.551451
+hold_216,flux_dev,hold,a person holding a skis,2.131789,0.167261,1.176585
+hold_217,flux_dev,hold,a person holding a skis,2.615092,0.118488,0.378911
+hold_218,flux_dev,hold,a person holding a skis,2.103287,0.168107,0.434774
+hold_219,flux_dev,hold,a person holding a skis,2.216287,0.175639,0.059011
+hold_220,flux_dev,hold,a person holding a skis,2.289044,0.154554,0.824987
+hold_221,flux_dev,hold,a person holding a skis,2.648480,0.106000,-0.536934
+hold_222,flux_dev,hold,a person holding a skis,2.055287,0.178457,0.510812
+hold_223,flux_dev,hold,a person holding a skis,1.853869,0.193023,0.127638
+hold_224,flux_dev,hold,a person holding a skis,2.606457,0.123037,0.424759
+hold_225,flux_dev,hold,a person holding a snowboard,1.843206,0.201478,0.025308
+hold_226,flux_dev,hold,a person holding a snowboard,2.358516,0.144434,1.285334
+hold_227,flux_dev,hold,a person holding a snowboard,1.949785,0.202565,-0.032985
+hold_228,flux_dev,hold,a person holding a snowboard,1.675646,0.233967,0.257687
+hold_229,flux_dev,hold,a person holding a snowboard,2.551178,0.107594,0.038987
+hold_230,flux_dev,hold,a person holding a snowboard,1.870425,0.197464,-0.154384
+hold_231,flux_dev,hold,a person holding a suitcase,2.316871,0.162496,0.329924
+hold_232,flux_dev,hold,a person holding a suitcase,2.465233,0.120145,1.232103
+hold_233,flux_dev,hold,a person holding a suitcase,2.150449,0.159994,1.006780
+hold_234,flux_dev,hold,a person holding a suitcase,2.743829,0.092817,0.744663
+hold_235,flux_dev,hold,a person holding a suitcase,2.573042,0.128912,-0.207291
+hold_236,flux_dev,hold,a person holding a suitcase,2.806152,0.097537,1.474551
+hold_237,flux_dev,hold,a person holding a suitcase,2.625962,0.106437,0.903456
+hold_238,flux_dev,hold,a person holding a suitcase,2.940214,0.082414,0.661481
+hold_239,flux_dev,hold,a person holding a suitcase,2.259183,0.179383,0.566707
+hold_240,flux_dev,hold,a person holding a surfboard,1.774414,0.214092,0.080863
+hold_241,flux_dev,hold,a person holding a surfboard,2.670686,0.113671,0.345111
+hold_242,flux_dev,hold,a person holding a surfboard,1.825058,0.224095,0.199953
+hold_243,flux_dev,hold,a person holding a surfboard,1.736968,0.212618,0.058714
+hold_244,flux_dev,hold,a person holding a surfboard,1.947428,0.194986,1.274873
+hold_245,flux_dev,hold,a person holding a surfboard,1.377274,0.294453,0.634812
+hold_246,flux_dev,hold,a person holding a surfboard,1.876269,0.203625,0.925439
+hold_247,flux_dev,hold,a person holding a surfboard,1.912659,0.194977,0.884580
+hold_248,flux_dev,hold,a person holding a tennis racket,2.968055,0.086420,-0.052115
+hold_249,flux_dev,hold,a person holding a tennis racket,1.898886,0.208818,1.201302
+hold_250,flux_dev,hold,a person holding a tennis racket,2.476194,0.121839,-0.474542
+hold_251,flux_dev,hold,a person holding a tennis racket,1.724931,0.238793,1.079402
+hold_252,flux_dev,hold,a person holding a tennis racket,1.741685,0.244594,0.772839
+hold_253,flux_dev,hold,a person holding a tennis racket,2.499471,0.123585,0.263536
+hold_254,flux_dev,hold,a person holding a tennis racket,2.204081,0.163438,1.360399
+hold_255,flux_dev,hold,a person holding a tennis racket,2.048808,0.190423,1.124751
+hold_256,flux_dev,hold,a person holding a tennis racket,1.766361,0.211442,0.815996
+hold_257,flux_dev,hold,a person holding a tennis racket,2.015135,0.175372,0.509453
+hold_258,flux_dev,hold,a person holding a tennis racket,2.021121,0.177665,0.562870
+hold_259,flux_dev,hold,a person holding a toothbrush,1.554984,0.256289,0.133484
+hold_260,flux_dev,hold,a person holding a toothbrush,1.388193,0.300071,0.248657
+hold_261,flux_dev,hold,a person holding a toothbrush,1.241928,0.315945,0.472743
+hold_262,flux_dev,hold,a person holding a toothbrush,2.023408,0.178869,0.201212
+hold_263,flux_dev,hold,a person holding a toothbrush,1.294494,0.313673,0.649523
+hold_264,flux_dev,hold,a person holding a toothbrush,1.708660,0.229967,0.933981
+hold_265,flux_dev,hold,a person holding a toothbrush,2.022574,0.181686,0.736284
+hold_266,flux_dev,hold,a person holding a toothbrush,1.381822,0.305714,0.471922
+hold_267,flux_dev,hold,a person holding a toothbrush,1.396507,0.281604,0.214546
+hold_268,flux_dev,hold,a person holding a toothbrush,2.771925,0.101443,-0.094272
+hold_269,flux_dev,hold,a person holding a toothbrush,2.758688,0.109870,-0.118551
+hold_270,flux_dev,hold,a person holding a toothbrush,1.716571,0.250661,0.861267
+hold_271,flux_dev,hold,a person holding a toothbrush,1.988146,0.191471,0.896833
+hold_272,flux_dev,hold,a person holding a toothbrush,2.425345,0.157608,0.590066
+hold_273,flux_dev,hold,a person holding a wine glass,1.808258,0.215661,0.632561
+hold_274,flux_dev,hold,a person holding a wine glass,1.284444,0.349029,0.432606
+hold_275,flux_dev,hold,a person holding a wine glass,2.202417,0.165695,0.302435
+hold_276,flux_dev,hold,a person holding a wine glass,2.359972,0.153443,0.184919
+hold_277,flux_dev,hold,a person holding a wine glass,1.794782,0.222292,0.431611
+hold_278,flux_dev,hold,a person holding a wine glass,2.188323,0.172848,0.392391
+hold_279,flux_dev,hold,a person holding a wine glass,1.202121,0.346969,1.119461
+hold_280,flux_dev,hold,a person holding a wine glass,1.979688,0.194937,0.588502
+hold_281,flux_dev,hold,a person holding a wine glass,1.422920,0.308783,0.258078
+hold_282,flux_dev,hold,a person holding a wine glass,1.250718,0.325415,1.207851
+hold_283,flux_dev,hold,a person holding a wine glass,1.782954,0.224905,0.933637
+hold_284,flux_dev,hold,a person holding a wine glass,1.917858,0.205021,0.943221
+hold_285,flux_dev,hold,a person holding a wine glass,1.783895,0.218274,0.692477
+hold_286,flux_dev,hold,a person holding a wine glass,2.432359,0.140021,-0.058043
+hold_287,flux_dev,hold,a person holding a wine glass,2.105508,0.175322,0.403834
+hold_288,flux_dev,hold,a person holding a wine glass,1.373756,0.326243,0.997111
+hold_289,flux_dev,hold,a person holding a wine glass,2.551764,0.130964,0.250788
+hold_290,flux_dev,hold,a person holding a wine glass,1.711758,0.230497,0.306026
+hold_291,flux_dev,hold,a person holding a wine glass,2.984233,0.082316,-0.635026
+hold_292,flux_dev,hold,a person holding a wine glass,1.518286,0.286552,0.855927
+hold_293,flux_dev,hold,a person holding a wine glass,2.036445,0.195813,0.687665
+hold_294,flux_dev,hold,a person holding a wine glass,1.602066,0.250128,0.953695
+hold_295,flux_dev,hold,a person holding a wine glass,1.393638,0.308821,0.758597
+hold_296,flux_dev,hold,a person holding a wine glass,1.490660,0.292231,0.722462
+hold_297,flux_dev,hold,a person holding a wine glass,1.597497,0.256594,1.066907
+jump_30,flux_dev,jump,a person jumping a skis,1.830064,0.215887,0.378050
+jump_31,flux_dev,jump,a person jumping a skis,2.132553,0.164218,1.103328
+jump_32,flux_dev,jump,a person jumping a snowboard,1.045788,0.404320,0.299156
+jump_33,flux_dev,jump,a person jumping a snowboard,1.846998,0.219549,0.950959
+jump_34,flux_dev,jump,a person jumping a snowboard,1.163353,0.378395,0.128392
+jump_35,flux_dev,jump,a person jumping a snowboard,1.063678,0.395053,0.197404
+jump_36,flux_dev,jump,a person jumping a snowboard,2.274031,0.162628,-0.035079
+jump_37,flux_dev,jump,a person jumping a snowboard,1.033967,0.400792,0.092663
+jump_38,flux_dev,jump,a person jumping a surfboard,0.869022,0.435088,0.928917
+jump_39,flux_dev,jump,a person jumping a surfboard,2.341584,0.147997,-0.089410
+jump_40,flux_dev,jump,a person jumping a surfboard,1.095116,0.382579,-0.019824
+jump_41,flux_dev,jump,a person jumping a surfboard,0.962593,0.412033,0.712131
+jump_42,flux_dev,jump,a person jumping a surfboard,1.640068,0.251684,1.053530
+jump_43,flux_dev,jump,a person jumping a surfboard,0.856056,0.462050,0.492999
+jump_44,flux_dev,jump,a person jumping a surfboard,1.744852,0.237942,0.017516
+jump_45,flux_dev,jump,a person jumping a surfboard,1.363321,0.311380,1.339123
+kick_30,flux_dev,kick,a person kicking a rugby ball,0.718611,0.517075,0.847430
+kick_31,flux_dev,kick,a person kicking a rugby ball,0.724101,0.533716,0.236621
+kick_32,flux_dev,kick,a person kicking a rugby ball,1.209850,0.347214,0.723782
+kick_33,flux_dev,kick,a person kicking a soccer ball,0.985452,0.389876,1.117121
+kick_34,flux_dev,kick,a person kicking a soccer ball,2.622347,0.123639,0.042249
+kick_35,flux_dev,kick,a person kicking a soccer ball,2.118718,0.173196,0.524003
+kick_36,flux_dev,kick,a person kicking a soccer ball,1.784113,0.221228,1.026515
+kick_37,flux_dev,kick,a person kicking a soccer ball,2.216199,0.163396,1.138337
+kick_38,flux_dev,kick,a person kicking a soccer ball,2.731354,0.112718,0.683838
+kick_39,flux_dev,kick,a person kicking a soccer ball,0.973160,0.396567,1.272226
+kick_40,flux_dev,kick,a person kicking a soccer ball,0.748270,0.508544,0.601189
+kick_41,flux_dev,kick,a person kicking a soccer ball,1.040247,0.384836,1.151699
+kick_42,flux_dev,kick,a person kicking a soccer ball,2.629683,0.117944,0.050154
+kick_43,flux_dev,kick,a person kicking a soccer ball,1.648971,0.240701,1.148274
+kick_44,flux_dev,kick,a person kicking a soccer ball,2.263240,0.150878,0.518497
+kick_45,flux_dev,kick,a person kicking a soccer ball,0.963826,0.407898,1.103464
+kick_46,flux_dev,kick,a person kicking a soccer ball,0.998430,0.389013,0.972775
+kick_47,flux_dev,kick,a person kicking a soccer ball,0.624310,0.586003,-0.095557
+kick_48,flux_dev,kick,a person kicking a soccer ball,1.128809,0.345317,0.882954
+kick_49,flux_dev,kick,a person kicking a soccer ball,1.898449,0.193916,0.873682
+lie_on_30,flux_dev,lie_on,a person lying on a bench,1.648170,0.267061,0.526469
+lie_on_31,flux_dev,lie_on,a person lying on a bench,1.545362,0.271777,1.107702
+lie_on_32,flux_dev,lie_on,a person lying on a bench,1.641274,0.241985,1.170344
+lie_on_33,flux_dev,lie_on,a person lying on a bench,1.684076,0.238953,1.244604
+lie_on_34,flux_dev,lie_on,a person lying on a bench,1.377772,0.296101,0.689808
+lie_on_35,flux_dev,lie_on,a person lying on a bench,1.116507,0.366959,1.214767
+lie_on_36,flux_dev,lie_on,a person lying on a bench,2.011575,0.199468,0.532441
+lie_on_37,flux_dev,lie_on,a person lying on a bench,1.221883,0.344525,1.098317
+lie_on_38,flux_dev,lie_on,a person lying on a bench,1.290885,0.329741,0.867380
+lie_on_39,flux_dev,lie_on,a person lying on a bench,1.185845,0.348843,1.208035
+lie_on_40,flux_dev,lie_on,a person lying on a bench,1.692052,0.243906,1.012218
+lie_on_41,flux_dev,lie_on,a person lying on a bench,2.043885,0.194911,0.186499
+lie_on_42,flux_dev,lie_on,a person lying on a bench,1.167425,0.367409,0.965897
+lie_on_43,flux_dev,lie_on,a person lying on a bench,1.440485,0.279285,1.084319
+lie_on_44,flux_dev,lie_on,a person lying on a bench,1.918095,0.203138,0.987293
+lie_on_45,flux_dev,lie_on,a person lying on a bench,1.198952,0.341347,1.036153
+lie_on_46,flux_dev,lie_on,a person lying on a bench,1.106673,0.377117,1.096336
+lie_on_47,flux_dev,lie_on,a person lying on a couch,1.398831,0.295304,1.068718
+lie_on_48,flux_dev,lie_on,a person lying on a couch,1.363099,0.304797,0.870700
+lie_on_49,flux_dev,lie_on,a person lying on a couch,1.410168,0.283956,0.983596
+lie_on_50,flux_dev,lie_on,a person lying on a couch,1.321080,0.305538,0.965589
+lie_on_51,flux_dev,lie_on,a person lying on a couch,2.050266,0.178238,0.485682
+lie_on_52,flux_dev,lie_on,a person lying on a couch,1.808395,0.212477,0.462539
+lie_on_53,flux_dev,lie_on,a person lying on a couch,1.611993,0.248096,0.825124
+lie_on_54,flux_dev,lie_on,a person lying on a couch,1.502859,0.270978,1.263316
+lie_on_55,flux_dev,lie_on,a person lying on a couch,1.750760,0.221914,0.569911
+lie_on_56,flux_dev,lie_on,a person lying on a couch,1.342517,0.309781,0.697106
+lie_on_57,flux_dev,lie_on,a person lying on a couch,1.846798,0.211366,0.289260
+lie_on_58,flux_dev,lie_on,a person lying on a couch,1.427035,0.283585,0.824799
+lie_on_59,flux_dev,lie_on,a person lying on a couch,2.160828,0.174282,0.595386
+lie_on_60,flux_dev,lie_on,a person lying on a couch,0.918063,0.420194,0.628009
+lie_on_61,flux_dev,lie_on,a person lying on a surfboard,0.592156,0.614240,1.070286
+lie_on_62,flux_dev,lie_on,a person lying on a surfboard,2.438566,0.134518,-0.220635
+lie_on_63,flux_dev,lie_on,a person lying on a surfboard,0.616230,0.574686,1.048609
+lie_on_64,flux_dev,lie_on,a person lying on a surfboard,1.298815,0.316524,0.913213
+lie_on_65,flux_dev,lie_on,a person lying on a surfboard,0.351800,0.693260,1.150358
+lie_on_66,flux_dev,lie_on,a person lying on a surfboard,1.128115,0.380853,-0.023759
+lie_on_67,flux_dev,lie_on,a person lying on a surfboard,1.044789,0.402412,0.831901
+open_30,flux_dev,open,a person opening a oven,2.754508,0.096840,-0.777009
+open_31,flux_dev,open,a person opening a oven,3.023700,0.086592,-0.653577
+open_32,flux_dev,open,a person opening a oven,1.523333,0.257854,0.565228
+open_33,flux_dev,open,a person opening a refrigerator,1.926146,0.196845,0.165763
+open_34,flux_dev,open,a person opening a refrigerator,3.001532,0.076233,-0.197572
+open_35,flux_dev,open,a person opening a refrigerator,1.693159,0.243076,0.229877
+open_36,flux_dev,open,a person opening a refrigerator,1.365995,0.309923,0.796269
+open_37,flux_dev,open,a person opening a refrigerator,1.775404,0.212936,0.043941
+open_38,flux_dev,open,a person opening a refrigerator,2.657692,0.117440,-0.095216
+open_39,flux_dev,open,a person opening a suitcase,2.226279,0.170790,0.009143
+open_40,flux_dev,open,a person opening a suitcase,2.012885,0.190604,0.259975
+open_41,flux_dev,open,a person opening a suitcase,2.185115,0.170360,-0.256554
+open_42,flux_dev,open,a person opening a suitcase,2.146831,0.178524,0.148530
+pour_30,flux_dev,pour,a person pouring a cup,3.464211,0.057075,-0.827297
+pour_31,flux_dev,pour,a person pouring a cup,2.240549,0.158802,-0.106171
+pour_32,flux_dev,pour,a person pouring a cup,2.605153,0.120015,-0.018382
+pour_33,flux_dev,pour,a person pouring a cup,2.581256,0.125271,0.010326
+pour_34,flux_dev,pour,a person pouring a cup,2.109985,0.177007,0.965297
+pour_35,flux_dev,pour,a person pouring a cup,2.418292,0.143522,0.100360
+pour_36,flux_dev,pour,a person pouring a cup,2.292130,0.143760,-0.450416
+pour_37,flux_dev,pour,a person pouring a cup,2.595977,0.115706,0.507092
+pour_38,flux_dev,pour,a person pouring a cup,1.519274,0.303892,0.919446
+pour_39,flux_dev,pour,a person pouring a wine glass,2.214542,0.155106,-0.044211
+pour_40,flux_dev,pour,a person pouring a wine glass,1.521794,0.275960,-0.218184
+pour_41,flux_dev,pour,a person pouring a wine glass,2.398564,0.148279,0.217192
+pour_42,flux_dev,pour,a person pouring a wine glass,2.056661,0.180910,0.339751
+pour_43,flux_dev,pour,a person pouring a wine glass,1.613809,0.251538,0.862682
+pour_44,flux_dev,pour,a person pouring a wine glass,2.644242,0.119681,-0.061287
+pour_45,flux_dev,pour,a person pouring a wine glass,1.600809,0.256160,0.451175
+pour_46,flux_dev,pour,a person pouring a wine glass,2.474720,0.134318,-0.309358
+pour_47,flux_dev,pour,a person pouring a wine glass,1.598836,0.257541,-0.205319
+pour_48,flux_dev,pour,a person pouring a wine glass,2.060189,0.182551,0.120238
+pour_49,flux_dev,pour,a person pouring a wine glass,2.461923,0.139920,-0.104227
+pour_50,flux_dev,pour,a person pouring a wine glass,2.386639,0.137742,-0.117631
+pour_51,flux_dev,pour,a person pouring a wine glass,2.395585,0.138743,-0.326153
+pour_52,flux_dev,pour,a person pouring a wine glass,2.426703,0.132789,-0.166743
+pour_53,flux_dev,pour,a person pouring a wine glass,2.456686,0.133130,-0.189248
+pour_54,flux_dev,pour,a person pouring a wine glass,1.908003,0.194240,-0.100380
+pour_55,flux_dev,pour,a person pouring a wine glass,2.502327,0.134086,0.493513
+pour_56,flux_dev,pour,a person pouring a wine glass,2.026038,0.174131,-0.295260
+pour_57,flux_dev,pour,a person pouring a wine glass,1.823765,0.205681,1.149043
+pour_58,flux_dev,pour,a person pouring a wine glass,1.843676,0.207105,0.100943
+pour_59,flux_dev,pour,a person pouring a wine glass,2.387337,0.140542,0.161194
+pour_60,flux_dev,pour,a person pouring a wine glass,2.086623,0.168640,0.163575
+pour_61,flux_dev,pour,a person pouring a wine glass,1.814952,0.204906,-0.148780
+pour_62,flux_dev,pour,a person pouring a wine glass,2.150998,0.174955,-0.409667
+pour_63,flux_dev,pour,a person pouring a wine glass,2.147716,0.162233,-0.043886
+ride_30,flux_dev,ride,a person riding a bicycle,1.577145,0.294710,0.920582
+ride_31,flux_dev,ride,a person riding a bicycle,1.774237,0.267981,0.250477
+ride_32,flux_dev,ride,a person riding a bicycle,1.828417,0.255336,0.405597
+ride_33,flux_dev,ride,a person riding a bicycle,1.607940,0.295441,0.548366
+ride_34,flux_dev,ride,a person riding a bicycle,1.429896,0.337889,0.742288
+ride_35,flux_dev,ride,a person riding a bicycle,2.381018,0.171804,-0.166029
+ride_36,flux_dev,ride,a person riding a bicycle,2.953416,0.105055,-0.507480
+ride_37,flux_dev,ride,a person riding a bicycle,1.720238,0.262842,0.689379
+ride_38,flux_dev,ride,a person riding a bicycle,1.937961,0.192316,0.034579
+ride_39,flux_dev,ride,a person riding a bicycle,1.980304,0.222982,0.430499
+ride_40,flux_dev,ride,a person riding a bicycle,1.484410,0.303100,0.776591
+ride_41,flux_dev,ride,a person riding a bicycle,1.997804,0.266963,0.265746
+ride_42,flux_dev,ride,a person riding a bicycle,2.317046,0.186305,-0.227189
+ride_43,flux_dev,ride,a person riding a motorcycle,2.192458,0.167450,-0.115991
+ride_44,flux_dev,ride,a person riding a motorcycle,1.706511,0.240757,0.773796
+ride_45,flux_dev,ride,a person riding a motorcycle,1.490988,0.318426,0.997413
+ride_46,flux_dev,ride,a person riding a motorcycle,1.586565,0.268896,0.761059
+ride_47,flux_dev,ride,a person riding a motorcycle,1.781497,0.248382,0.493071
+ride_48,flux_dev,ride,a person riding a motorcycle,1.863712,0.222584,0.917833
+ride_49,flux_dev,ride,a person riding a motorcycle,1.589208,0.269335,0.924170
+ride_50,flux_dev,ride,a person riding a motorcycle,2.189172,0.184704,0.678487
+ride_51,flux_dev,ride,a person riding a motorcycle,2.011729,0.185100,0.430408
+ride_52,flux_dev,ride,a person riding a motorcycle,1.829510,0.209130,0.630346
+ride_53,flux_dev,ride,a person riding a motorcycle,1.660337,0.244803,0.888748
+ride_54,flux_dev,ride,a person riding a motorcycle,2.117748,0.170801,0.866603
+ride_55,flux_dev,ride,a person riding a motorcycle,1.475501,0.294917,0.933079
+ride_56,flux_dev,ride,a person riding a motorcycle,1.826926,0.222230,1.192236
+ride_57,flux_dev,ride,a person riding a motorcycle,1.606625,0.275076,0.975261
+ride_58,flux_dev,ride,a person riding a motorcycle,2.506453,0.131432,0.033706
+ride_59,flux_dev,ride,a person riding a motorcycle,1.836487,0.235764,0.337003
+ride_60,flux_dev,ride,a person riding a motorcycle,1.699272,0.273002,0.705129
+ride_61,flux_dev,ride,a person riding a motorcycle,1.796349,0.218499,0.839903
+ride_62,flux_dev,ride,a person riding a motorcycle,2.598326,0.123964,0.690726
+ride_63,flux_dev,ride,a person riding a motorcycle,1.853815,0.215860,0.978528
+ride_64,flux_dev,ride,a person riding a motorcycle,1.866079,0.216670,0.809161
+ride_65,flux_dev,ride,a person riding a motorcycle,1.885195,0.206953,0.882997
+ride_66,flux_dev,ride,a person riding a motorcycle,1.492564,0.282571,0.932166
+ride_67,flux_dev,ride,a person riding a motorcycle,1.700766,0.250040,0.822560
+ride_68,flux_dev,ride,a person riding a motorcycle,2.314213,0.144342,0.291153
+ride_69,flux_dev,ride,a person riding a motorcycle,2.495235,0.146311,0.047845
+ride_70,flux_dev,ride,a person riding a motorcycle,1.832935,0.222311,0.613249
+ride_71,flux_dev,ride,a person riding a motorcycle,1.625716,0.259006,0.853543
+ride_72,flux_dev,ride,a person riding a motorcycle,1.542265,0.282289,1.180992
+ride_73,flux_dev,ride,a person riding a motorcycle,1.667011,0.248115,1.156021
+ride_74,flux_dev,ride,a person riding a motorcycle,2.379040,0.146276,0.715053
+ride_75,flux_dev,ride,a person riding a motorcycle,1.843976,0.208747,1.331244
+ride_76,flux_dev,ride,a person riding a motorcycle,1.870182,0.237719,0.651292
+ride_77,flux_dev,ride,a person riding a motorcycle,1.912951,0.214229,0.906714
+ride_78,flux_dev,ride,a person riding a motorcycle,1.470538,0.303154,1.132843
+ride_79,flux_dev,ride,a person riding a motorcycle,1.730347,0.252982,0.641194
+ride_80,flux_dev,ride,a person riding a motorcycle,1.814289,0.223182,0.720011
+ride_81,flux_dev,ride,a person riding a motorcycle,1.729172,0.243373,0.674216
+ride_82,flux_dev,ride,a person riding a motorcycle,2.496945,0.150040,-0.345264
+ride_83,flux_dev,ride,a person riding a motorcycle,2.446245,0.138588,0.092536
+ride_84,flux_dev,ride,a person riding a motorcycle,1.809919,0.218785,1.090950
+ride_85,flux_dev,ride,a person riding a motorcycle,1.474012,0.321731,0.739797
+ride_86,flux_dev,ride,a person riding a motorcycle,1.610059,0.256611,0.976970
+ride_87,flux_dev,ride,a person riding a motorcycle,2.286924,0.157101,0.422136
+sip_30,flux_dev,sip,a person sipping a cup,1.788477,0.210193,0.146738
+sip_31,flux_dev,sip,a person sipping a cup,1.841208,0.202658,-0.081035
+sip_32,flux_dev,sip,a person sipping a cup,1.051072,0.393172,1.148960
+sip_33,flux_dev,sip,a person sipping a cup,2.536896,0.124551,-0.038234
+sip_34,flux_dev,sip,a person sipping a cup,1.499479,0.303511,0.272086
+sip_35,flux_dev,sip,a person sipping a cup,1.807854,0.214280,0.447100
+sip_36,flux_dev,sip,a person sipping a cup,1.987442,0.188191,0.407355
+sip_37,flux_dev,sip,a person sipping a cup,1.452158,0.308764,0.129182
+sip_38,flux_dev,sip,a person sipping a cup,1.405365,0.322901,0.781356
+sip_39,flux_dev,sip,a person sipping a wine glass,2.843755,0.100930,-0.194560
+sip_40,flux_dev,sip,a person sipping a wine glass,2.292623,0.145290,0.014367
+sip_41,flux_dev,sip,a person sipping a wine glass,3.017709,0.081834,-0.085918
+sip_42,flux_dev,sip,a person sipping a wine glass,1.967762,0.194589,-0.121555
+sip_43,flux_dev,sip,a person sipping a wine glass,2.611595,0.110355,-0.224544
+sip_44,flux_dev,sip,a person sipping a wine glass,2.872501,0.093477,-0.022236
+sip_45,flux_dev,sip,a person sipping a wine glass,2.494142,0.125048,-0.142197
+sip_46,flux_dev,sip,a person sipping a wine glass,2.031914,0.182317,0.841498
+sip_47,flux_dev,sip,a person sipping a wine glass,1.644395,0.248222,0.228530
+sip_48,flux_dev,sip,a person sipping a wine glass,2.381870,0.143785,0.629352
+sip_49,flux_dev,sip,a person sipping a wine glass,1.404215,0.296183,0.817323
+sip_50,flux_dev,sip,a person sipping a wine glass,2.282046,0.153360,1.038811
+sip_51,flux_dev,sip,a person sipping a wine glass,2.592910,0.124707,0.218758
+sip_52,flux_dev,sip,a person sipping a wine glass,2.926624,0.090066,-0.345119
+sip_53,flux_dev,sip,a person sipping a wine glass,3.121540,0.085819,-0.288002
+sip_54,flux_dev,sip,a person sipping a wine glass,2.239344,0.147250,0.085807
+sip_55,flux_dev,sip,a person sipping a wine glass,2.171441,0.162061,0.779286
+sip_56,flux_dev,sip,a person sipping a wine glass,2.023960,0.168968,-0.552193
+sip_57,flux_dev,sip,a person sipping a wine glass,1.973121,0.187105,1.010913
+sip_58,flux_dev,sip,a person sipping a wine glass,2.706658,0.100987,-0.300905
+sip_59,flux_dev,sip,a person sipping a wine glass,2.264743,0.155079,1.246748
+sip_60,flux_dev,sip,a person sipping a wine glass,2.354443,0.138347,0.328007
+sip_61,flux_dev,sip,a person sipping a wine glass,2.388479,0.136339,-0.106408
+sip_62,flux_dev,sip,a person sipping a wine glass,2.045040,0.192017,0.755437
+sip_63,flux_dev,sip,a person sipping a wine glass,2.160025,0.163365,0.627249
+sit_on_30,flux_dev,sit_on,a person sitting on a bench,1.613722,0.302453,0.580374
+sit_on_31,flux_dev,sit_on,a person sitting on a bench,1.500657,0.285793,0.948047
+sit_on_32,flux_dev,sit_on,a person sitting on a bench,1.984939,0.194501,0.457315
+sit_on_33,flux_dev,sit_on,a person sitting on a bench,1.836960,0.216339,1.060742
+sit_on_34,flux_dev,sit_on,a person sitting on a bench,1.477059,0.279750,0.420666
+sit_on_35,flux_dev,sit_on,a person sitting on a bench,1.741752,0.241193,0.107433
+sit_on_36,flux_dev,sit_on,a person sitting on a bench,2.315666,0.152626,0.000495
+sit_on_37,flux_dev,sit_on,a person sitting on a bench,1.568057,0.308197,0.701033
+sit_on_38,flux_dev,sit_on,a person sitting on a bench,1.299758,0.357898,0.877709
+sit_on_39,flux_dev,sit_on,a person sitting on a bench,1.939483,0.197503,-0.035733
+sit_on_40,flux_dev,sit_on,a person sitting on a bench,1.730770,0.233976,0.676423
+sit_on_41,flux_dev,sit_on,a person sitting on a bench,1.784101,0.219479,0.260504
+sit_on_42,flux_dev,sit_on,a person sitting on a bench,1.694066,0.253889,0.163400
+sit_on_43,flux_dev,sit_on,a person sitting on a bench,1.424732,0.284337,1.015511
+sit_on_44,flux_dev,sit_on,a person sitting on a bench,1.720725,0.229137,0.961345
+sit_on_45,flux_dev,sit_on,a person sitting on a bench,1.383689,0.322729,0.640643
+sit_on_46,flux_dev,sit_on,a person sitting on a bench,1.397694,0.298781,0.582844
+sit_on_47,flux_dev,sit_on,a person sitting on a bicycle,2.486985,0.134037,-0.000143
+sit_on_48,flux_dev,sit_on,a person sitting on a bicycle,2.476919,0.141186,1.264758
+sit_on_49,flux_dev,sit_on,a person sitting on a bicycle,2.676216,0.116133,0.899116
+sit_on_50,flux_dev,sit_on,a person sitting on a bicycle,1.858197,0.204512,0.394915
+sit_on_51,flux_dev,sit_on,a person sitting on a bicycle,2.578696,0.133457,0.492050
+sit_on_52,flux_dev,sit_on,a person sitting on a bicycle,2.970232,0.094449,-0.528520
+sit_on_53,flux_dev,sit_on,a person sitting on a bicycle,2.307178,0.157408,1.515865
+sit_on_54,flux_dev,sit_on,a person sitting on a bicycle,3.093251,0.085558,0.103976
+sit_on_55,flux_dev,sit_on,a person sitting on a bicycle,2.983450,0.094273,-0.277891
+sit_on_56,flux_dev,sit_on,a person sitting on a bicycle,2.782379,0.118915,0.141928
+sit_on_57,flux_dev,sit_on,a person sitting on a bicycle,3.194378,0.075535,-0.387635
+sit_on_58,flux_dev,sit_on,a person sitting on a bicycle,2.004619,0.185169,0.561785
+sit_on_59,flux_dev,sit_on,a person sitting on a bicycle,1.678171,0.248632,1.146042
+sit_on_60,flux_dev,sit_on,a person sitting on a bicycle,2.798448,0.097946,-0.388116
+sit_on_61,flux_dev,sit_on,a person sitting on a bicycle,3.046877,0.086127,0.060733
+sit_on_62,flux_dev,sit_on,a person sitting on a bicycle,2.351606,0.141132,0.491261
+sit_on_63,flux_dev,sit_on,a person sitting on a bicycle,2.564656,0.125609,0.629260
+sit_on_64,flux_dev,sit_on,a person sitting on a bicycle,2.981609,0.099302,0.213442
+sit_on_65,flux_dev,sit_on,a person sitting on a bicycle,3.023746,0.099080,-0.246673
+sit_on_66,flux_dev,sit_on,a person sitting on a bicycle,3.112769,0.087382,0.026025
+sit_on_67,flux_dev,sit_on,a person sitting on a bicycle,2.403112,0.143357,-0.100358
+sit_on_68,flux_dev,sit_on,a person sitting on a bicycle,2.632755,0.122578,-0.041742
+sit_on_69,flux_dev,sit_on,a person sitting on a bicycle,2.208095,0.169781,1.212017
+sit_on_70,flux_dev,sit_on,a person sitting on a bicycle,2.868821,0.099463,0.267001
+sit_on_71,flux_dev,sit_on,a person sitting on a bicycle,3.634265,0.053244,-0.572801
+sit_on_72,flux_dev,sit_on,a person sitting on a bicycle,2.443120,0.131341,0.141182
+sit_on_73,flux_dev,sit_on,a person sitting on a bicycle,3.516988,0.054383,-0.761283
+sit_on_74,flux_dev,sit_on,a person sitting on a bicycle,2.965039,0.099111,-0.195016
+sit_on_75,flux_dev,sit_on,a person sitting on a bicycle,1.853136,0.216374,0.812516
+sit_on_76,flux_dev,sit_on,a person sitting on a bicycle,3.298443,0.086745,0.040722
+sit_on_77,flux_dev,sit_on,a person sitting on a bicycle,3.018700,0.083836,0.011413
+sit_on_78,flux_dev,sit_on,a person sitting on a bicycle,2.490343,0.137711,0.664764
+sit_on_79,flux_dev,sit_on,a person sitting on a bicycle,2.475957,0.132840,1.069517
+sit_on_80,flux_dev,sit_on,a person sitting on a bicycle,2.853888,0.108367,0.306611
+sit_on_81,flux_dev,sit_on,a person sitting on a bicycle,2.505507,0.136502,0.562132
+sit_on_82,flux_dev,sit_on,a person sitting on a bicycle,3.319632,0.072920,-0.560769
+sit_on_83,flux_dev,sit_on,a person sitting on a bicycle,3.686387,0.048758,-0.838531
+sit_on_84,flux_dev,sit_on,a person sitting on a bicycle,2.325829,0.143529,0.841936
+sit_on_85,flux_dev,sit_on,a person sitting on a bicycle,2.102510,0.181616,1.566696
+sit_on_86,flux_dev,sit_on,a person sitting on a bicycle,2.675085,0.109877,0.209484
+sit_on_87,flux_dev,sit_on,a person sitting on a bicycle,2.868940,0.102141,0.302069
+sit_on_88,flux_dev,sit_on,a person sitting on a bicycle,2.962968,0.092676,-0.427537
+sit_on_89,flux_dev,sit_on,a person sitting on a bicycle,3.624856,0.055330,-0.456650
+sit_on_90,flux_dev,sit_on,a person sitting on a chair,1.939838,0.199188,0.562394
+sit_on_91,flux_dev,sit_on,a person sitting on a chair,1.861305,0.210202,0.760599
+sit_on_92,flux_dev,sit_on,a person sitting on a chair,2.090217,0.178103,0.865441
+sit_on_93,flux_dev,sit_on,a person sitting on a chair,1.912577,0.203663,0.607255
+sit_on_94,flux_dev,sit_on,a person sitting on a chair,1.695366,0.247354,0.697900
+sit_on_95,flux_dev,sit_on,a person sitting on a chair,2.371792,0.145376,0.873276
+sit_on_96,flux_dev,sit_on,a person sitting on a chair,1.852299,0.201289,0.367146
+sit_on_97,flux_dev,sit_on,a person sitting on a chair,1.698791,0.229840,0.770247
+sit_on_98,flux_dev,sit_on,a person sitting on a chair,1.917871,0.193320,0.784981
+sit_on_99,flux_dev,sit_on,a person sitting on a chair,2.859535,0.098060,0.057310
+sit_on_100,flux_dev,sit_on,a person sitting on a chair,2.153011,0.169303,1.262940
+sit_on_101,flux_dev,sit_on,a person sitting on a chair,1.194121,0.373813,-0.008720
+sit_on_102,flux_dev,sit_on,a person sitting on a chair,1.021446,0.388252,1.279997
+sit_on_103,flux_dev,sit_on,a person sitting on a chair,3.130324,0.078988,-0.307702
+sit_on_104,flux_dev,sit_on,a person sitting on a chair,2.197025,0.161379,0.469120
+sit_on_105,flux_dev,sit_on,a person sitting on a chair,1.386843,0.313843,0.691722
+sit_on_106,flux_dev,sit_on,a person sitting on a chair,1.908968,0.215556,1.143828
+sit_on_107,flux_dev,sit_on,a person sitting on a chair,1.426405,0.299233,0.657222
+sit_on_108,flux_dev,sit_on,a person sitting on a chair,1.638455,0.247753,1.061771
+sit_on_109,flux_dev,sit_on,a person sitting on a chair,1.832310,0.201975,0.377695
+sit_on_110,flux_dev,sit_on,a person sitting on a chair,1.700261,0.247192,1.041992
+sit_on_111,flux_dev,sit_on,a person sitting on a chair,2.449141,0.138255,0.644053
+sit_on_112,flux_dev,sit_on,a person sitting on a chair,1.108453,0.360322,1.095044
+sit_on_113,flux_dev,sit_on,a person sitting on a chair,1.959530,0.195867,1.089369
+sit_on_114,flux_dev,sit_on,a person sitting on a chair,2.128251,0.180114,0.736638
+sit_on_115,flux_dev,sit_on,a person sitting on a chair,2.186071,0.174957,-0.094065
+sit_on_116,flux_dev,sit_on,a person sitting on a couch,1.556965,0.257813,0.487550
+sit_on_117,flux_dev,sit_on,a person sitting on a couch,1.337752,0.310240,0.744456
+sit_on_118,flux_dev,sit_on,a person sitting on a couch,1.656314,0.247096,0.384309
+sit_on_119,flux_dev,sit_on,a person sitting on a couch,1.519480,0.266175,0.440261
+sit_on_120,flux_dev,sit_on,a person sitting on a couch,1.866241,0.213648,0.850441
+sit_on_121,flux_dev,sit_on,a person sitting on a couch,1.415466,0.291670,1.158086
+sit_on_122,flux_dev,sit_on,a person sitting on a couch,1.772916,0.212749,0.151909
+sit_on_123,flux_dev,sit_on,a person sitting on a couch,1.603885,0.247430,0.915685
+sit_on_124,flux_dev,sit_on,a person sitting on a couch,1.668564,0.249822,0.844819
+sit_on_125,flux_dev,sit_on,a person sitting on a couch,1.367970,0.308509,0.572707
+sit_on_126,flux_dev,sit_on,a person sitting on a couch,1.491287,0.286392,0.982286
+sit_on_127,flux_dev,sit_on,a person sitting on a couch,1.294050,0.319408,1.061568
+sit_on_128,flux_dev,sit_on,a person sitting on a couch,2.175749,0.169428,0.362890
+sit_on_129,flux_dev,sit_on,a person sitting on a couch,0.775326,0.514892,0.927797
+sit_on_130,flux_dev,sit_on,a person sitting on a motorcycle,2.351903,0.140043,0.703979
+sit_on_131,flux_dev,sit_on,a person sitting on a motorcycle,2.260174,0.153602,1.349370
+sit_on_132,flux_dev,sit_on,a person sitting on a motorcycle,2.450003,0.130440,0.593451
+sit_on_133,flux_dev,sit_on,a person sitting on a motorcycle,2.118118,0.170536,1.216374
+sit_on_134,flux_dev,sit_on,a person sitting on a motorcycle,2.290660,0.148470,0.712359
+sit_on_135,flux_dev,sit_on,a person sitting on a motorcycle,2.508890,0.127659,0.977751
+sit_on_136,flux_dev,sit_on,a person sitting on a motorcycle,2.149220,0.168072,1.449499
+sit_on_137,flux_dev,sit_on,a person sitting on a motorcycle,2.604110,0.119220,0.628842
+sit_on_138,flux_dev,sit_on,a person sitting on a motorcycle,2.050662,0.173945,0.708922
+sit_on_139,flux_dev,sit_on,a person sitting on a motorcycle,2.221963,0.157446,1.047729
+sit_on_140,flux_dev,sit_on,a person sitting on a motorcycle,2.452218,0.136339,1.216351
+sit_on_141,flux_dev,sit_on,a person sitting on a motorcycle,2.107116,0.174641,0.572424
+sit_on_142,flux_dev,sit_on,a person sitting on a motorcycle,2.712897,0.113005,0.208927
+sit_on_143,flux_dev,sit_on,a person sitting on a motorcycle,2.242534,0.158879,1.456437
+sit_on_144,flux_dev,sit_on,a person sitting on a motorcycle,2.277831,0.152785,1.184103
+sit_on_145,flux_dev,sit_on,a person sitting on a motorcycle,2.845709,0.099401,0.276456
+sit_on_146,flux_dev,sit_on,a person sitting on a motorcycle,1.992852,0.183123,1.032188
+sit_on_147,flux_dev,sit_on,a person sitting on a motorcycle,2.626075,0.124682,-0.174810
+sit_on_148,flux_dev,sit_on,a person sitting on a motorcycle,1.972203,0.188331,0.846409
+sit_on_149,flux_dev,sit_on,a person sitting on a motorcycle,2.670100,0.111743,0.336864
+sit_on_150,flux_dev,sit_on,a person sitting on a motorcycle,2.428657,0.134612,0.832856
+sit_on_151,flux_dev,sit_on,a person sitting on a motorcycle,2.924014,0.107609,0.016838
+sit_on_152,flux_dev,sit_on,a person sitting on a motorcycle,2.855471,0.107188,0.288666
+sit_on_153,flux_dev,sit_on,a person sitting on a motorcycle,2.257267,0.151756,0.429541
+sit_on_154,flux_dev,sit_on,a person sitting on a motorcycle,1.950399,0.190705,0.994142
+sit_on_155,flux_dev,sit_on,a person sitting on a motorcycle,2.616132,0.119523,0.681724
+sit_on_156,flux_dev,sit_on,a person sitting on a motorcycle,3.098945,0.091682,0.118004
+sit_on_157,flux_dev,sit_on,a person sitting on a motorcycle,2.772539,0.118784,0.213763
+sit_on_158,flux_dev,sit_on,a person sitting on a motorcycle,1.860608,0.202844,0.939212
+sit_on_159,flux_dev,sit_on,a person sitting on a motorcycle,2.138029,0.172895,1.477321
+sit_on_160,flux_dev,sit_on,a person sitting on a motorcycle,2.315807,0.147088,0.754977
+sit_on_161,flux_dev,sit_on,a person sitting on a motorcycle,2.132651,0.171231,1.498960
+sit_on_162,flux_dev,sit_on,a person sitting on a motorcycle,2.369630,0.147969,0.955149
+sit_on_163,flux_dev,sit_on,a person sitting on a motorcycle,2.240477,0.161289,1.178550
+sit_on_164,flux_dev,sit_on,a person sitting on a motorcycle,2.555751,0.128851,0.965133
+sit_on_165,flux_dev,sit_on,a person sitting on a motorcycle,2.409078,0.144232,0.418298
+sit_on_166,flux_dev,sit_on,a person sitting on a motorcycle,2.474593,0.134416,1.121818
+sit_on_167,flux_dev,sit_on,a person sitting on a motorcycle,1.761614,0.220549,1.264501
+sit_on_168,flux_dev,sit_on,a person sitting on a motorcycle,2.409461,0.135922,0.980660
+sit_on_169,flux_dev,sit_on,a person sitting on a motorcycle,3.789746,0.045698,-0.782082
+sit_on_170,flux_dev,sit_on,a person sitting on a motorcycle,3.211694,0.078708,-0.067527
+sit_on_171,flux_dev,sit_on,a person sitting on a motorcycle,2.089176,0.181439,1.902869
+sit_on_172,flux_dev,sit_on,a person sitting on a motorcycle,2.904655,0.097560,0.018085
+sit_on_173,flux_dev,sit_on,a person sitting on a motorcycle,2.430372,0.136197,0.893383
+sit_on_174,flux_dev,sit_on,a person sitting on a motorcycle,2.270460,0.154593,1.026693
+sit_on_175,flux_dev,sit_on,a person sitting on a skateboard,2.412183,0.160931,0.457866
+sit_on_176,flux_dev,sit_on,a person sitting on a skateboard,1.792595,0.259098,-0.272835
+sit_on_177,flux_dev,sit_on,a person sitting on a skateboard,1.550585,0.266496,-0.351509
+sit_on_178,flux_dev,sit_on,a person sitting on a skateboard,1.653964,0.310682,-0.099205
+sit_on_179,flux_dev,sit_on,a person sitting on a skateboard,1.571570,0.269780,1.422182
+sit_on_180,flux_dev,sit_on,a person sitting on a skateboard,1.018457,0.397860,0.962550
+sit_on_181,flux_dev,sit_on,a person sitting on a skateboard,1.055467,0.426725,0.494638
+sit_on_182,flux_dev,sit_on,a person sitting on a skateboard,0.727023,0.493891,1.300286
+sit_on_183,flux_dev,sit_on,a person sitting on a skateboard,1.121435,0.412786,0.354643
+sit_on_184,flux_dev,sit_on,a person sitting on a skateboard,1.026502,0.446279,0.089714
+sit_on_185,flux_dev,sit_on,a person sitting on a skateboard,1.452963,0.309532,0.041197
+sit_on_186,flux_dev,sit_on,a person sitting on a skateboard,1.279980,0.358945,0.131596
+sit_on_187,flux_dev,sit_on,a person sitting on a skateboard,0.819155,0.470845,0.636574
+sit_on_188,flux_dev,sit_on,a person sitting on a skateboard,1.264688,0.353411,0.526806
+sit_on_189,flux_dev,sit_on,a person sitting on a skateboard,1.880969,0.240570,-0.178443
+sit_on_190,flux_dev,sit_on,a person sitting on a surfboard,0.310282,0.685013,0.932253
+stick_30,flux_dev,stick,a person sticking a knife,3.600769,0.049212,-0.470479
+stick_31,flux_dev,stick,a person sticking a knife,3.419907,0.063801,-0.584136
+stick_32,flux_dev,stick,a person sticking a knife,2.202197,0.170336,0.180863
+stick_33,flux_dev,stick,a person sticking a knife,2.498602,0.127568,1.055254
+stick_34,flux_dev,stick,a person sticking a knife,2.541895,0.127048,0.927588
+stick_35,flux_dev,stick,a person sticking a knife,2.805326,0.109504,0.173823
+stick_36,flux_dev,stick,a person sticking a knife,3.498191,0.060581,-0.668406
+stick_37,flux_dev,stick,a person sticking a knife,3.825689,0.048170,-0.148397
+stick_39,flux_dev,stick,a person sticking a knife,2.203657,0.153452,1.242249
+stick_40,flux_dev,stick,a person sticking a knife,2.171376,0.167237,0.701016
+stick_41,flux_dev,stick,a person sticking a knife,3.142027,0.071838,-0.354388
+stick_42,flux_dev,stick,a person sticking a knife,3.026273,0.088064,-0.233946
+stick_43,flux_dev,stick,a person sticking a knife,2.695590,0.111135,0.490685
+stick_44,flux_dev,stick,a person sticking a knife,3.113338,0.090109,0.346470
+stick_45,flux_dev,stick,a person sticking a knife,3.099929,0.084248,0.138796
+stick_46,flux_dev,stick,a person sticking a knife,2.939551,0.097222,-0.275933
+stick_47,flux_dev,stick,a person sticking a knife,3.700249,0.050808,-0.173055
+stick_48,flux_dev,stick,a person sticking a knife,2.716352,0.113497,0.946409
+swing_30,flux_dev,swing,a person swinging a golf clubs,2.477214,0.137312,0.350149
+swing_31,flux_dev,swing,a person swinging a tennis racket,2.773258,0.094340,0.009641
+swing_32,flux_dev,swing,a person swinging a tennis racket,2.300776,0.135550,0.050498
+swing_33,flux_dev,swing,a person swinging a tennis racket,2.227269,0.151232,0.031832
+swing_34,flux_dev,swing,a person swinging a tennis racket,2.173198,0.155574,0.153029
+swing_35,flux_dev,swing,a person swinging a tennis racket,2.325430,0.148457,-0.519883
+swing_36,flux_dev,swing,a person swinging a tennis racket,2.467139,0.133456,0.662235
+swing_37,flux_dev,swing,a person swinging a tennis racket,2.685568,0.132271,0.971288
+swing_38,flux_dev,swing,a person swinging a tennis racket,2.343790,0.144307,0.595984
+swing_39,flux_dev,swing,a person swinging a tennis racket,1.841760,0.196544,0.684211
+swing_40,flux_dev,swing,a person swinging a tennis racket,2.120756,0.166396,0.498598
+swing_41,flux_dev,swing,a person swinging a tennis racket,2.176200,0.152909,0.136704
+take_photo_30,flux_dev,take_photo,a person taking a photo with a cell phone,1.676980,0.235883,0.122733
+throw_30,flux_dev,throw,a person throwing a frisbee,1.053502,0.394571,-0.436619
+throw_31,flux_dev,throw,a person throwing a frisbee,0.979050,0.437353,0.144729
+throw_32,flux_dev,throw,a person throwing a frisbee,1.014544,0.410715,-0.364949
+throw_33,flux_dev,throw,a person throwing a frisbee,0.843212,0.460716,-0.147077
+throw_34,flux_dev,throw,a person throwing a frisbee,0.871163,0.461933,0.280985
+throw_35,flux_dev,throw,a person throwing a frisbee,1.023011,0.396172,-0.477353
+throw_36,flux_dev,throw,a person throwing a frisbee,1.113295,0.394530,-0.563239
+throw_37,flux_dev,throw,a person throwing a frisbee,0.535661,0.588539,0.256818
+throw_38,flux_dev,throw,a person throwing a frisbee,0.993593,0.413549,-0.305089
+throw_39,flux_dev,throw,a person throwing a frisbee,0.787409,0.491237,0.528260
+throw_40,flux_dev,throw,a person throwing a javelin,2.356900,0.144428,1.400297
+throw_41,flux_dev,throw,a person throwing a javelin,2.467779,0.132246,0.866800
+throw_42,flux_dev,throw,a person throwing a javelin,2.281334,0.158692,1.604587
+throw_43,flux_dev,throw,a person throwing a javelin,2.247439,0.150214,1.066013
+throw_44,flux_dev,throw,a person throwing a javelin,2.348559,0.113906,0.126368
+throw_45,flux_dev,throw,a person throwing a javelin,2.747626,0.111938,0.837972
+throw_46,flux_dev,throw,a person throwing a javelin,2.570694,0.133493,1.288669
+throw_47,flux_dev,throw,a person throwing a javelin,2.495522,0.135637,1.147095
+throw_48,flux_dev,throw,a person throwing a rugby ball,0.694061,0.514780,0.884559
+throw_49,flux_dev,throw,a person throwing a rugby ball,0.836775,0.453666,0.818857
+throw_50,flux_dev,throw,a person throwing a rugby ball,0.724364,0.501871,1.091256
+throw_51,flux_dev,throw,a person throwing a rugby ball,0.308374,0.717598,0.675580
+throw_52,flux_dev,throw,a person throwing a rugby ball,0.528258,0.602823,0.183830
+throw_53,flux_dev,throw,a person throwing a rugby ball,1.414683,0.292605,0.313761
+throw_54,flux_dev,throw,a person throwing a rugby ball,0.483577,0.648690,0.375421
+throw_55,flux_dev,throw,a person throwing a rugby ball,0.714137,0.505377,0.807814
+throw_56,flux_dev,throw,a person throwing a rugby ball,0.657647,0.553345,0.434806
+throw_57,flux_dev,throw,a person throwing a rugby ball,1.013855,0.389580,1.111148
